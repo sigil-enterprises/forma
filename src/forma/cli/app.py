@@ -167,7 +167,7 @@ def render_default(
             tpl_path = config.resolve_template_path(name, project_dir)
             out = output_dir / f"{name}.pdf"
             console.print(f"[dim]Rendering {name}...[/dim]")
-            render_template(tpl_path, content, style, out)
+            render_template(tpl_path, content, style, out, project_dir=project_dir)
 
     _do_render()
 
@@ -313,7 +313,7 @@ def publish(
         tpl_path = config.resolve_template_path(name, project_dir)
         out = output_dir / f"{name}.pdf"
         console.print(f"[dim]Rendering {name}...[/dim]")
-        render_template(tpl_path, content, style, out)
+        render_template(tpl_path, content, style, out, project_dir=project_dir)
 
     drive_folder = folder_id or config.publishing.google_drive_folder_id
     if not drive_folder and not dry_run:

@@ -38,7 +38,7 @@ def _make_project(tmp_path: Path) -> Path:
     return project
 
 
-def _fake_render(tpl_path, content, style, output_path):
+def _fake_render(tpl_path, content, style, output_path, *, project_dir=None):
     """Mock render_template: writes a stub PDF and returns the path."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_bytes(b"%PDF-1.4 stub")

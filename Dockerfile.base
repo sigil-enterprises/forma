@@ -5,6 +5,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
       git make git-lfs curl unzip fontconfig \
       texlive-xetex \
+      texlive-fonts-recommended \
       texlive-fonts-extra \
       texlive-latex-extra \
       texlive-lang-arabic \

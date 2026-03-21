@@ -248,7 +248,7 @@ def test_publish_dry_run_skips_upload(tmp_path):
     with patch("forma.renderer.engine.render_template") as mock_render:
         mock_render.return_value = tmp_path / "slides.pdf"
         # Make it create the file so publish can check it exists
-        def fake_render(tpl_path, content, style, output_path):
+        def fake_render(tpl_path, content, style, output_path, *, project_dir=None):
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_bytes(b"%PDF fake")
             return output_path

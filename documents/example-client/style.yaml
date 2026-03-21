@@ -13,8 +13,8 @@ colors:
   text_secondary: "#666666"
 
 typography:
-  font_primary: "Rubik"
-  font_secondary: "Inter"
+  font_primary: "TeX Gyre Heros"
+  font_secondary: "TeX Gyre Heros"
   sizes:
     xs: 9
     sm: 10

@@ -7,6 +7,7 @@ the appropriate LaTeX engine (xelatex, pdflatex, lualatex).
 
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
 import tempfile
@@ -27,6 +28,7 @@ class BaseRenderer(ABC):
         output_path: Path,
         *,
         passes: int = 2,
+        project_dir: Path | None = None,
     ) -> Path:
         """
         Write tex_source to a temp dir, compile it, copy the result to output_path.
@@ -40,7 +42,7 @@ class BaseRenderer(ABC):
             tex_file.write_text(tex_source, encoding="utf-8")
 
             for _ in range(passes):
-                self._compile(tex_file, tmp)
+                self._compile(tex_file, tmp, project_dir=project_dir)
 
             pdf_file = tmp / "document.pdf"
             if not pdf_file.exists():
@@ -53,24 +55,30 @@ class BaseRenderer(ABC):
         console.print(f"[green]✓[/green] Rendered → {output_path}")
         return output_path
 
-    def _compile(self, tex_file: Path, workdir: Path) -> None:
+    def _compile(self, tex_file: Path, workdir: Path, *, project_dir: Path | None = None) -> None:
         cmd = [
             self.engine,
             "-interaction=nonstopmode",
-            "-halt-on-error",
             f"-output-directory={workdir}",
             str(tex_file),
         ]
+        env = os.environ.copy()
+        if project_dir:
+            # Prepend project dir to TEXINPUTS so \includegraphics finds local assets.
+            # The trailing // means recursive search; the trailing : keeps defaults.
+            env["TEXINPUTS"] = f"{project_dir}//::{env.get('TEXINPUTS', '')}"
         result = subprocess.run(
             cmd,
             cwd=workdir,
             capture_output=True,
             text=True,
+            env=env,
         )
-        if result.returncode != 0:
+        pdf_produced = (workdir / "document.pdf").exists()
+        if not pdf_produced:
             log = (workdir / "document.log").read_text(errors="replace") if (workdir / "document.log").exists() else result.stdout
             raise RuntimeError(
-                f"{self.engine} failed (exit {result.returncode}).\n"
+                f"{self.engine} failed (exit {result.returncode}) — no PDF produced.\n"
                 f"--- LaTeX log (last 60 lines) ---\n"
                 + "\n".join(log.splitlines()[-60:])
             )

@@ -62,6 +62,8 @@ def render_template(
     content: BaseContent,
     style: BaseStyle,
     output_path: Path,
+    *,
+    project_dir: Path | None = None,
 ) -> Path:
     """
     Full pipeline: Jinja2 render → LaTeX compile → PDF at output_path.
@@ -98,4 +100,4 @@ def render_template(
         raise ValueError(f"Unknown LaTeX engine: {manifest.engine!r}. Choose from {list(_ENGINES)}")
 
     renderer = renderer_cls()
-    return renderer.render(tex_source, output_path)
+    return renderer.render(tex_source, output_path, project_dir=project_dir)
