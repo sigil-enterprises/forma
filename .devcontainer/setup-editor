@@ -1,0 +1,17 @@
+#!/bin/bash
+DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get -o DPkg::Options::=--force-confdef install -y wget zsh tmux curl
+wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+
+cd ~
+tmux kill-server || true
+git clone --single-branch https://github.com/gpakosz/.tmux.git
+ln -s -f .tmux/.tmux.conf
+
+cd /app
+cp .devcontainer/.tmux.conf ~/.tmux.conf.local
+make setup-dev
+
+curl -fsSL https://claude.ai/install.sh | bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc || true

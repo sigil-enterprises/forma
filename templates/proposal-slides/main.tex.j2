@@ -1,0 +1,115 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+
+% ── Packages ──────────────────────────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% ── Fonts (from style) ────────────────────────────────────────────────────
+\setmainfont{ ((- style.typography.font_primary | default('Helvetica') -)) }[
+  BoldFont = * Bold,
+  ItalicFont = * Italic,
+]
+\setsansfont{ ((- style.typography.font_primary | default('Helvetica') -)) }
+
+% ── Colors (from style) ───────────────────────────────────────────────────
+\definecolor{primary}   {HTML}{ ((- style.colors.primary_dark   | default('0B1D2A') | hex_color -)) }
+\definecolor{accent}    {HTML}{ ((- style.colors.primary_accent | default('F58220') | hex_color -)) }
+\definecolor{textprimary}{HTML}{ ((- style.colors.text_primary  | default('333333') | hex_color -)) }
+\definecolor{white}     {HTML}{FFFFFF}
+\definecolor{lightgray} {HTML}{ ((- style.colors.gray_light     | default('F5F5F5') | hex_color -)) }
+
+% ── Beamer theme ──────────────────────────────────────────────────────────
+\usetheme{default}
+\setbeamercolor{frametitle}{bg=primary, fg=white}
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{normal text}{fg=textprimary}
+\setbeamercolor{itemize item}{fg=accent}
+\setbeamercolor{itemize subitem}{fg=accent}
+\setbeamerfont{frametitle}{series=\bfseries, size=\large}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{accent}\textbullet}
+\setbeamertemplate{itemize subitem}{\color{accent}--}
+\setbeamertemplate{footline}{
+  \leavevmode
+  \hbox{
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,leftskip=.3cm]{normal text}
+      \tiny\color{gray} (( content.client.name | latex_escape )) — (( content.engagement.title | latex_escape ))
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,rightskip=.3cm,right]{normal text}
+      \tiny\color{gray}\insertframenumber{} / \inserttotalframenumber
+    \end{beamercolorbox}
+  }
+  \vskip0pt
+}
+
+% ── Helpers ───────────────────────────────────────────────────────────────
+\newcommand{\accentrule}{\textcolor{accent}{\rule{\linewidth}{2pt}}}
+\newcommand{\sectiondivider}[1]{%
+  \begin{frame}[plain]
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[primary] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+    \begin{center}
+      \vspace{2cm}
+      {\color{white}\Huge\bfseries #1}
+    \end{center}
+  \end{frame}
+}
+
+% ─────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+%% ── COVER ─────────────────────────────────────────────────────────────
+(% include '_cover.tex.j2' %)
+
+%% ── EXECUTIVE SUMMARY ─────────────────────────────────────────────────
+(% if content.executive_summary %)
+(% include '_exec_summary.tex.j2' %)
+(% endif %)
+
+%% ── CONTEXT / PROBLEM ─────────────────────────────────────────────────
+(% if content.context %)
+\sectiondivider{The Challenge}
+(% include '_context.tex.j2' %)
+(% endif %)
+
+%% ── SOLUTION ──────────────────────────────────────────────────────────
+(% if content.solution %)
+\sectiondivider{Our Approach}
+(% include '_solution.tex.j2' %)
+(% endif %)
+
+%% ── TIMELINE ──────────────────────────────────────────────────────────
+(% if content.timeline and content.timeline.phases %)
+\sectiondivider{Project Timeline}
+(% include '_timeline.tex.j2' %)
+(% endif %)
+
+%% ── INVESTMENT ────────────────────────────────────────────────────────
+(% if content.investment %)
+\sectiondivider{Investment}
+(% include '_investment.tex.j2' %)
+(% endif %)
+
+%% ── TEAM ──────────────────────────────────────────────────────────────
+(% if content.team %)
+\sectiondivider{Our Team}
+(% include '_team.tex.j2' %)
+(% endif %)
+
+%% ── NEXT STEPS ────────────────────────────────────────────────────────
+(% if content.next_steps %)
+(% include '_next_steps.tex.j2' %)
+(% endif %)
+
+%% ── CLOSING ───────────────────────────────────────────────────────────
+(% include '_closing.tex.j2' %)
+
+\end{document}

@@ -1,0 +1,13 @@
+\begin{frame}{Executive Summary}
+  \accentrule\\[0.4cm]
+  {\large\bfseries (( content.executive_summary.headline | latex_escape )) }\\[0.4cm]
+  (( content.executive_summary.body | latex_escape ))
+  (% if content.executive_summary.key_points %)
+  \\[0.4cm]
+  \begin{itemize}
+    (% for point in content.executive_summary.key_points %)
+    \item (( point | latex_escape ))
+    (% endfor %)
+  \end{itemize}
+  (% endif %)
+\end{frame}

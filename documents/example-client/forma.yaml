@@ -1,0 +1,14 @@
+schema: schemas.proposal.content:ProposalContent
+style: style.yaml
+
+templates:
+  slides:
+    path: ../../templates/proposal-slides
+  report:
+    path: ../../templates/proposal-report
+
+output_dir: ../../var/builds/example-client
+
+publishing:
+  google_drive_folder_id: ""
+  filename_prefix: "SLVR-EXAMPLE"

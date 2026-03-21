@@ -1,0 +1,34 @@
+name: Build base image
+
+on:
+  push:
+    paths:
+      - Dockerfile.base
+      - pyproject.toml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-base:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_ORG_REPO_READ || github.token }}
+
+      - name: Checkout ${{ github.repository_owner }}/opv-actions
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/opv-actions
+          ref: v3
+          token: ${{ secrets.PAT_ORG_REPO_READ || github.token }}
+          path: .opv-actions
+
+      - name: Build and push base image
+        uses: ./.opv-actions/build-base
+        with:
+          repositories-read-token: ${{ secrets.PAT_ORG_REPO_READ || github.token }}

@@ -1,0 +1,86 @@
+[project]
+name = "forma"
+dynamic = ["version"]
+description = "Schema-agnostic document rendering framework — content YAML + Jinja2/LaTeX templates → PDF"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+  { name = "sliver-corporate-services", email = "dev@sliver.sa" },
+]
+dependencies = [
+  "typer[all]>=0.12",
+  "pydantic>=2.7",
+  "PyYAML>=6.0",
+  "jinja2>=3.1",
+  "anthropic>=0.28",
+  "google-api-python-client>=2.130",
+  "google-auth>=2.29",
+  "watchfiles>=0.21",
+  "rich>=13.7",
+  "python-dotenv>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/slivern-corporate-services/forma"
+Issues = "https://github.com/slivern-corporate-services/forma/issues"
+
+[project.optional-dependencies]
+dev = [
+  "forma[test]",
+  "forma[docs]",
+  "forma[ci]",
+  "pytest-watch",
+]
+test = [
+  "pytest",
+  "pytest-mock",
+]
+ci = [
+  "genbadge[coverage]",
+]
+docs = [
+  "mike",
+  "mkdocs",
+  "mkdocs-material",
+  "mkdocstrings-python",
+]
+
+[project.scripts]
+forma = "forma.cli.app:app"
+
+[tool.setuptools.package-data]
+forma = ["etc/**"]
+
+[tool.coverage.html]
+directory = "docs/reports/coverage"
+
+[tool.coverage.xml]
+output = "docs/reports/coverage/coverage.xml"
+
+[tool.coverage.run]
+data_file = "var/.coverage"
+omit = [
+  "tests/*",
+  "/usr/*",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.coverage.report]
+exclude_also = [
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "except PackageNotFoundError:",
+]
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = ["tests"]
+
+[tool.setuptools_scm]
+version_file = "src/forma/_version.py"
+
+[build-system]
+requires = ["setuptools >= 75.0", "setuptools-scm >= 8.0"]
+build-backend = "setuptools.build_meta"

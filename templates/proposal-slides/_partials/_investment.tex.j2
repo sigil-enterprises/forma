@@ -1,0 +1,39 @@
+(% for phase in content.investment.phases %)
+\begin{frame}{Investment — (( phase.name | latex_escape ))}
+  \accentrule\\[0.3cm]
+  \begin{tabularx}{\textwidth}{Xrrr}
+    \toprule
+    \textbf{Service} & \textbf{Qty} & \textbf{Rate (USD)} & \textbf{Total (USD)} \\
+    \midrule
+    (% for item in phase.line_items %)
+    (( item.service | latex_escape )) & (( item.quantity )) (( item.unit | latex_escape )) & (( item.rate_usd | currency )) & (( item.total_usd | currency )) \\
+    (% endfor %)
+    \midrule
+    \textbf{Subtotal} & & & \textbf{ (( phase.subtotal_usd | currency )) } \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+(% endfor %)
+
+\begin{frame}{Investment Summary}
+  \accentrule\\[0.3cm]
+  \begin{tabularx}{\textwidth}{Xr}
+    \toprule
+    \textbf{Phase} & \textbf{Total (USD)} \\
+    \midrule
+    (% for phase in content.investment.phases %)
+    (( phase.name | latex_escape )) & (( phase.subtotal_usd | currency )) \\
+    (% endfor %)
+    \midrule
+    \textbf{Total Investment} & \textbf{ (( content.investment.total_usd | currency )) } \\
+    \bottomrule
+  \end{tabularx}
+  (% if content.investment.notes %)
+  \\[0.4cm]
+  \begin{itemize}
+    (% for note in content.investment.notes %)
+    \item \small\textit{ (( note | latex_escape )) }
+    (% endfor %)
+  \end{itemize}
+  (% endif %)
+\end{frame}

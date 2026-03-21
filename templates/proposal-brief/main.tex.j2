@@ -1,0 +1,67 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{microtype}
+
+\geometry{a4paper, top=1.5cm, bottom=1.5cm, left=2cm, right=2cm}
+
+\setmainfont{ ((- style.typography.font_primary | default('Helvetica') -)) }
+\definecolor{primary}{HTML}{ ((- style.colors.primary_dark   | default('0B1D2A') | hex_color -)) }
+\definecolor{accent} {HTML}{ ((- style.colors.primary_accent | default('F58220') | hex_color -)) }
+
+\titleformat{\section}{\bfseries\color{primary}}{}{0em}{}[\textcolor{accent}{\titlerule[1pt]}]
+
+\pagestyle{empty}
+
+\begin{document}
+
+% Header bar
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[primary] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
+\end{tikzpicture}
+\vspace*{0.3cm}
+\begin{flushleft}
+  {\color{white}\LARGE\bfseries (( content.meta.title | latex_escape )) }\\
+  (% if content.meta.subtitle %)
+  {\color{white}\normalsize (( content.meta.subtitle | latex_escape )) }\\
+  (% endif %)
+  \vspace{0.1cm}
+  {\color{accent}\small (( content.meta.date | format_date )) \quad|\quad (( content.meta.prepared_for | latex_escape )) }
+\end{flushleft}
+\vspace{0.8cm}
+
+\begin{multicols}{2}
+(% for section in content.sections %)
+\section{ (( section.heading | latex_escape )) }
+(( section.body | latex_escape ))
+(% if section.bullets %)
+\begin{itemize}[nosep]
+  (% for b in section.bullets %)
+  \item \small (( b | latex_escape ))
+  (% endfor %)
+\end{itemize}
+(% endif %)
+\vspace{0.3cm}
+
+(% endfor %)
+\end{multicols}
+
+(% if content.call_to_action %)
+\vfill
+\begin{center}
+  \textcolor{accent}{\rule{0.3\linewidth}{0.5pt}}\\[0.2cm]
+  \textbf{ (( content.call_to_action | latex_escape )) }\\
+  (% if content.contact_email %)
+  \small (( content.contact_email | latex_escape ))
+  (% endif %)
+\end{center}
+(% endif %)
+
+\end{document}

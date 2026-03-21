@@ -1,0 +1,7 @@
+name: "Proposal Slides"
+description: "Beamer slide deck for client proposals — cover through closing"
+format: slides
+engine: xelatex
+entry: main.tex.j2
+compatible_schemas:
+  - "schemas.proposal.content:ProposalContent"
