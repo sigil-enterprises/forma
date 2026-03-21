@@ -1,16 +1,19 @@
 name: Publish
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Build"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   discover:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       documents: ${{ steps.list.outputs.json }}
