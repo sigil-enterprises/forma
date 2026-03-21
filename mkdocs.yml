@@ -1,0 +1,42 @@
+site_name: forma
+site_description: Schema-agnostic document rendering framework — content YAML + Jinja2/LaTeX templates → PDF
+site_url: https://slivern-corporate-services.github.io/forma/
+repo_url: https://github.com/slivern-corporate-services/forma
+repo_name: slivern-corporate-services/forma
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+  font:
+    text: Inter
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+
+nav:
+  - Home: index.md
+  - API Reference:
+      - Core: api/core.md
+      - Renderer: api/renderer.md
+      - Composer: api/composer.md
+      - Publisher: api/publisher.md
+
+extra_css:
+  - stylesheets/extra.css

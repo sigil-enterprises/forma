@@ -15,20 +15,24 @@ jobs:
   build-base:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT_ORG_REPO_READ || github.token }}
 
-      - name: Checkout ${{ github.repository_owner }}/opv-actions
-        uses: actions/checkout@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
         with:
-          repository: ${{ github.repository_owner }}/opv-actions
-          ref: v3
-          token: ${{ secrets.PAT_ORG_REPO_READ || github.token }}
-          path: .opv-actions
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.PAT_ORG_REPO_READ || github.token }}
 
       - name: Build and push base image
-        uses: ./.opv-actions/build-base
+        uses: docker/build-push-action@v5
         with:
-          repositories-read-token: ${{ secrets.PAT_ORG_REPO_READ || github.token }}
+          context: .
+          file: Dockerfile.base
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/forma-base:latest
+          build-args: |
+            GITHUB_TOKEN=${{ secrets.PAT_ORG_REPO_READ || github.token }}
+            ORGANIZATION=${{ github.repository_owner }}
