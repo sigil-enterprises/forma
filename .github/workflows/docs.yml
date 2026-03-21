@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - main
-  release:
-    types:
-      - published
+    tags:
+      - "v*"
   workflow_dispatch:
 
 permissions:
@@ -16,7 +15,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout (full history for mike versioning)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -29,16 +28,27 @@ jobs:
 
       - name: Authenticate private org repositories
         run: |
-          git config --global url."https://${{ secrets.PAT_ORG_REPO_READ }}@github.com/${{ github.repository_owner }}/".insteadOf \
+          git config --global \
+            url."https://${{ secrets.PAT_ORG_REPO_READ || github.token }}@github.com/${{ github.repository_owner }}/".insteadOf \
             "https://github.com/${{ github.repository_owner }}/"
 
       - name: Install package and doc dependencies
         run: pip install -e ".[docs]"
 
-      - name: Configure git identity
+      - name: Configure git identity (required for gh-deploy push)
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build and deploy docs
-        run: mkdocs gh-deploy --force --clean
+      - name: Deploy versioned docs (on tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION="${GITHUB_REF_NAME}"          # e.g. v1.0.0
+          ALIAS="latest"
+          mike deploy --push --update-aliases "$VERSION" "$ALIAS"
+          mike set-default --push latest
+
+      - name: Deploy dev docs (on main push)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          mike deploy --push dev

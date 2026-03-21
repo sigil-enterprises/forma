@@ -3,6 +3,7 @@ site_description: Schema-agnostic document rendering framework — content YAML 
 site_url: https://slivern-corporate-services.github.io/forma/
 repo_url: https://github.com/slivern-corporate-services/forma
 repo_name: slivern-corporate-services/forma
+edit_uri: edit/main/docs/
 
 theme:
   name: material
@@ -10,15 +11,29 @@ theme:
     - scheme: default
       primary: custom
       accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   font:
     text: Inter
     code: Roboto Mono
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.top
+    - navigation.footer
     - search.suggest
+    - search.highlight
     - content.code.copy
+    - content.code.annotate
+    - toc.follow
 
 plugins:
   - search
@@ -29,14 +44,54 @@ plugins:
           options:
             docstring_style: google
             show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            merge_init_into_class: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - def_list
+  - tables
+  - toc:
+      permalink: true
 
 nav:
   - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - First Document: getting-started/first-document.md
+  - Guide:
+      - Schemas: guide/schemas.md
+      - Templates: guide/templates.md
+      - Claude Composer: guide/composer.md
+      - Skills: guide/skills.md
+      - Publishing: guide/publishing.md
+  - Deployment:
+      - Secrets & Environment: deployment/secrets.md
+      - CI/CD: deployment/ci.md
+      - Devcontainer: deployment/devcontainer.md
   - API Reference:
       - Core: api/core.md
       - Renderer: api/renderer.md
       - Composer: api/composer.md
       - Publisher: api/publisher.md
+
+extra:
+  version:
+    provider: mike
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/slivern-corporate-services/forma
 
 extra_css:
   - stylesheets/extra.css

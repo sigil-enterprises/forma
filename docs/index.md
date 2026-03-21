@@ -2,72 +2,95 @@
 
 **Schema-agnostic document rendering framework.**
 
-Content YAML + Jinja2/LaTeX templates → polished PDF slides and reports.
+Turn structured YAML content and Jinja2/LaTeX templates into polished PDF slides, reports, and briefings — driven by Claude AI.
 
-## Concept
+---
 
-`forma` separates **content** from **presentation**:
+## How it works
 
-- **`content.yaml`** — domain-semantic data (client, problem, solution, investment, team…). No document structure, no slide types.
-- **`style.yaml`** — visual tokens (colors, fonts, spacing).
-- **`templates/`** — Jinja2/LaTeX templates that define document structure and reference content paths freely.
+```
+content.yaml  ──[schema validates]──→  Jinja2 context
+                                             │
+style.yaml    ─────────────────────→  templates/proposal-slides/main.tex.j2  →  slides.pdf
+                                             │
+                                        templates/proposal-report/main.tex.j2  →  report.pdf
+                                             │
+                                        templates/proposal-brief/main.tex.j2   →  brief.pdf
+```
 
-The same `content.yaml` renders as a slide deck, a full report, or a one-pager — each template decides its own structure.
+**Content** describes *what* — client, problem, solution, team, investment. No slide types, no page layout.
+
+**Templates** describe *how* — each template independently decides structure, layout, and which content fields to include.
+
+---
+
+## Key features
+
+<div class="grid cards" markdown>
+
+- :material-file-code: **Schema-first content**
+
+    Define your content structure with Pydantic. The engine works with any subclass of `BaseContent`.
+
+- :material-robot: **Claude Composer**
+
+    Draft `content.yaml` from meeting notes in seconds. `forma compose fill` sends notes to Claude and validates the output against your schema.
+
+- :simple-latex: **LaTeX rendering**
+
+    Templates are Jinja2-wrapped LaTeX. xelatex produces pixel-perfect PDFs with full font and color control.
+
+- :material-google-drive: **Google Drive publishing**
+
+    `forma publish` renders all templates and uploads to a Drive folder. Service account credentials never touch disk.
+
+- :material-puzzle: **Skills submodule**
+
+    Pull live data from ClickUp, Google Docs, Google Sheets, or meeting notes files and feed them directly into the composer.
+
+- :material-test-tube: **65 tests, all mocked**
+
+    Full test suite covering every CLI command, filter, schema, publisher, and skills loader — no live API keys required.
+
+</div>
+
+---
 
 ## Quick start
 
 ```bash
+# Install
 pip install -e .[dev]
 
-# Scaffold a new document project
+# Scaffold a new project
 forma init acme-corp
 
-# Fill content from notes using Claude
+# Draft content from meeting notes using Claude
 forma compose fill documents/acme-corp --notes meeting-notes.md
 
 # Validate
 forma validate documents/acme-corp
 
-# Render to PDF
+# Render to PDF (requires xelatex)
 forma render documents/acme-corp
 
 # Publish to Google Drive
 forma publish documents/acme-corp
 ```
 
+---
+
 ## CLI reference
 
 | Command | Description |
 |---|---|
-| `forma validate [DIR]` | Validate content.yaml and style.yaml |
+| `forma validate [DIR]` | Validate `content.yaml` and `style.yaml` against the schema |
 | `forma render [DIR]` | Render all templates to PDF |
 | `forma render [DIR] -t slides` | Render a specific template |
 | `forma render [DIR] --watch` | Re-render on file change |
-| `forma compose fill [DIR] -n FILE` | Draft content.yaml from notes using Claude |
-| `forma compose enrich [DIR] -s clickup,google_docs` | Enrich with external data then compose |
-| `forma publish [DIR]` | Render + upload to Google Drive |
-| `forma schema export` | Export JSON Schema files |
-| `forma template list` | List available templates |
-| `forma init CLIENT_NAME` | Scaffold a new document project |
-
-## Architecture
-
-```
-content.yaml  ──[schema validates]──→  Jinja2 context
-                                             ↓
-style.yaml    ─────────────────────→  templates/proposal-slides/main.tex.j2  →  slides.pdf
-                                             ↓
-                                        templates/proposal-report/main.tex.j2  →  report.pdf
-                                             ↓
-                                        templates/proposal-brief/main.tex.j2   →  brief.pdf
-```
-
-## Environment variables
-
-| Variable | Purpose |
-|---|---|
-| `ANTHROPIC_API_KEY` | Required for `forma compose` commands |
-| `GOOGLE_SERVICE_ACCOUNT_JSON` | Base64-encoded service account JSON for Drive publishing |
-| `GITHUB_TOKEN` | CI and devcontainer setup |
-
-See `.env.example` for the full list.
+| `forma compose fill [DIR] -n FILE` | Draft `content.yaml` from notes using Claude |
+| `forma compose enrich [DIR] -s clickup,gdocs` | Fetch external data, then compose |
+| `forma publish [DIR]` | Render + upload artifacts to Google Drive |
+| `forma schema export` | Export JSON Schema files from all Pydantic schemas |
+| `forma template list` | List available templates and their manifests |
+| `forma init NAME` | Scaffold a new document project directory |
