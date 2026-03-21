@@ -6,6 +6,14 @@ help:
 
 ##@ DevOps
 
+init: ## Initialise submodules and create .env
+	git submodule update --init --recursive
+	@test -f .env || (test -f .env.example && cp .env.example .env || touch .env)
+	@echo "✓ Submodules initialised"
+
+submodule-status: ## Show submodule status
+	git submodule status
+
 setup: ## Setup environment
 	pip install -e .[test,ci,docs]
 

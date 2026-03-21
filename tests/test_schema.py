@@ -73,11 +73,6 @@ def test_case_study_content_model():
 
 
 def test_schema_export(tmp_path):
-    import sys
-    repo_root = Path(__file__).parents[1]
-    if str(repo_root) not in sys.path:
-        sys.path.insert(0, str(repo_root))
-
     from schemas.proposal.content import ProposalContent
     schema = ProposalContent.model_json_schema()
     assert "properties" in schema
@@ -93,12 +88,8 @@ def test_config_loads_forma_yaml():
 
 
 def test_loader_resolves_schema_class():
-    import sys
-    repo_root = Path(__file__).parents[1]
-    if str(repo_root) not in sys.path:
-        sys.path.insert(0, str(repo_root))
-
     from forma.core.loader import load_content_class
     from forma.core.base import BaseContent
+    repo_root = Path(__file__).parents[1]
     cls = load_content_class("schemas.proposal.content:ProposalContent", repo_root)
     assert issubclass(cls, BaseContent)

@@ -39,7 +39,9 @@ def latex_escape(value: Any) -> str:
 
 
 def format_date(value: Any, fmt: str = "%B %d, %Y") -> str:
-    """Format a date string or date object."""
+    """Format a date string or date object. Returns '' for None."""
+    if value is None:
+        return ""
     if isinstance(value, (date, datetime)):
         return value.strftime(fmt)
     if isinstance(value, str):
@@ -78,8 +80,10 @@ def hex_color(value: str) -> str:
     return value.lstrip("#")
 
 
-def bullet_list(items: list[str], indent: int = 0) -> str:
-    """Render a list as LaTeX itemize environment."""
+def bullet_list(items: list[str] | None, indent: int = 0) -> str:
+    """Render a list as LaTeX itemize environment. Returns '' for empty/None."""
+    if not items:
+        return ""
     pad = "  " * indent
     lines = [f"{pad}\\begin{{itemize}}"]
     for item in items:

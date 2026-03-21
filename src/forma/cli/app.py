@@ -60,6 +60,38 @@ def _load_project(project_dir: Path):
     return config, schema_cls
 
 
+def _format_skill_data(name: str, data: dict) -> str:
+    """
+    Format fetched skill data as structured prose for the Claude composer.
+
+    Rather than dumping raw YAML, we produce a readable section that Claude
+    can extract facts from more reliably.
+    """
+    lines = [f"## Data from {name}"]
+
+    def _render(obj: object, indent: int = 0) -> None:
+        pad = "  " * indent
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if isinstance(v, (dict, list)):
+                    lines.append(f"{pad}**{k}:**")
+                    _render(v, indent + 1)
+                else:
+                    lines.append(f"{pad}**{k}:** {v}")
+        elif isinstance(obj, list):
+            for item in obj:
+                if isinstance(item, (dict, list)):
+                    lines.append(f"{pad}-")
+                    _render(item, indent + 1)
+                else:
+                    lines.append(f"{pad}- {item}")
+        else:
+            lines.append(f"{pad}{obj}")
+
+    _render(data)
+    return "\n".join(lines)
+
+
 # ---------------------------------------------------------------------------
 # validate
 # ---------------------------------------------------------------------------
@@ -72,13 +104,23 @@ def validate(
     strict: bool = typer.Option(False, "--strict", help="Treat warnings as errors"),
 ):
     """Validate content.yaml (and optionally style.yaml) against the declared schema."""
-    from forma.core.validator import validate_content
+    from forma.core.validator import validate_content, validate_style
+    from forma.core.base import FormaStyle
 
     project_dir = project_dir.resolve()
     config, schema_cls = _load_project(project_dir)
 
     content_path = project_dir / content_file
     result = validate_content(content_path, schema_cls, project_dir, strict=strict)
+
+    # Also validate style.yaml if it exists
+    resolved_style = style_file or config.style
+    style_path = (project_dir / resolved_style).resolve() if resolved_style else None
+    if style_path and style_path.exists():
+        style_result = validate_style(style_path, FormaStyle, project_dir)
+        result.errors.extend(style_result.errors)
+        result.warnings.extend(style_result.warnings)
+
     result.print()
 
     if not result.ok or (strict and result.warnings):
@@ -200,7 +242,7 @@ def compose_enrich(
     config, schema_cls = _load_project(project_dir)
 
     # Find skills dir (submodule)
-    repo_root = Path(__file__).parents[4]
+    repo_root = Path(__file__).parents[3]
     skills_dir = repo_root / "skills"
     if not skills_dir.exists():
         console.print(f"[red]✗ skills/ submodule not found at {skills_dir}[/red]")
@@ -209,15 +251,15 @@ def compose_enrich(
     skill_names = [s.strip() for s in skills.split(",")]
     fetched = load_skills(skills_dir, skill_names)
 
-    # Build combined notes
+    # Build combined notes — structured prose so Claude can reason about each source
     combined_parts = []
     if notes_file and notes_file.exists():
-        combined_parts.append(notes_file.read_text())
+        combined_parts.append(notes_file.read_text().strip())
 
     for name, data in fetched.items():
-        combined_parts.append(f"\n\n## {name} data\n{yaml.dump(data, default_flow_style=False)}")
+        combined_parts.append(_format_skill_data(name, data))
 
-    combined_notes = "\n".join(combined_parts)
+    combined_notes = "\n\n".join(p for p in combined_parts if p)
     if not combined_notes.strip():
         console.print("[red]✗ No notes or fetched data to work with.[/red]")
         raise typer.Exit(1)
@@ -256,11 +298,23 @@ def publish(
     config, schema_cls = _load_project(project_dir)
 
     output_dir = config.resolve_output_dir(project_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
     templates = {template_name: config.templates[template_name]} if template_name else config.templates
 
-    # Render first
-    ctx = typer.Context(render_default)
-    render_default.callback(ctx, project_dir=project_dir, template_name=template_name)  # type: ignore
+    # Render all templates directly
+    from forma.core.base import FormaStyle
+    from forma.renderer.engine import render_template
+
+    content_path = project_dir / "content.yaml"
+    content = schema_cls.from_yaml(content_path)
+    style_path = config.resolve_style_path(project_dir)
+    style = FormaStyle.from_yaml(style_path) if style_path.exists() else FormaStyle()
+
+    for name in templates:
+        tpl_path = config.resolve_template_path(name, project_dir)
+        out = output_dir / f"{name}.pdf"
+        console.print(f"[dim]Rendering {name}...[/dim]")
+        render_template(tpl_path, content, style, out)
 
     drive_folder = folder_id or config.publishing.google_drive_folder_id
     if not drive_folder and not dry_run:
@@ -295,7 +349,7 @@ def schema_export(
     project_dir = project_dir.resolve()
 
     # Export all schemas found in the repo's schemas/ directory
-    repo_root = Path(__file__).parents[4]
+    repo_root = Path(__file__).parents[3]
     schemas_dir = repo_root / "schemas"
 
     if str(repo_root) not in sys.path:
@@ -340,7 +394,7 @@ def template_list(
     import yaml as _yaml
 
     if templates_dir is None:
-        templates_dir = Path(__file__).parents[4] / "templates"
+        templates_dir = Path(__file__).parents[3] / "templates"
 
     table = Table(title="Available Templates")
     table.add_column("Name", style="cyan")

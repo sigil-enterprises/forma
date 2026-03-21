@@ -224,29 +224,27 @@ Secrets:
 - Makefile
 - build.yml, build-base.yml, docs.yml, publish.yml
 
-### 🔲 v0.4 — Claude Composer (NOT STARTED)
-The engine + prompts + filler are written. The CLI commands exist.
-Remaining work:
-- [ ] Integration test for `forma compose fill` with a real ANTHROPIC_API_KEY
-- [ ] Test that `filler.py` validates against schema and raises cleanly on bad output
-- [ ] `forma init` scaffold test
-- [ ] Review prompt quality with actual meeting notes
+### ✅ v0.4 — Claude Composer (COMPLETE)
+- FormaClient, prompts, filler (markdown fence stripping, schema validation, error raising)
+- `forma compose fill` CLI with `--dry-run`, `--overwrite`, incremental YAML support
+- `forma compose enrich` with structured note assembly (prose format, not YAML dump)
+- `forma init` scaffold CLI
+- Tests: `tests/test_composer.py` (11 tests, all mocked — no live API key required)
+- Tests: `tests/test_cli.py` covers init, compose fill dry-run, compose fill write
 
-### 🔲 v0.5 — Skills Submodule (NOT STARTED)
-- [ ] Create `slivern-corporate-services/forma-skills` repository
-- [ ] Add as git submodule: `git submodule add https://github.com/slivern-corporate-services/forma-skills skills`
-- [ ] Implement `skills/clickup/fetch.py` — fetch tasks from a ClickUp list by ID
-- [ ] Implement `skills/google_docs/fetch.py` — fetch document text by doc ID
-- [ ] Implement `skills/google_sheets/fetch.py` — fetch sheet as a list of dicts
-- [ ] Implement `skills/meeting_notes/parse.py` — parse structured meeting notes format
-- [ ] `forma compose enrich` integration test
+### ✅ v0.5 — Skills Submodule (COMPLETE)
+- `slivern-corporate-services/forma-skills` exists as git submodule at `skills/`
+- `skills/clickup/fetch.py`, `skills/google_docs/fetch.py`, `skills/google_sheets/fetch.py`
+- `skills/meeting_notes/fetch.py` — parses structured markdown meeting notes
+- `forma compose enrich` integration: skills loaded, structured note assembly, content composed
+- Tests: `tests/test_skills.py` (7 tests including meeting_notes skill parse test)
 
-### 🔲 v1.0 — Publishing (PARTIAL)
-- [x] `publisher/google_drive.py` — written, needs integration test
-- [x] `publish.yml` workflow — written
-- [ ] Integration test for publish (mock Drive API)
-- [ ] End-to-end CI test: validate → render → mock publish
-- [ ] Deployment + secrets documentation in README
+### ✅ v1.0 — Publishing (COMPLETE)
+- [x] `publisher/google_drive.py` — upload/update logic, in-memory credentials
+- [x] `publish.yml` workflow — discover → validate → render → publish → artifact upload
+- [x] Integration tests for publish (`tests/test_publisher.py`, 5 tests, Drive API mocked)
+- [x] End-to-end test: validate → render (mocked) → publish dry-run (`tests/test_e2e.py`)
+- [x] Deployment + secrets documentation in `README.md` and `.env.example`
 
 ---
 
@@ -264,34 +262,13 @@ Remaining work:
 
 ## Known issues / TODOs
 
-- `style.yaml` is loaded as plain `BaseStyle` in the renderer. A richer
-  `FormaStyle` model with all branding.css-derived fields should be defined
-  (colors, typography, layout with proper defaults). Currently templates use
-  `style.colors.primary_dark` etc. with `| default(...)` fallbacks.
-
-- The `publish` CLI command calls `render_default.callback()` inline which is
-  fragile. It should call `render_template()` directly for each template.
-
-- `forma compose enrich` builds combined notes as a YAML dump of fetched data,
-  which is not ideal. A structured note-assembly step would improve quality.
-
 - LaTeX font availability: `Rubik` and `Inter` must be installed in the TeX
   live distribution. The `Dockerfile.base` installs `texlive-fonts-extra` which
-  should cover them, but this needs verification in CI.
+  should cover them, but this needs verification in CI with a real xelatex run.
 
-- The `\include` commands in `proposal-slides/main.tex.j2` reference partial
-  files. xelatex `\include` expects `.tex` files by name without extension.
-  The Jinja2-rendered partials need to be written to disk before the main
-  template tries to include them. The current `engine.py` does not handle this.
-  **Fix needed**: either use `\input` with inline Jinja2 expansion (render
-  everything to a single .tex file), or write partials to the temp dir.
-  → Recommended fix: render partials inline in `main.tex.j2` using
-  Jinja2 `{% include '_partials/_cover.tex.j2' %}` (already handled by
-  Jinja2 FileSystemLoader — just change LaTeX `\include` to Jinja2 `{% include %}`).
-
-- `BaseStyle.from_yaml` uses `model_validate` but `BaseStyle` has no fields
-  beyond `publishing`. A `FormaStyle` subclass with all branding tokens needs
-  to be created and used as the default style model.
+- `forma compose fill` prompt quality review requires a live ANTHROPIC_API_KEY.
+  The prompts in `composer/prompts.py` are well-structured but benefit from
+  manual review against real meeting notes for a given schema.
 
 ---
 
