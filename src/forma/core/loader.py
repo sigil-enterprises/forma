@@ -9,6 +9,7 @@ defined anywhere on sys.path — including in-project schemas/ directories.
 from __future__ import annotations
 
 import importlib
+import os
 import sys
 from pathlib import Path
 
@@ -24,8 +25,7 @@ def load_content_class(schema_path: str, project_root: Path | None = None) -> ty
         project_root: if provided, added to sys.path so project-local
                       schemas/ directory is importable.
     """
-    if project_root and str(project_root) not in sys.path:
-        sys.path.insert(0, str(project_root))
+    _ensure_on_path(project_root)
 
     module_path, class_name = _split_path(schema_path)
     module = importlib.import_module(module_path)
@@ -38,8 +38,7 @@ def load_content_class(schema_path: str, project_root: Path | None = None) -> ty
 
 
 def load_style_class(schema_path: str, project_root: Path | None = None) -> type[BaseStyle]:
-    if project_root and str(project_root) not in sys.path:
-        sys.path.insert(0, str(project_root))
+    _ensure_on_path(project_root)
 
     module_path, class_name = _split_path(schema_path)
     module = importlib.import_module(module_path)
@@ -49,6 +48,15 @@ def load_style_class(schema_path: str, project_root: Path | None = None) -> type
         raise TypeError(f"{schema_path} must be a subclass of BaseStyle, got {cls}")
 
     return cls
+
+
+def _ensure_on_path(project_root: Path | None) -> None:
+    """Add the CWD and project_root to sys.path so local schemas/ are importable."""
+    cwd = os.getcwd()
+    if cwd not in sys.path:
+        sys.path.insert(0, cwd)
+    if project_root and str(project_root) not in sys.path:
+        sys.path.insert(0, str(project_root))
 
 
 def _split_path(path: str) -> tuple[str, str]:
