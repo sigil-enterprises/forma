@@ -39,3 +39,5 @@ Thumbs.db
 *.pem
 *.key
 service-account*.json
+site/
+src/forma/_version.py
