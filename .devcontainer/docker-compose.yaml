@@ -3,6 +3,9 @@ services:
     entrypoint: ["sleep"]
     command: ["infinity"]
     build:
-      target: base
+      context: ..
+      dockerfile: Dockerfile.devcontainer
     env_file:
       - ../.env
+    volumes:
+      - ..:/app

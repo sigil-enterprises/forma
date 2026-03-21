@@ -1,7 +1,6 @@
 {
   "name": "${containerEnv:DEV_CONTAINER_NAME:unnamed}",
   "dockerComposeFile": [
-    "../docker-compose.yaml",
     "./docker-compose.yaml"
   ],
   "workspaceFolder": "/app",
