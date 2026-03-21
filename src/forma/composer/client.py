@@ -29,4 +29,7 @@ class FormaClient:
             system=system_prompt,
             messages=[{"role": "user", "content": user_prompt}],
         )
-        return message.content[0].text
+        block = message.content[0]
+        if not hasattr(block, "text"):
+            raise ValueError(f"Unexpected content block type: {type(block)}")
+        return block.text  # type: ignore[union-attr]
