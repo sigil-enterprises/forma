@@ -11,12 +11,11 @@ from __future__ import annotations
 import importlib
 import sys
 from pathlib import Path
-from typing import Type
 
 from forma.core.base import BaseContent, BaseStyle
 
 
-def load_content_class(schema_path: str, project_root: Path | None = None) -> Type[BaseContent]:
+def load_content_class(schema_path: str, project_root: Path | None = None) -> type[BaseContent]:
     """
     Load a BaseContent subclass from a dotted import path.
 
@@ -38,7 +37,7 @@ def load_content_class(schema_path: str, project_root: Path | None = None) -> Ty
     return cls
 
 
-def load_style_class(schema_path: str, project_root: Path | None = None) -> Type[BaseStyle]:
+def load_style_class(schema_path: str, project_root: Path | None = None) -> type[BaseStyle]:
     if project_root and str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
 

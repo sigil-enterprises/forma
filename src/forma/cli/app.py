@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
 import yaml
@@ -100,12 +99,12 @@ def _format_skill_data(name: str, data: dict) -> str:
 def validate(
     project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
     content_file: str = typer.Option("content.yaml", "--content", "-c"),
-    style_file: Optional[str] = typer.Option(None, "--style", "-s"),
+    style_file: str | None = typer.Option(None, "--style", "-s"),
     strict: bool = typer.Option(False, "--strict", help="Treat warnings as errors"),
 ):
     """Validate content.yaml (and optionally style.yaml) against the declared schema."""
-    from forma.core.validator import validate_content, validate_style
     from forma.core.base import FormaStyle
+    from forma.core.validator import validate_content, validate_style
 
     project_dir = project_dir.resolve()
     config, schema_cls = _load_project(project_dir)
@@ -135,7 +134,7 @@ def validate(
 def render_default(
     ctx: typer.Context,
     project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
-    template_name: Optional[str] = typer.Option(None, "--template", "-t", help="Render a specific template"),
+    template_name: str | None = typer.Option(None, "--template", "-t", help="Render a specific template"),
     content_file: str = typer.Option("content.yaml", "--content", "-c"),
     watch: bool = typer.Option(False, "--watch", "-w", help="Re-render on file change"),
 ):
@@ -147,9 +146,9 @@ def render_default(
     config, schema_cls = _load_project(project_dir)
 
     def _do_render():
+        from forma.core.base import FormaStyle
         from forma.core.config import FormaConfig
         from forma.core.loader import load_content_class
-        from forma.core.base import FormaStyle
         from forma.renderer.engine import render_template
 
         cfg = FormaConfig.from_yaml(project_dir / "forma.yaml")
@@ -164,7 +163,7 @@ def render_default(
         output_dir = cfg.resolve_output_dir(project_dir)
         templates = {template_name: cfg.templates[template_name]} if template_name else cfg.templates
 
-        for name, entry in templates.items():
+        for name, _entry in templates.items():
             tpl_path = config.resolve_template_path(name, project_dir)
             out = output_dir / f"{name}.pdf"
             console.print(f"[dim]Rendering {name}...[/dim]")
@@ -230,13 +229,13 @@ def compose_fill(
 def compose_enrich(
     project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
     skills: str = typer.Option(..., "--skills", "-s", help="Comma-separated skill names, e.g. clickup,google_docs"),
-    notes_file: Optional[Path] = typer.Option(None, "--notes", "-n"),
+    notes_file: Path | None = typer.Option(None, "--notes", "-n"),
     model: str = typer.Option("claude-opus-4-6", "--model", "-m"),
     dry_run: bool = typer.Option(False, "--dry-run"),
 ):
     """Fetch external data via skills, merge with notes, compose content.yaml."""
-    from forma.integrations.skills_loader import load_skills
     from forma.composer.filler import fill_from_notes
+    from forma.integrations.skills_loader import load_skills
 
     project_dir = project_dir.resolve()
     config, schema_cls = _load_project(project_dir)
@@ -287,8 +286,8 @@ def compose_enrich(
 @app.command()
 def publish(
     project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
-    template_name: Optional[str] = typer.Option(None, "--template", "-t"),
-    folder_id: Optional[str] = typer.Option(None, "--folder-id", help="Override Drive folder ID"),
+    template_name: str | None = typer.Option(None, "--template", "-t"),
+    folder_id: str | None = typer.Option(None, "--folder-id", help="Override Drive folder ID"),
     dry_run: bool = typer.Option(False, "--dry-run"),
 ):
     """Render all templates and upload to Google Drive."""

@@ -9,12 +9,10 @@ and prints structured errors via rich.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Type
 
 import yaml
 from pydantic import ValidationError
 from rich.console import Console
-from rich.table import Table
 
 from forma.core.base import BaseContent, BaseStyle
 
@@ -51,7 +49,7 @@ class ValidationResult:
 
 def validate_content(
     content_path: Path,
-    schema_cls: Type[BaseContent],
+    schema_cls: type[BaseContent],
     project_root: Path,
     strict: bool = False,
 ) -> ValidationResult:
@@ -86,7 +84,7 @@ def validate_content(
 
 def validate_style(
     style_path: Path,
-    schema_cls: Type[BaseStyle],
+    schema_cls: type[BaseStyle],
     project_root: Path,
 ) -> ValidationResult:
     result = ValidationResult()

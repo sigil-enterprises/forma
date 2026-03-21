@@ -9,7 +9,6 @@ then delegates compilation to the appropriate BaseRenderer subclass.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Type
 
 import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
@@ -32,7 +31,7 @@ class _LualatexRenderer(BaseRenderer):
     engine = "lualatex"
 
 
-_ENGINES: dict[str, Type[BaseRenderer]] = {
+_ENGINES: dict[str, type[BaseRenderer]] = {
     "xelatex": _XelatexRenderer,
     "pdflatex": _PdflatexRenderer,
     "lualatex": _LualatexRenderer,

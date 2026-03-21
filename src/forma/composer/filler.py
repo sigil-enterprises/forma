@@ -5,15 +5,13 @@ ProposalFiller: takes notes text → calls Claude → validates → writes conte
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Type
 
 import yaml
-from pydantic import ValidationError
 from rich.console import Console
 
-from forma.core.base import BaseContent
 from forma.composer.client import FormaClient
 from forma.composer.prompts import build_system_prompt, build_user_prompt
+from forma.core.base import BaseContent
 
 console = Console()
 
@@ -26,7 +24,7 @@ class FillResult:
 
 def fill_from_notes(
     notes: str,
-    schema_cls: Type[BaseContent],
+    schema_cls: type[BaseContent],
     model: str = "claude-opus-4-6",
     max_tokens: int = 8192,
     existing_yaml_path: Path | None = None,

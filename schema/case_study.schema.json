@@ -1,0 +1,170 @@
+{
+  "$defs": {
+    "Approach": {
+      "properties": {
+        "overview": {
+          "title": "Overview",
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Steps",
+          "type": "array"
+        }
+      },
+      "required": [
+        "overview"
+      ],
+      "title": "Approach",
+      "type": "object"
+    },
+    "CaseStudyMeta": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "subtitle": {
+          "default": "",
+          "title": "Subtitle",
+          "type": "string"
+        },
+        "client_name": {
+          "title": "Client Name",
+          "type": "string"
+        },
+        "industry": {
+          "default": "",
+          "title": "Industry",
+          "type": "string"
+        },
+        "date": {
+          "title": "Date",
+          "type": "string"
+        },
+        "confidentiality": {
+          "default": "public",
+          "title": "Confidentiality",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "client_name",
+        "date"
+      ],
+      "title": "CaseStudyMeta",
+      "type": "object"
+    },
+    "Challenge": {
+      "properties": {
+        "statement": {
+          "title": "Statement",
+          "type": "string"
+        },
+        "details": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Details",
+          "type": "array"
+        }
+      },
+      "required": [
+        "statement"
+      ],
+      "title": "Challenge",
+      "type": "object"
+    },
+    "Outcome": {
+      "properties": {
+        "headline": {
+          "title": "Headline",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Results",
+          "type": "array"
+        },
+        "quote": {
+          "default": "",
+          "title": "Quote",
+          "type": "string"
+        },
+        "quote_attribution": {
+          "default": "",
+          "title": "Quote Attribution",
+          "type": "string"
+        }
+      },
+      "required": [
+        "headline"
+      ],
+      "title": "Outcome",
+      "type": "object"
+    },
+    "PublishingConfig": {
+      "properties": {
+        "google_drive_folder_id": {
+          "default": "",
+          "title": "Google Drive Folder Id",
+          "type": "string"
+        },
+        "filename_prefix": {
+          "default": "",
+          "title": "Filename Prefix",
+          "type": "string"
+        }
+      },
+      "title": "PublishingConfig",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "publishing": {
+      "$ref": "#/$defs/PublishingConfig"
+    },
+    "meta": {
+      "$ref": "#/$defs/CaseStudyMeta"
+    },
+    "challenge": {
+      "$ref": "#/$defs/Challenge"
+    },
+    "approach": {
+      "$ref": "#/$defs/Approach"
+    },
+    "outcomes": {
+      "$ref": "#/$defs/Outcome"
+    },
+    "technologies": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Technologies",
+      "type": "array"
+    },
+    "logo": {
+      "default": "",
+      "title": "Logo",
+      "type": "string"
+    },
+    "hero_image": {
+      "default": "",
+      "title": "Hero Image",
+      "type": "string"
+    }
+  },
+  "required": [
+    "meta",
+    "challenge",
+    "approach",
+    "outcomes"
+  ],
+  "title": "CaseStudyContent",
+  "type": "object"
+}

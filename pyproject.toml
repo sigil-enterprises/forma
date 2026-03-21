@@ -29,6 +29,7 @@ dev = [
   "forma[test]",
   "forma[docs]",
   "forma[ci]",
+  "forma[lint]",
   "pytest-watch",
 ]
 test = [
@@ -37,6 +38,11 @@ test = [
 ]
 ci = [
   "genbadge[coverage]",
+]
+lint = [
+  "ruff>=0.4",
+  "mypy>=1.10",
+  "types-PyYAML",
 ]
 docs = [
   "mike",
@@ -78,6 +84,23 @@ exclude_also = [
 addopts = "--import-mode=importlib"
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E501", "B008", "B024"]  # E501: line length; B008: Typer defaults; B024: ABC with engine override
+
+[tool.ruff.lint.isort]
+known-first-party = ["forma"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = false
+ignore_missing_imports = true
+exclude = ["tests/", "schemas/", "skills/"]
 
 [tool.setuptools_scm]
 version_file = "src/forma/_version.py"

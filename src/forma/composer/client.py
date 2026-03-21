@@ -14,7 +14,7 @@ class FormaClient:
     def __init__(self, model: str = "claude-opus-4-6", max_tokens: int = 8192) -> None:
         api_key = os.environ.get("ANTHROPIC_API_KEY")
         if not api_key:
-            raise EnvironmentError(
+            raise OSError(
                 "ANTHROPIC_API_KEY is not set. "
                 "Export it before running compose commands."
             )

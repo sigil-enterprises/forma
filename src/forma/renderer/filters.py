@@ -11,7 +11,6 @@ import re
 from datetime import date, datetime
 from typing import Any
 
-
 _LATEX_SPECIAL = {
     "&":  r"\&",
     "%":  r"\%",

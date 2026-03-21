@@ -26,6 +26,10 @@ dev: ## Run tests on file change
 test: ## Run tests
 	pytest .
 
+lint: ## Run ruff + mypy linters
+	ruff check src/forma
+	mypy src/forma
+
 build:
 	@echo "No build, check errors"
 

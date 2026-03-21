@@ -23,7 +23,7 @@ def _get_credentials():
 
     raw = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
     if not raw:
-        raise EnvironmentError(
+        raise OSError(
             "GOOGLE_SERVICE_ACCOUNT_JSON is not set. "
             "Set it to the base64-encoded service account JSON."
         )

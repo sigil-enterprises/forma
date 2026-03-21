@@ -7,12 +7,10 @@ exactly what shape to produce. The user prompt wraps the notes input.
 
 from __future__ import annotations
 
-from typing import Type
-
 from forma.core.base import BaseContent
 
 
-def build_system_prompt(schema_cls: Type[BaseContent]) -> str:
+def build_system_prompt(schema_cls: type[BaseContent]) -> str:
     schema_json = schema_cls.json_schema_str()
     return f"""\
 You are an expert business consultant and technical writer helping to draft \

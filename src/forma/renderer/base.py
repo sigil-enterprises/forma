@@ -10,7 +10,7 @@ from __future__ import annotations
 import shutil
 import subprocess
 import tempfile
-from abc import ABC, abstractmethod
+from abc import ABC
 from pathlib import Path
 
 from rich.console import Console

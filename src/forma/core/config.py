@@ -12,7 +12,6 @@ Each document project root contains a forma.yaml that declares:
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import yaml
 from pydantic import BaseModel, Field
@@ -37,7 +36,7 @@ class FormaConfig(BaseModel):
     model_config = {"populate_by_name": True}
 
     @classmethod
-    def from_yaml(cls, path: Path) -> "FormaConfig":
+    def from_yaml(cls, path: Path) -> FormaConfig:
         with open(path) as f:
             data = yaml.safe_load(f)
         return cls.model_validate(data or {})

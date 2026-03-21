@@ -3,7 +3,7 @@ FROM python:3.12-slim-bookworm
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      git make git-lfs \
+      git make git-lfs curl unzip \
       texlive-xetex \
       texlive-fonts-extra \
       texlive-latex-extra \
@@ -11,6 +11,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       fonts-font-awesome \
  && mkdir -p /builds/docs \
  && rm -rf /var/lib/apt/lists/*
+
+# Install Rubik and Inter from Google Fonts (not in texlive-fonts-extra)
+RUN mkdir -p /usr/share/fonts/truetype/rubik /usr/share/fonts/truetype/inter \
+ && curl -fsSL "https://fonts.google.com/download?family=Rubik" -o /tmp/Rubik.zip \
+ && unzip -q /tmp/Rubik.zip -d /tmp/Rubik \
+ && find /tmp/Rubik -name "*.ttf" -exec cp {} /usr/share/fonts/truetype/rubik/ \; \
+ && curl -fsSL "https://fonts.google.com/download?family=Inter" -o /tmp/Inter.zip \
+ && unzip -q /tmp/Inter.zip -d /tmp/Inter \
+ && find /tmp/Inter -name "*.ttf" -exec cp {} /usr/share/fonts/truetype/inter/ \; \
+ && fc-cache -fv \
+ && rm -rf /tmp/Rubik* /tmp/Inter*
 
 ENV DEBIAN_FRONTEND=noninteractive
 

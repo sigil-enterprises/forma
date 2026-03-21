@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import yaml
 from pydantic import BaseModel, Field
@@ -73,7 +73,7 @@ class BaseStyle(BaseModel):
     model_config = {"extra": "allow"}
 
     @classmethod
-    def from_yaml(cls, path: Path) -> "BaseStyle":
+    def from_yaml(cls, path: Path) -> BaseStyle:
         with open(path) as f:
             data = yaml.safe_load(f)
         return cls.model_validate(data or {})
@@ -102,7 +102,7 @@ class BaseContent(BaseModel):
     publishing: PublishingConfig = Field(default_factory=PublishingConfig)
 
     @classmethod
-    def from_yaml(cls, path: Path) -> "BaseContent":
+    def from_yaml(cls, path: Path) -> BaseContent:
         with open(path) as f:
             data = yaml.safe_load(f)
         return cls.model_validate(data or {})

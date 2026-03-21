@@ -11,8 +11,8 @@ from __future__ import annotations
 
 from datetime import date
 
-from forma.core.base import BaseContent, BaseStyle, FormaStyle
 from forma import __version__
+from forma.core.base import BaseContent, BaseStyle
 
 
 def build_context(content: BaseContent, style: BaseStyle) -> dict:

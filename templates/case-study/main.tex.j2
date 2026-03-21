@@ -1,0 +1,186 @@
+\documentclass[11pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{mdframed}
+
+% ── Page geometry ─────────────────────────────────────────────────────────
+\geometry{
+  a4paper,
+  top=2cm, bottom=2.5cm,
+  left=2.5cm, right=2.5cm,
+}
+
+% ── Fonts ─────────────────────────────────────────────────────────────────
+\setmainfont{ ((- style.typography.font_primary | default('Helvetica Neue') -)) }[
+  BoldFont = * Bold,
+  ItalicFont = * Italic,
+]
+\setsansfont{ ((- style.typography.font_primary | default('Helvetica Neue') -)) }
+
+% ── Colors ────────────────────────────────────────────────────────────────
+\definecolor{primary}    {HTML}{ ((- style.colors.primary_dark   | default('0B1D2A') | hex_color -)) }
+\definecolor{accent}     {HTML}{ ((- style.colors.primary_accent | default('F58220') | hex_color -)) }
+\definecolor{textprimary}{HTML}{ ((- style.colors.text_primary   | default('333333') | hex_color -)) }
+\definecolor{lightgray}  {HTML}{ ((- style.colors.gray_light     | default('F5F5F5') | hex_color -)) }
+\definecolor{midgray}    {HTML}{ ((- style.colors.gray_mid       | default('AAAAAA') | hex_color -)) }
+
+% ── Hyperref ──────────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accent,
+  linkcolor=primary,
+  pdfauthor={(( content.meta.client_name | latex_escape ))},
+  pdftitle={(( content.meta.title | latex_escape ))},
+}
+
+% ── Section styling ───────────────────────────────────────────────────────
+\titleformat{\section}
+  {\color{primary}\large\bfseries}
+  {}
+  {0em}
+  {}
+  [\color{accent}\titlerule[1.5pt]]
+
+\titlespacing*{\section}{0pt}{1.5em}{0.6em}
+
+% ── Header / footer ───────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{midgray} (( content.meta.client_name | latex_escape )) Case Study}
+\fancyhead[R]{\small\color{midgray} (( content.meta.date | format_date | latex_escape ))}
+\fancyfoot[C]{\small\color{midgray}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% ── Highlight box ─────────────────────────────────────────────────────────
+\newmdenv[
+  backgroundcolor=lightgray,
+  linecolor=accent,
+  linewidth=3pt,
+  leftline=true,
+  rightline=false,
+  topline=false,
+  bottomline=false,
+  innerleftmargin=12pt,
+  innerrightmargin=12pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  skipabove=8pt,
+  skipbelow=8pt,
+]{highlightbox}
+
+\begin{document}
+\color{textprimary}
+
+% ── Cover banner ──────────────────────────────────────────────────────────
+{%
+  \noindent
+  \colorbox{primary}{%
+    \begin{minipage}{\dimexpr\linewidth+0pt\relax}
+      \vspace{1.2em}
+      \hspace{1em}
+      {\color{white}\LARGE\bfseries (( content.meta.title | latex_escape ))}
+      (% if content.meta.subtitle %)
+      \\[0.3em]
+      \hspace{1em}{\color{accent}\large (( content.meta.subtitle | latex_escape ))}
+      (% endif %)
+      \\[0.4em]
+      \hspace{1em}{\color{white}\small
+        (( content.meta.industry | latex_escape ))
+        (% if content.meta.industry and content.meta.client_name %) · (% endif %)
+        (( content.meta.client_name | latex_escape ))
+      }
+      \vspace{1em}
+    \end{minipage}%
+  }
+}
+
+\vspace{1.5em}
+
+% ── Challenge ─────────────────────────────────────────────────────────────
+\section{The Challenge}
+
+(( content.challenge.statement | latex_escape ))
+
+(% if content.challenge.details %)
+\begin{itemize}[leftmargin=1.5em, itemsep=0.3em]
+(% for detail in content.challenge.details %)
+  \item (( detail | latex_escape ))
+(% endfor %)
+\end{itemize}
+(% endif %)
+
+% ── Approach ──────────────────────────────────────────────────────────────
+\section{Our Approach}
+
+(( content.approach.overview | latex_escape ))
+
+(% if content.approach.steps %)
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.3em]
+(% for step in content.approach.steps %)
+  \item (( step | latex_escape ))
+(% endfor %)
+\end{enumerate}
+(% endif %)
+
+% ── Outcomes ──────────────────────────────────────────────────────────────
+\section{Outcomes}
+
+\begin{highlightbox}
+  {\large\bfseries (( content.outcomes.headline | latex_escape ))}
+\end{highlightbox}
+
+(% if content.outcomes.results %)
+\begin{itemize}[leftmargin=1.5em, itemsep=0.3em]
+(% for result in content.outcomes.results %)
+  \item (( result | latex_escape ))
+(% endfor %)
+\end{itemize}
+(% endif %)
+
+(% if content.outcomes.quote %)
+\vspace{0.8em}
+\begin{highlightbox}
+  \textit{``(( content.outcomes.quote | latex_escape ))''}
+  (% if content.outcomes.quote_attribution %)
+  \\[0.4em]
+  \small --- (( content.outcomes.quote_attribution | latex_escape ))
+  (% endif %)
+\end{highlightbox}
+(% endif %)
+
+% ── Technologies ──────────────────────────────────────────────────────────
+(% if content.technologies %)
+\section{Technologies}
+
+\begin{tabular}{(% for _ in content.technologies %)l (% endfor %)}
+(% for tech in content.technologies %)
+  \colorbox{lightgray}{\small\strut\hspace{0.4em}(( tech | latex_escape ))\hspace{0.4em}}
+  (% if not loop.last %) & (% endif %)
+(% endfor %)
+\end{tabular}
+(% endif %)
+
+% ── Footer strip ──────────────────────────────────────────────────────────
+\vfill
+{%
+  \noindent\rule{\linewidth}{0.4pt}\\[0.3em]
+  \small\color{midgray}
+  (% if content.meta.confidentiality != "public" %)
+  \textbf{(( content.meta.confidentiality | upper | latex_escape ))} —
+  (% endif %)
+  Rendered (( meta.rendered_date )) · forma (( meta.forma_version ))
+}
+
+\end{document}

@@ -1,0 +1,7 @@
+name: "Case Study"
+description: "One-page case study document — challenge, approach, outcomes"
+format: document
+engine: xelatex
+entry: main.tex.j2
+compatible_schemas:
+  - "schemas.case_study.content:CaseStudyContent"

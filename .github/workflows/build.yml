@@ -23,7 +23,20 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: pip install -e .[test,ci]
+        run: pip install -e .[test,ci,lint]
+
+      - name: Lint (ruff + mypy)
+        run: |
+          ruff check src/forma
+          mypy src/forma
+        continue-on-error: false
+
+      - name: Schema drift check
+        run: |
+          SETUPTOOLS_SCM_PRETEND_VERSION=0.0.0 forma schema export --output-dir /tmp/schema-check
+          diff -r schema/ /tmp/schema-check/ \
+            && echo "✓ Schema files are up to date" \
+            || (echo "✗ Schema files are out of date — run: forma schema export --output-dir schema/" && exit 1)
 
       - name: Run tests
         run: pytest --tb=short -q
