@@ -12,16 +12,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && mkdir -p /builds/docs \
  && rm -rf /var/lib/apt/lists/*
 
-# Install Rubik and Inter from Google Fonts (not in texlive-fonts-extra)
-RUN mkdir -p /usr/share/fonts/truetype/rubik /usr/share/fonts/truetype/inter \
- && curl -fsSL "https://fonts.google.com/download?family=Rubik" -o /tmp/Rubik.zip \
- && unzip -q /tmp/Rubik.zip -d /tmp/Rubik \
- && find /tmp/Rubik -name "*.ttf" -exec cp {} /usr/share/fonts/truetype/rubik/ \; \
- && curl -fsSL "https://fonts.google.com/download?family=Inter" -o /tmp/Inter.zip \
- && unzip -q /tmp/Inter.zip -d /tmp/Inter \
- && find /tmp/Inter -name "*.ttf" -exec cp {} /usr/share/fonts/truetype/inter/ \; \
- && fc-cache -fv \
- && rm -rf /tmp/Rubik* /tmp/Inter*
+# Install Rubik and Inter variable fonts (OFL licence) from google/fonts on GitHub.
+# Download is best-effort — templates fall back to Helvetica if fonts are absent.
+RUN BASE="https://github.com/google/fonts/raw/main" \
+ && mkdir -p /usr/share/fonts/truetype/rubik /usr/share/fonts/truetype/inter \
+ && curl -fsSL "${BASE}/ofl/rubik/Rubik%5Bwght%5D.ttf" \
+         -o /usr/share/fonts/truetype/rubik/Rubik-VariableFont.ttf 2>/dev/null || true \
+ && curl -fsSL "${BASE}/ofl/inter/Inter%5Bslnt%2Cwght%5D.ttf" \
+         -o /usr/share/fonts/truetype/inter/Inter-VariableFont.ttf 2>/dev/null || true \
+ && fc-cache -fv
 
 ENV DEBIAN_FRONTEND=noninteractive
 

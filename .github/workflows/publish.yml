@@ -40,8 +40,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
 
       - name: Validate
         run: forma validate ${{ matrix.document }}
