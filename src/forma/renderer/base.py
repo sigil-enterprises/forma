@@ -29,6 +29,7 @@ class BaseRenderer(ABC):
         *,
         passes: int = 2,
         project_dir: Path | None = None,
+        fonts_dirs: list[Path] | None = None,
     ) -> Path:
         """
         Write tex_source to a temp dir, compile it, copy the result to output_path.
@@ -42,7 +43,7 @@ class BaseRenderer(ABC):
             tex_file.write_text(tex_source, encoding="utf-8")
 
             for _ in range(passes):
-                self._compile(tex_file, tmp, project_dir=project_dir)
+                self._compile(tex_file, tmp, project_dir=project_dir, fonts_dirs=fonts_dirs)
 
             pdf_file = tmp / "document.pdf"
             if not pdf_file.exists():
@@ -55,7 +56,7 @@ class BaseRenderer(ABC):
         console.print(f"[green]✓[/green] Rendered → {output_path}")
         return output_path
 
-    def _compile(self, tex_file: Path, workdir: Path, *, project_dir: Path | None = None) -> None:
+    def _compile(self, tex_file: Path, workdir: Path, *, project_dir: Path | None = None, fonts_dirs: list[Path] | None = None) -> None:
         cmd = [
             self.engine,
             "-interaction=nonstopmode",
@@ -67,6 +68,13 @@ class BaseRenderer(ABC):
             # Prepend project dir to TEXINPUTS so \includegraphics finds local assets.
             # The trailing // means recursive search; the trailing : keeps defaults.
             env["TEXINPUTS"] = f"{project_dir}//::{env.get('TEXINPUTS', '')}"
+        if fonts_dirs:
+            # Add fonts dirs to both TEXINPUTS and OSFONTDIR so fontspec can find
+            # font files by filename (e.g. \setmainfont{Rubik-VariableFont.ttf})
+            # regardless of whether they are registered with fontconfig.
+            extra = ":".join(str(d) + "//" for d in fonts_dirs)
+            env["TEXINPUTS"] = f"{extra}:{env.get('TEXINPUTS', '')}"
+            env["OSFONTDIR"] = f"{extra}:{env.get('OSFONTDIR', '')}"
         result = subprocess.run(
             cmd,
             cwd=workdir,

@@ -94,10 +94,20 @@ def render_template(
     context = build_context(content, style)
     tex_source = template.render(**context)
 
+    # Collect fonts directories: look for fonts/ at the presskit root,
+    # which by convention sits two levels above the template dir
+    # (e.g. presskit/templates/proposal-slides → presskit/fonts/).
+    fonts_dirs: list[Path] = []
+    fonts_candidate = template_dir.parent.parent / "fonts"
+    if fonts_candidate.is_dir():
+        fonts_dirs.append(fonts_candidate)
+
     # Compile
     renderer_cls = _ENGINES.get(manifest.engine)
     if renderer_cls is None:
         raise ValueError(f"Unknown LaTeX engine: {manifest.engine!r}. Choose from {list(_ENGINES)}")
 
     renderer = renderer_cls()
-    return renderer.render(tex_source, output_path, project_dir=project_dir)
+    return renderer.render(
+        tex_source, output_path, project_dir=project_dir, fonts_dirs=fonts_dirs or None
+    )
