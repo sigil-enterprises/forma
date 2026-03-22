@@ -41,3 +41,4 @@ Thumbs.db
 service-account*.json
 site/
 src/forma/_version.py
+.cellar/
