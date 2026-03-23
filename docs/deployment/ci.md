@@ -28,7 +28,7 @@ push → test job (pip install, pytest)
 
 Rebuilds the heavy TeX Live base image only when dependencies change:
 
-- Triggered by changes to `Dockerfile.base` or `pyproject.toml`
+- Triggered by changes to `Dockerfile` or `pyproject.toml`
 - Pushes `ghcr.io/{org}/forma-base:latest`
 - Uses `docker/build-push-action` with GitHub Actions layer cache
 
@@ -46,15 +46,17 @@ Uses `mike` for version-stamped documentation. The deployed site is available at
 
 ## publish.yml — Render + Drive upload
 
-Runs on push to `main`:
+Runs automatically after a successful `Build` on `main`.
 
-1. **Discover** — finds all `documents/*/forma.yaml`
-2. **Matrix** — one job per document, run in parallel
-3. For each document:
+1. **Discover** — searches the repo for `forma.yaml` files (excluding `tests/` and `.cellar/`); outputs a JSON matrix
+2. If no documents are found, the matrix is empty and all render/publish jobs are skipped
+3. For each discovered document:
    - `forma validate` — fails the job if content is invalid
    - `forma render` — compiles all templates to PDF
    - `forma publish` — uploads to Google Drive (`continue-on-error: true`)
-   - Upload PDFs as GitHub artifacts
+   - Uploads PDFs as GitHub artifacts
+
+> **Note:** Client documents live in `.cellar/` (gitignored) and are not rendered in CI. To render a document in CI, add it to a `documents/` directory in the repo (not recommended for confidential content).
 
 **Required secrets:** `GOOGLE_SERVICE_ACCOUNT_JSON`
 

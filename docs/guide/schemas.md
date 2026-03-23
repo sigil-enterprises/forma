@@ -9,9 +9,9 @@ Three schemas ship with forma:
 
 | Schema | Class | Use case |
 |---|---|---|
-| `schemas/proposal/` | `ProposalContent` | Full proposal (slides + report) |
-| `schemas/brief/` | `BriefContent` | One-pager / executive brief |
-| `schemas/case_study/` | `CaseStudyContent` | Client case study |
+| `src/forma/schemas/proposal/` | `ProposalContent` | Full proposal (slides + report) |
+| `src/forma/schemas/brief/` | `BriefContent` | One-pager / executive brief |
+| `src/forma/schemas/case_study/` | `CaseStudyContent` | Client case study |
 
 ## How a schema works
 
@@ -41,7 +41,7 @@ The engine works with **any** `BaseContent` subclass. Templates receive the mode
 
 ## Creating a new schema
 
-1. Create `schemas/mytype/content.py` extending `BaseContent`:
+1. Create `src/forma/schemas/mytype/content.py` extending `BaseContent`:
 
     ```python
     from forma.core.base import BaseContent
@@ -64,10 +64,12 @@ The engine works with **any** `BaseContent` subclass. Templates receive the mode
     forma schema export
     ```
 
-3. Point a document project at it in `forma.yaml`:
+3. Register it in `src/forma/core/loader.py` if you want `forma validate` to check it:
 
-    ```yaml
-    schema: schemas.mytype.content:MyContent
+    ```python
+    from forma.core.loader import register_schema
+    from pathlib import Path
+    register_schema("MyContent", Path("path/to/my-content.schema.yaml"))
     ```
 
 ## Computed properties
@@ -92,11 +94,10 @@ Templates can then use `(( content.investment.total_usd | currency ))`.
 
 Any string field ending in `.png`, `.jpg`, `.svg`, `.pdf`, or `.eps` is treated as an asset path and checked by `forma validate`. Missing assets produce warnings (or errors with `--strict`).
 
-## Exporting JSON Schema
+## Listing schemas
 
 ```bash
-forma schema export --output-dir schema/
+forma schema export
 ```
 
-Writes `schema/proposal.schema.json`, `schema/brief.schema.json`, etc.
-These can be used by editors for YAML autocompletion.
+Lists the built-in JSON Schema YAML files bundled with the package (under `src/forma/schema/`). These can be used by editors for YAML autocompletion via YAML Language Server.

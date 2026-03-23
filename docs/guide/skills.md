@@ -1,8 +1,8 @@
 # Skills
 
-Skills are data-fetching modules in the `skills/` git submodule
-(`slivern-corporate-services/forma-skills`). Each skill pulls data from an
-external system and returns a dict that the composer can use.
+Skills are data-fetching modules — each a directory containing a `fetch.py` file that returns a dict. The composer uses them to pull live data (tasks, docs, meeting notes) into content generation.
+
+Skills live outside the forma repo. Pass their parent directory to `forma compose enrich` via `--skills-dir` (defaults to a `skills/` directory relative to the repo root).
 
 ## Available skills
 
@@ -61,7 +61,7 @@ Returns:
 
 ## Writing a new skill
 
-1. Create `skills/my_skill/fetch.py` in the submodule:
+1. Create `my_skill/fetch.py` in your skills directory:
 
     ```python
     import os
@@ -72,9 +72,7 @@ Returns:
         return {"items": [...]}
     ```
 
-2. Add its env vars to `.env.example`.
-
-3. Use it:
+2. Use it:
 
     ```bash
     forma compose enrich documents/acme-corp \
@@ -94,8 +92,8 @@ from forma.integrations.skills_loader import load_skills
 from pathlib import Path
 
 results = load_skills(
-    Path("skills"),
-    ["clickup", "meeting_notes"],
+    skills_dir=Path("/path/to/your/skills"),
+    skill_names=["clickup", "meeting_notes"],
     path="notes/meeting.md",
 )
 # results = {"clickup": {...}, "meeting_notes": {...}}

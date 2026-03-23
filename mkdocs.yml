@@ -72,6 +72,7 @@ nav:
       - First Document: getting-started/first-document.md
   - Guide:
       - Schemas: guide/schemas.md
+      - Mapping files: guide/mapping.md
       - Templates: guide/templates.md
       - Claude Composer: guide/composer.md
       - Skills: guide/skills.md

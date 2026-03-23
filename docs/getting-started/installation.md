@@ -4,14 +4,12 @@
 
 - Python 3.12+
 - xelatex (for rendering PDFs)
-- Git (for the skills submodule)
 
 ## Install from source
 
 ```bash
 git clone https://github.com/slivern-corporate-services/forma.git
 cd forma
-git submodule update --init --recursive
 pip install -e .[dev]
 ```
 
@@ -60,19 +58,28 @@ For local use:
 
 === "Docker"
 
-    Use `Dockerfile.devcontainer` which includes all TeX Live dependencies:
+    The `Dockerfile` multi-stage build produces a `base` target with all TeX Live dependencies:
 
     ```bash
-    docker build -f Dockerfile.devcontainer -t forma-dev .
-    docker run --rm -v $(pwd):/app forma-dev forma render documents/example-client
+    docker build --target base -t forma-base .
+    docker run --rm -v $(pwd):/app forma-base pip install -e . && forma render .
+    ```
+
+    Or use the pre-built GHCR image:
+
+    ```bash
+    docker run --rm -v $(pwd):/app \
+      ghcr.io/slivern-corporate-services/forma:latest \
+      forma render .
     ```
 
 ## Environment variables
 
-Copy `.env.example` to `.env` and fill in your values:
+Create a `.env` file in the repo root with your credentials:
 
 ```bash
-cp .env.example .env
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_SERVICE_ACCOUNT_JSON=<base64-encoded service account JSON>
 ```
 
 See [Secrets & Environment](../deployment/secrets.md) for a full reference.
