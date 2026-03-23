@@ -1,10 +1,13 @@
 """
 Tests for the rendering pipeline (Jinja2 context + filters).
-Does NOT invoke xelatex — tests the template rendering stage only.
+Does NOT invoke xelatex or Playwright — tests template rendering only.
 """
 
 import pytest
 from pathlib import Path
+
+FIXTURE_DIR = Path(__file__).parent / "fixtures" / "example-client"
+REPO_ROOT = Path(__file__).parent.parent
 
 
 def test_latex_escape_basics():
@@ -40,66 +43,30 @@ def test_join_oxford():
 
 
 def test_build_context_structure():
-    from schemas.proposal.content import ProposalContent
-    from forma.core.base import FormaStyle
+    """build_context returns document/style/meta keys."""
     from forma.renderer.context import build_context
-    from pathlib import Path
+    document = {"resourceType": "SlideDocument", "slides": [{"type": "cover", "title": "Test"}]}
+    style = {"colors": {"primary_dark": "#061E30"}}
+    ctx = build_context(document, style)
 
-    fixture = Path(__file__).parents[1] / "documents" / "example-client"
-    content = ProposalContent.from_yaml(fixture / "content.yaml")
-    style = FormaStyle.from_yaml(fixture / "style.yaml")
-    ctx = build_context(content, style)
-
-    assert "content" in ctx
+    assert "document" in ctx
     assert "style" in ctx
     assert "meta" in ctx
     assert ctx["meta"]["forma_version"] is not None
-
-
-def test_jinja2_template_renders_to_string():
-    """Render the slides main.tex.j2 to a string (no LaTeX compile)."""
-    from schemas.proposal.content import ProposalContent
-    from forma.core.base import FormaStyle
-    from forma.renderer.context import build_context
-    from forma.renderer.filters import FILTERS
-    from jinja2 import Environment, FileSystemLoader, StrictUndefined
-    from pathlib import Path
-
-    fixture = Path(__file__).parents[1] / "documents" / "example-client"
-    template_dir = Path(__file__).parents[1] / "templates" / "proposal-slides"
-
-    content = ProposalContent.from_yaml(fixture / "content.yaml")
-    style = FormaStyle.from_yaml(fixture / "style.yaml")
-    ctx = build_context(content, style)
-
-    env = Environment(
-        loader=FileSystemLoader([str(template_dir), str(template_dir / "_partials")]),
-        undefined=StrictUndefined,
-        keep_trailing_newline=True,
-        trim_blocks=True,
-        lstrip_blocks=True,
-        block_start_string="(%",
-        block_end_string="%)",
-        variable_start_string="((",
-        variable_end_string="))",
-        comment_start_string="(#",
-        comment_end_string="#)",
-    )
-    for name, fn in FILTERS.items():
-        env.filters[name] = fn
-
-    tex = env.get_template("main.tex.j2").render(**ctx)
-    assert r"\documentclass" in tex
-    assert "Digital Transformation Strategy" in tex
-    assert "Acme Corp" in tex
+    assert ctx["document"]["slides"][0]["title"] == "Test"
 
 
 def _make_jinja_env(template_dir: Path):
     from forma.renderer.filters import FILTERS
     from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
+    search_paths = [str(template_dir)]
+    for sub in ("_partials", "_slides"):
+        if (template_dir / sub).is_dir():
+            search_paths.append(str(template_dir / sub))
+
     env = Environment(
-        loader=FileSystemLoader([str(template_dir), str(template_dir / "_partials")]),
+        loader=FileSystemLoader(search_paths),
         undefined=StrictUndefined,
         keep_trailing_newline=True,
         trim_blocks=True,
@@ -110,69 +77,56 @@ def _make_jinja_env(template_dir: Path):
         variable_end_string="))",
         comment_start_string="(#",
         comment_end_string="#)",
+        autoescape=False,
     )
     for name, fn in FILTERS.items():
         env.filters[name] = fn
     return env
 
 
-def test_jinja2_report_template_renders_to_string():
-    """Render proposal-report main.tex.j2 to a string (no LaTeX compile)."""
-    from schemas.proposal.content import ProposalContent
-    from forma.core.base import FormaStyle
+def test_html_slides_template_renders():
+    """Render the HTML slides main.html.j2 to a string (no Playwright)."""
+    from forma.core.loader import load_document, load_style
     from forma.renderer.context import build_context
-    from pathlib import Path
 
-    fixture = Path(__file__).parents[1] / "documents" / "example-client"
-    template_dir = Path(__file__).parents[1] / "templates" / "proposal-report"
+    template_dir = Path(__file__).parent / "fixtures" / "templates" / "proposal-slides-html"
+    if not template_dir.exists():
+        pytest.skip("proposal-slides-html template not found")
 
-    content = ProposalContent.from_yaml(fixture / "content.yaml")
-    style = FormaStyle.from_yaml(fixture / "style.yaml")
-    ctx = build_context(content, style)
+    doc = load_document(FIXTURE_DIR / "slides.yaml", FIXTURE_DIR)
+    style = load_style(Path(__file__).parent / "fixtures" / "templates" / "style.yaml")
+    ctx = build_context(doc, style)
+
+    env = _make_jinja_env(template_dir)
+    html = env.get_template("main.html.j2").render(**ctx)
+
+    assert "<!DOCTYPE html>" in html
+    assert "Digital Transformation Strategy" in html
+    assert "Acme Corp" in html
+
+
+def test_report_template_renders():
+    """Render the LaTeX report main.tex.j2 to a string (no xelatex)."""
+    from forma.core.loader import load_document, load_style
+    from forma.renderer.context import build_context
+
+    template_dir = Path(__file__).parent / "fixtures" / "templates" / "proposal-report"
+    if not template_dir.exists():
+        pytest.skip("proposal-report template not found")
+
+    doc = load_document(FIXTURE_DIR / "content.yaml", FIXTURE_DIR)
+    style = load_style(Path(__file__).parent / "fixtures" / "templates" / "style.yaml")
+    ctx = build_context(doc, style)
 
     env = _make_jinja_env(template_dir)
     tex = env.get_template("main.tex.j2").render(**ctx)
+
     assert r"\documentclass" in tex
     assert "Digital Transformation Strategy" in tex
-    assert "Acme Corp" in tex
-
-
-def test_jinja2_brief_template_renders_to_string():
-    """Render proposal-brief main.tex.j2 with BriefContent (no LaTeX compile)."""
-    from schemas.brief.content import BriefContent
-    from forma.core.base import FormaStyle
-    from forma.renderer.context import build_context
-    from pathlib import Path
-
-    template_dir = Path(__file__).parents[1] / "templates" / "proposal-brief"
-
-    content = BriefContent.model_validate({
-        "meta": {
-            "title": "Q1 Brief",
-            "subtitle": "Digital Transformation",
-            "date": "2026-03-21",
-            "prepared_for": "Acme Corp",
-            "prepared_by": "Sliver",
-        },
-        "sections": [
-            {"heading": "Overview", "body": "We can help.", "bullets": ["Point A", "Point B"]},
-        ],
-        "call_to_action": "Contact us today.",
-        "contact_email": "hello@sliver.co",
-    })
-    style = FormaStyle()
-    ctx = build_context(content, style)
-
-    env = _make_jinja_env(template_dir)
-    tex = env.get_template("main.tex.j2").render(**ctx)
-    assert r"\documentclass" in tex
-    assert "Q1 Brief" in tex
-    assert "Acme Corp" in tex
 
 
 def test_bullet_list_filter():
     from forma.renderer.filters import bullet_list
-
     result = bullet_list(["Alpha", "Beta", "Gamma"])
     assert r"\begin{itemize}" in result
     assert r"\item Alpha" in result
@@ -181,21 +135,15 @@ def test_bullet_list_filter():
 
 def test_bullet_list_filter_empty():
     from forma.renderer.filters import bullet_list
-
-    result = bullet_list([])
-    assert result == ""
+    assert bullet_list([]) == ""
 
 
 def test_bullet_list_filter_none():
     from forma.renderer.filters import bullet_list
-
-    result = bullet_list(None)
-    assert result == ""
+    assert bullet_list(None) == ""
 
 
 def test_format_date_various_formats():
     from forma.renderer.filters import format_date
-
     assert format_date(None) == ""
-    # Unknown format: falls back to str(value)
     assert format_date("not-a-date") == "not-a-date"

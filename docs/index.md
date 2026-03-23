@@ -9,13 +9,9 @@ Turn structured YAML content and Jinja2/LaTeX templates into polished PDF slides
 ## How it works
 
 ```
-content.yaml  ──[schema validates]──→  Jinja2 context
-                                             │
-style.yaml    ─────────────────────→  templates/proposal-slides/main.tex.j2  →  slides.pdf
-                                             │
-                                        templates/proposal-report/main.tex.j2  →  report.pdf
-                                             │
-                                        templates/proposal-brief/main.tex.j2   →  brief.pdf
+content.yaml  ──[!include]──→  slides.yaml / report.yaml  (mapping)
+                                        │
+style.yaml   ───────────────→  Jinja2 template  →  xelatex / Playwright  →  PDF
 ```
 
 **Content** describes *what* — client, problem, solution, team, investment. No slide types, no page layout.
@@ -44,11 +40,11 @@ style.yaml    ─────────────────────→
 
     `forma publish` renders all templates and uploads to a Drive folder. Service account credentials never touch disk.
 
-- :material-puzzle: **Skills submodule**
+- :material-puzzle: **Skills integration**
 
     Pull live data from ClickUp, Google Docs, Google Sheets, or meeting notes files and feed them directly into the composer.
 
-- :material-test-tube: **65 tests, all mocked**
+- :material-test-tube: **84 tests, all mocked**
 
     Full test suite covering every CLI command, filter, schema, publisher, and skills loader — no live API keys required.
 

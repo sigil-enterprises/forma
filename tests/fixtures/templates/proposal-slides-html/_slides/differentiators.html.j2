@@ -1,0 +1,24 @@
+(% set client_name = document.slides | selectattr('type','eq','cover') | map(attribute='client') | first | default('') %)
+(% set eng_title = document.slides | selectattr('type','eq','cover') | map(attribute='title') | first | default('') %)
+<div class="slide">
+  <div class="slide-header"><h1>(( slide.title | default('Why Us') | e ))</h1></div>
+  <div class="header-accent"></div>
+  <div class="slide-body">
+    <ul class="diff-list">
+      (% for d in slide['items'] %)
+      <li class="diff-item">
+        <div class="diff-item-content">
+          <h3>(( d.title | e ))</h3>
+          (% if d.get('description') %)
+          <p>(( d.get('description') | e ))</p>
+          (% endif %)
+        </div>
+      </li>
+      (% endfor %)
+    </ul>
+  </div>
+  <div class="slide-footer">
+    <span class="footer-left">(( client_name | e ))(% if client_name and eng_title %)<span class="footer-sep">|</span>(% endif %)(( eng_title | e ))</span>
+    <span class="footer-right">(( ns.idx )) / ??</span>
+  </div>
+</div>

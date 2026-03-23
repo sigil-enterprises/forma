@@ -1,3 +1,5 @@
+.cellar
+
 # Python
 __pycache__/
 *.py[cod]
@@ -16,7 +18,7 @@ var/.coverage
 docs/reports/
 
 # Build outputs
-var/builds/
+var/
 *.pdf
 *.aux
 *.log
@@ -42,3 +44,4 @@ service-account*.json
 site/
 src/forma/_version.py
 .cellar/
+.claude/

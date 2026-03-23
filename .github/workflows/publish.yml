@@ -24,7 +24,11 @@ jobs:
         id: list
         run: |
           # Find directories containing forma.yaml
-          DOCS=$(find documents -name "forma.yaml" -exec dirname {} \; | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          DOCS=$(find . -maxdepth 3 -name "forma.yaml" \
+            -not -path "*/tests/*" \
+            -not -path "*/.cellar/*" \
+            -exec dirname {} \; 2>/dev/null \
+            | jq -R -s -c 'split("\n") | map(select(length > 0))' || echo '[]')
           echo "json=$DOCS" >> $GITHUB_OUTPUT
 
   render-and-publish:

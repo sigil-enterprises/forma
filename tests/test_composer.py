@@ -10,7 +10,7 @@ import pytest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-FIXTURE_DIR = Path(__file__).parent.parent / "documents" / "example-client"
+FIXTURE_DIR = Path(__file__).parent / "fixtures" / "example-client"
 
 
 # ---------------------------------------------------------------------------
@@ -18,7 +18,7 @@ FIXTURE_DIR = Path(__file__).parent.parent / "documents" / "example-client"
 # ---------------------------------------------------------------------------
 
 def test_build_system_prompt_contains_schema():
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.prompts import build_system_prompt
 
     prompt = build_system_prompt(ProposalContent)
@@ -28,7 +28,7 @@ def test_build_system_prompt_contains_schema():
 
 
 def test_build_system_prompt_embeds_full_json_schema():
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.prompts import build_system_prompt
     import json
 
@@ -93,7 +93,7 @@ def _minimal_proposal_yaml() -> str:
 
 
 def test_filler_returns_fill_result_on_valid_output():
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.filler import fill_from_notes, FillResult
 
     valid_yaml = _minimal_proposal_yaml()
@@ -113,7 +113,7 @@ def test_filler_returns_fill_result_on_valid_output():
 
 
 def test_filler_strips_markdown_fences():
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.filler import fill_from_notes
 
     valid_yaml = _minimal_proposal_yaml()
@@ -132,7 +132,7 @@ def test_filler_strips_markdown_fences():
 
 
 def test_filler_strips_markdown_fences_without_lang_tag():
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.filler import fill_from_notes
 
     valid_yaml = _minimal_proposal_yaml()
@@ -151,7 +151,7 @@ def test_filler_strips_markdown_fences_without_lang_tag():
 
 
 def test_filler_raises_on_bad_yaml_output():
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.filler import fill_from_notes
 
     with patch("forma.composer.filler.FormaClient") as MockClient:
@@ -164,7 +164,7 @@ def test_filler_raises_on_bad_yaml_output():
 
 def test_filler_raises_on_schema_violation():
     """Claude returns valid YAML but it doesn't match the schema."""
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.filler import fill_from_notes
     from pydantic import ValidationError
 
@@ -183,7 +183,7 @@ def test_filler_raises_on_schema_violation():
 
 def test_filler_loads_existing_yaml(tmp_path):
     """When existing_yaml_path exists, its content is passed to the user prompt."""
-    from schemas.proposal.content import ProposalContent
+    from forma.schemas.proposal.content import ProposalContent
     from forma.composer.filler import fill_from_notes
     from forma.composer.prompts import build_user_prompt
 

@@ -1,11 +1,1 @@
-[submodule "skills"]
-	path = skills
-	url = https://github.com/slivern-corporate-services/forma-skills
 
-[submodule "clients/sigil"]
-	path = clients/sigil
-	url = https://github.com/sigil-enterprises/presskit
-
-[submodule "documents/sigil/unimed-sc-muti-proposal"]
-	path = documents/sigil/unimed-sc-muti-proposal
-	url = https://github.com/sigil-enterprises/unimed-sc-muti-proposal

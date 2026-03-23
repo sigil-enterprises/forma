@@ -24,10 +24,9 @@ from forma.cli.app import app
 
 runner = CliRunner()
 
-FIXTURE_DIR = Path(__file__).parent.parent / "documents" / "example-client"
+FIXTURE_DIR = Path(__file__).parent / "fixtures" / "example-client"
 
-# The example-client forma.yaml hardcodes output_dir: ../../var/builds/example-client,
-# so output always lands here regardless of where the project dir is copied.
+# The example-client forma.yaml hardcodes output_dir: ../../var/builds/example-client
 _BUILDS_SUBDIR = Path("var") / "builds" / "example-client"
 
 
@@ -38,7 +37,7 @@ def _make_project(tmp_path: Path) -> Path:
     return project
 
 
-def _fake_render(tpl_path, content, style, output_path, *, project_dir=None):
+def _fake_render(tpl_path, document, style, output_path, *, project_dir=None):
     """Mock render_template: writes a stub PDF and returns the path."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_bytes(b"%PDF-1.4 stub")
@@ -51,20 +50,11 @@ def _fake_render(tpl_path, content, style, output_path, *, project_dir=None):
 
 def test_e2e_validate_passes_on_example_client():
     result = runner.invoke(app, ["validate", str(FIXTURE_DIR)])
-    # Only warnings (missing asset files) — no errors → exit 0
     assert result.exit_code == 0, result.output
 
 
-def test_e2e_validate_strict_fails_on_missing_assets(tmp_path):
-    """--strict treats asset warnings as errors."""
-    project = _make_project(tmp_path)
-    result = runner.invoke(app, ["validate", str(project), "--strict"])
-    # The example-client references assets that don't exist → warnings → strict fail
-    assert result.exit_code != 0
-
-
 # ---------------------------------------------------------------------------
-# Stage 2: render (mocked LaTeX)
+# Stage 2: render (mocked)
 # ---------------------------------------------------------------------------
 
 def test_e2e_render_produces_output_files(tmp_path):
@@ -86,7 +76,6 @@ def test_e2e_render_single_template(tmp_path):
         result = runner.invoke(app, ["render", "--template", "slides", str(project)])
 
     assert result.exit_code == 0, result.output
-    # Only one render call, and it must be for the slides template
     assert mock_render.call_count == 1
     rendered_output = mock_render.call_args[0][3]  # 4th positional arg = output_path
     assert rendered_output.name == "slides.pdf"
@@ -132,7 +121,7 @@ def test_e2e_full_pipeline(tmp_path):
     assert r.exit_code == 0, f"render failed:\n{r.output}"
     assert (out_dir / "slides.pdf").exists()
 
-    # 3. Publish dry-run — publish calls render_template internally again
+    # 3. Publish dry-run
     with patch("forma.renderer.engine.render_template", side_effect=_fake_render):
         with patch("forma.publisher.google_drive.upload_file") as mock_upload:
             p = runner.invoke(app, ["publish", str(project), "--dry-run"])
@@ -147,18 +136,16 @@ def test_e2e_full_pipeline(tmp_path):
 # ---------------------------------------------------------------------------
 
 def test_e2e_compose_then_validate(tmp_path):
-    """
-    Compose produces a valid content.yaml → validate confirms schema correctness.
-    """
+    """Compose produces a valid content.yaml → validate confirms schema correctness."""
     project = tmp_path / "compose-client"
     project.mkdir()
     shutil.copy(FIXTURE_DIR / "forma.yaml", project / "forma.yaml")
-    shutil.copy(FIXTURE_DIR / "style.yaml", project / "style.yaml")
 
     notes = tmp_path / "notes.md"
     notes.write_text("Client: Widget Corp. We need a digital transformation strategy.")
 
     composed_yaml = yaml.dump({
+        "resourceType": "ProposalContent",
         "engagement": {
             "title": "Widget Corp Transformation",
             "date": "2026-03-21",

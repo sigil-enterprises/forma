@@ -216,11 +216,13 @@
   \toprule
   \textbf{Service} & \textbf{Qty} & \textbf{Rate (USD)} & \textbf{Total (USD)} \\
   \midrule
+  (% set phase_total = namespace(val=0) %)
   (% for item in phase.line_items %)
-  (( item.service | latex_escape )) & (( item.quantity )) (( item.unit | latex_escape )) & (( item.rate_usd | currency )) & (( item.total_usd | currency )) \\
+  (( item.service | latex_escape )) & (( item.quantity )) (( item.get('unit','') | latex_escape )) & (( item.get('rate_usd',0) | currency )) & (( item.total_usd | currency )) \\
+  (% set phase_total.val = phase_total.val + item.total_usd %)
   (% endfor %)
   \midrule
-  \textbf{Subtotal} & & & \textbf{ (( phase.subtotal_usd | currency )) } \\
+  \textbf{Subtotal} & & & \textbf{ (( phase_total.val | currency | le )) } \\
   \bottomrule
 \end{tabularx}
 \vspace{0.3cm}
@@ -229,15 +231,24 @@
 
 \subsection{Total Investment}
 
+(% set grand_total = namespace(val=0) %)
+(% for phase in content.investment.phases %)
+  (% set phase_total = namespace(val=0) %)
+  (% for item in phase.line_items %)(% set phase_total.val = phase_total.val + item.total_usd %)(% endfor %)
+  (% set grand_total.val = grand_total.val + phase_total.val %)
+(% endfor %)
+
 \begin{tabularx}{\textwidth}{Xr}
   \toprule
   \textbf{Phase} & \textbf{Total (USD)} \\
   \midrule
   (% for phase in content.investment.phases %)
-  (( phase.name | latex_escape )) & (( phase.subtotal_usd | currency )) \\
+  (% set phase_total = namespace(val=0) %)
+  (% for item in phase.line_items %)(% set phase_total.val = phase_total.val + item.total_usd %)(% endfor %)
+  (( phase.name | latex_escape )) & (( phase_total.val | currency | le )) \\
   (% endfor %)
   \midrule
-  \textbf{Total} & \textbf{ (( content.investment.total_usd | currency )) } \\
+  \textbf{Total} & \textbf{ (( grand_total.val | currency | le )) } \\
   \bottomrule
 \end{tabularx}
 

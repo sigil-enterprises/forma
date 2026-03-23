@@ -1,0 +1,22 @@
+<div class="slide cover">
+  <div class="cover-body">
+    <div class="cover-kicker">(( slide.get('client', '') | e ))</div>
+    <h1 class="cover-title">(( slide.title | e ))</h1>
+    (% if slide.get('subtitle') %)
+    <p class="cover-subtitle">(( slide.subtitle | e ))</p>
+    (% endif %)
+    <div class="cover-meta">
+      (% if slide.get('logo') %)
+      <img class="cover-logo" src="(( slide.logo | e ))" alt="Logo">
+      (% endif %)
+      (% if slide.get('reference') or slide.get('date') %)
+      <span class="cover-ref">
+        (% if slide.get('reference') %)(( slide.reference | e ))(% endif %)
+        (% if slide.get('reference') and slide.get('date') %) &nbsp;·&nbsp; (% endif %)
+        (% if slide.get('date') %)(( slide.date | e ))(% endif %)
+      </span>
+      (% endif %)
+    </div>
+  </div>
+  <div class="cover-stripe"></div>
+</div>

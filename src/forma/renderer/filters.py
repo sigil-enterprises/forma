@@ -22,6 +22,12 @@ _LATEX_SPECIAL = {
     "~":  r"\textasciitilde{}",
     "^":  r"\textasciicircum{}",
     "\\": r"\textbackslash{}",
+    "→":  r"$\rightarrow$",
+    "←":  r"$\leftarrow$",
+    "–":  r"--",
+    "—":  r"---",
+    "…":  r"\ldots{}",
+    "\u00a0": r"~",  # non-breaking space
 }
 
 _LATEX_RE = re.compile(

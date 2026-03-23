@@ -2,8 +2,9 @@
 forma CLI — schema-agnostic document rendering framework.
 
 Commands:
-  validate   Validate content.yaml + style.yaml against the project schema
+  validate   Validate content.yaml and mapping files against their schemas
   render     Render one or all templates to PDF
+  mapping    Mapping file utilities (validate)
   compose    AI-assisted content drafting (fill / enrich)
   publish    Render + upload artifacts to Google Drive
   schema     Export JSON Schema files from Pydantic models
@@ -32,6 +33,9 @@ app.add_typer(compose_app, name="compose")
 render_app = typer.Typer(help="Render templates to PDF.")
 app.add_typer(render_app, name="render")
 
+mapping_app = typer.Typer(help="Mapping file utilities.")
+app.add_typer(mapping_app, name="mapping")
+
 schema_app = typer.Typer(help="Schema utilities.")
 app.add_typer(schema_app, name="schema")
 
@@ -45,27 +49,19 @@ console = Console()
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _load_project(project_dir: Path):
+def _load_config(project_dir: Path):
     from forma.core.config import FormaConfig
-    from forma.core.loader import load_content_class
 
     config_path = project_dir / "forma.yaml"
     if not config_path.exists():
         console.print(f"[red]✗ No forma.yaml found in {project_dir}[/red]")
         raise typer.Exit(1)
 
-    config = FormaConfig.from_yaml(config_path)
-    schema_cls = load_content_class(config.schema_path, project_root=project_dir)
-    return config, schema_cls
+    return FormaConfig.from_yaml(config_path)
 
 
 def _format_skill_data(name: str, data: dict) -> str:
-    """
-    Format fetched skill data as structured prose for the Claude composer.
-
-    Rather than dumping raw YAML, we produce a readable section that Claude
-    can extract facts from more reliably.
-    """
+    """Format fetched skill data as structured prose for the Claude composer."""
     lines = [f"## Data from {name}"]
 
     def _render(obj: object, indent: int = 0) -> None:
@@ -98,28 +94,13 @@ def _format_skill_data(name: str, data: dict) -> str:
 @app.command()
 def validate(
     project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
-    content_file: str = typer.Option("content.yaml", "--content", "-c"),
-    style_file: str | None = typer.Option(None, "--style", "-s"),
     strict: bool = typer.Option(False, "--strict", help="Treat warnings as errors"),
 ):
-    """Validate content.yaml (and optionally style.yaml) against the declared schema."""
-    from forma.core.base import FormaStyle
-    from forma.core.validator import validate_content, validate_style
+    """Validate content.yaml and all mapping files against their declared schemas."""
+    from forma.core.validator import validate_project
 
     project_dir = project_dir.resolve()
-    config, schema_cls = _load_project(project_dir)
-
-    content_path = project_dir / content_file
-    result = validate_content(content_path, schema_cls, project_dir, strict=strict)
-
-    # Also validate style.yaml if it exists
-    resolved_style = style_file or config.style
-    style_path = (project_dir / resolved_style).resolve() if resolved_style else None
-    if style_path and style_path.exists():
-        style_result = validate_style(style_path, FormaStyle, project_dir)
-        result.errors.extend(style_result.errors)
-        result.warnings.extend(style_result.warnings)
-
+    result = validate_project(project_dir)
     result.print()
 
     if not result.ok or (strict and result.warnings):
@@ -135,7 +116,6 @@ def render_default(
     ctx: typer.Context,
     project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
     template_name: str | None = typer.Option(None, "--template", "-t", help="Render a specific template"),
-    content_file: str = typer.Option("content.yaml", "--content", "-c"),
     watch: bool = typer.Option(False, "--watch", "-w", help="Re-render on file change"),
 ):
     """Render all templates (or a specific one) declared in forma.yaml."""
@@ -143,31 +123,38 @@ def render_default(
         return
 
     project_dir = project_dir.resolve()
-    config, schema_cls = _load_project(project_dir)
 
     def _do_render():
-        from forma.core.base import FormaStyle
         from forma.core.config import FormaConfig
-        from forma.core.loader import load_content_class
+        from forma.core.loader import load_document, load_style
         from forma.renderer.engine import render_template
 
         cfg = FormaConfig.from_yaml(project_dir / "forma.yaml")
-        cls = load_content_class(cfg.schema_path, project_root=project_dir)
-
-        content_path = project_dir / content_file
-        content = cls.from_yaml(content_path)
 
         style_path = cfg.resolve_style_path(project_dir)
-        style = FormaStyle.from_yaml(style_path) if style_path.exists() else FormaStyle()
+        style = load_style(style_path)
 
         output_dir = cfg.resolve_output_dir(project_dir)
-        templates = {template_name: cfg.templates[template_name]} if template_name else cfg.templates
+        output_dir.mkdir(parents=True, exist_ok=True)
 
-        for name, _entry in templates.items():
-            tpl_path = config.resolve_template_path(name, project_dir)
+        templates = (
+            {template_name: cfg.templates[template_name]}
+            if template_name
+            else cfg.templates
+        )
+
+        for name in templates:
+            mapping_path = cfg.resolve_mapping_path(name, project_dir)
+            if not mapping_path.exists():
+                console.print(f"[red]✗ Mapping file not found: {mapping_path}[/red]")
+                continue
+
+            document = load_document(mapping_path, project_dir)
+            tpl_path = cfg.resolve_template_path(name, project_dir)
             out = output_dir / f"{name}.pdf"
+
             console.print(f"[dim]Rendering {name}...[/dim]")
-            render_template(tpl_path, content, style, out, project_dir=project_dir)
+            render_template(tpl_path, document, style, out, project_dir=project_dir)
 
     _do_render()
 
@@ -176,6 +163,42 @@ def render_default(
         console.print("[dim]Watching for changes (Ctrl-C to stop)...[/dim]")
         for _ in wf(str(project_dir)):
             _do_render()
+
+
+# ---------------------------------------------------------------------------
+# mapping validate
+# ---------------------------------------------------------------------------
+
+@mapping_app.command("validate")
+def mapping_validate(
+    project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
+    mapping_file: str | None = typer.Option(None, "--file", "-f", help="Specific mapping file (e.g. slides.yaml)"),
+):
+    """Validate mapping file(s) against their declared schemas."""
+    from forma.core.validator import validate_file
+
+    project_dir = project_dir.resolve()
+    mapping_names = [mapping_file] if mapping_file else ["slides.yaml", "report.yaml", "brief.yaml"]
+
+    found = False
+    combined_ok = True
+    for name in mapping_names:
+        path = project_dir / name
+        if not path.exists():
+            continue
+        found = True
+        console.print(f"[dim]Validating {name}...[/dim]")
+        result = validate_file(path, base_dir=project_dir)
+        result.print()
+        if not result.ok:
+            combined_ok = False
+
+    if not found:
+        console.print("[yellow]⚠ No mapping files found in project directory[/yellow]")
+        raise typer.Exit(1)
+
+    if not combined_ok:
+        raise typer.Exit(1)
 
 
 # ---------------------------------------------------------------------------
@@ -195,7 +218,14 @@ def compose_fill(
     from forma.composer.filler import fill_from_notes
 
     project_dir = project_dir.resolve()
-    config, schema_cls = _load_project(project_dir)
+
+    # Derive a simple schema class for the composer — still uses ProposalContent for now.
+    # This can be extended to support other schema types via a registry lookup.
+    try:
+        from forma.schemas.proposal.content import ProposalContent as schema_cls
+    except ImportError:
+        console.print("[red]✗ ProposalContent schema not found. Check that schemas/ is on sys.path.[/red]")
+        raise typer.Exit(1)
 
     notes = notes_file.read_text()
     existing_path = project_dir / "content.yaml"
@@ -228,7 +258,7 @@ def compose_fill(
 @compose_app.command("enrich")
 def compose_enrich(
     project_dir: Path = typer.Argument(Path("."), help="Document project directory"),
-    skills: str = typer.Option(..., "--skills", "-s", help="Comma-separated skill names, e.g. clickup,google_docs"),
+    skills: str = typer.Option(..., "--skills", "-s", help="Comma-separated skill names"),
     notes_file: Path | None = typer.Option(None, "--notes", "-n"),
     model: str = typer.Option("claude-opus-4-6", "--model", "-m"),
     dry_run: bool = typer.Option(False, "--dry-run"),
@@ -238,9 +268,13 @@ def compose_enrich(
     from forma.integrations.skills_loader import load_skills
 
     project_dir = project_dir.resolve()
-    config, schema_cls = _load_project(project_dir)
 
-    # Find skills dir (submodule)
+    try:
+        from forma.schemas.proposal.content import ProposalContent as schema_cls
+    except ImportError:
+        console.print("[red]✗ ProposalContent schema not found.[/red]")
+        raise typer.Exit(1)
+
     repo_root = Path(__file__).parents[3]
     skills_dir = repo_root / "skills"
     if not skills_dir.exists():
@@ -250,7 +284,6 @@ def compose_enrich(
     skill_names = [s.strip() for s in skills.split(",")]
     fetched = load_skills(skills_dir, skill_names)
 
-    # Build combined notes — structured prose so Claude can reason about each source
     combined_parts = []
     if notes_file and notes_file.exists():
         combined_parts.append(notes_file.read_text().strip())
@@ -291,33 +324,39 @@ def publish(
     dry_run: bool = typer.Option(False, "--dry-run"),
 ):
     """Render all templates and upload to Google Drive."""
+    from forma.core.loader import load_document, load_style
     from forma.publisher.google_drive import upload_file
+    from forma.renderer.engine import render_template
 
     project_dir = project_dir.resolve()
-    config, schema_cls = _load_project(project_dir)
+    config = _load_config(project_dir)
 
     output_dir = config.resolve_output_dir(project_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    templates = {template_name: config.templates[template_name]} if template_name else config.templates
 
-    # Render all templates directly
-    from forma.core.base import FormaStyle
-    from forma.renderer.engine import render_template
-
-    content_path = project_dir / "content.yaml"
-    content = schema_cls.from_yaml(content_path)
     style_path = config.resolve_style_path(project_dir)
-    style = FormaStyle.from_yaml(style_path) if style_path.exists() else FormaStyle()
+    style = load_style(style_path)
+
+    templates = (
+        {template_name: config.templates[template_name]}
+        if template_name
+        else config.templates
+    )
 
     for name in templates:
+        mapping_path = config.resolve_mapping_path(name, project_dir)
+        if not mapping_path.exists():
+            console.print(f"[red]✗ Mapping file not found: {mapping_path}[/red]")
+            continue
+        document = load_document(mapping_path, project_dir)
         tpl_path = config.resolve_template_path(name, project_dir)
         out = output_dir / f"{name}.pdf"
         console.print(f"[dim]Rendering {name}...[/dim]")
-        render_template(tpl_path, content, style, out, project_dir=project_dir)
+        render_template(tpl_path, document, style, out, project_dir=project_dir)
 
     drive_folder = folder_id or config.publishing.google_drive_folder_id
     if not drive_folder and not dry_run:
-        console.print("[red]✗ No Google Drive folder ID configured. Set publishing.google_drive_folder_id in forma.yaml or pass --folder-id.[/red]")
+        console.print("[red]✗ No Google Drive folder ID configured.[/red]")
         raise typer.Exit(1)
 
     prefix = config.publishing.filename_prefix
@@ -340,45 +379,22 @@ def publish(
 @schema_app.command("export")
 def schema_export(
     output_dir: Path = typer.Option(Path("schema"), "--output-dir", "-o"),
-    project_dir: Path = typer.Argument(Path("."), help="Document project directory (for schema path)"),
 ):
-    """Export JSON Schema files from all starter Pydantic schemas."""
-    import json
+    """List built-in YAML schemas from the package schema/ directory."""
+    pkg_dir = Path(__file__).parents[1]  # src/forma/
+    schemas_dir = pkg_dir / "schema"
 
-    project_dir = project_dir.resolve()
+    if not schemas_dir.exists():
+        console.print(f"[red]✗ schema/ directory not found at {schemas_dir}[/red]")
+        raise typer.Exit(1)
 
-    # Export all schemas found in the repo's schemas/ directory
+    for f in sorted(schemas_dir.glob("*.schema.yaml")):
+        console.print(f"[green]✓[/green] {f}")
+
     repo_root = Path(__file__).parents[3]
-    schemas_dir = repo_root / "schemas"
-
-    if str(repo_root) not in sys.path:
-        sys.path.insert(0, str(repo_root))
-
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    exported = 0
-    for schema_file in schemas_dir.glob("*/content.py"):
-        schema_name = schema_file.parent.name
-        try:
-            import importlib
-            module = importlib.import_module(f"schemas.{schema_name}.content")
-            # Find BaseContent subclass
-            from forma.core.base import BaseContent
-            for attr_name in dir(module):
-                cls = getattr(module, attr_name)
-                if (
-                    isinstance(cls, type)
-                    and issubclass(cls, BaseContent)
-                    and cls is not BaseContent
-                ):
-                    out_path = output_dir / f"{schema_name}.schema.json"
-                    out_path.write_text(json.dumps(cls.model_json_schema(), indent=2))
-                    console.print(f"[green]✓[/green] {out_path}")
-                    exported += 1
-        except Exception as e:
-            console.print(f"[yellow]⚠ Could not export {schema_name}: {e}[/yellow]")
-
-    console.print(f"\nExported {exported} schema(s) to {output_dir}/")
+    client_schemas = sorted(repo_root.glob("templates/*.schema.yaml"))
+    for f in client_schemas:
+        console.print(f"[cyan]✓[/cyan] {f}")
 
 
 # ---------------------------------------------------------------------------
@@ -393,7 +409,8 @@ def template_list(
     import yaml as _yaml
 
     if templates_dir is None:
-        templates_dir = Path(__file__).parents[3] / "templates"
+        repo_root = Path(__file__).parents[3]
+        templates_dir = repo_root / "tests" / "fixtures" / "templates"
 
     table = Table(title="Available Templates")
     table.add_column("Name", style="cyan")
@@ -420,27 +437,38 @@ def template_list(
 
 @app.command()
 def init(
-    client_name: str = typer.Argument(..., help="Client or project name (used as directory name)"),
+    client_name: str = typer.Argument(..., help="Client or project name"),
     documents_dir: Path = typer.Option(Path("documents"), "--dir", "-d"),
-    schema: str = typer.Option("schemas.proposal.content:ProposalContent", "--schema"),
-    template: str = typer.Option("proposal-slides,proposal-report", "--templates"),
 ):
     """Scaffold a new document project directory."""
     slug = client_name.lower().replace(" ", "-")
     project_dir = documents_dir / slug
     project_dir.mkdir(parents=True, exist_ok=True)
-    (project_dir / "assets").mkdir(exist_ok=True)
 
-    templates_config = {
-        t.strip(): {"path": f"../../templates/{t.strip()}"}
-        for t in template.split(",")
-    }
+    # Determine template base relative path
+    repo_root = Path(__file__).parents[3]
+    try:
+        rel = project_dir.resolve().relative_to(repo_root)
+        depth = len(rel.parts)
+    except ValueError:
+        depth = 3  # fallback
+    up = "/".join([".."] * depth)
 
     forma_config = {
-        "schema": schema,
+        "resourceType": "FormaConfig",
+        "content": "content.yaml",
         "style": "style.yaml",
-        "templates": templates_config,
-        "output_dir": f"../../var/builds/{slug}",
+        "templates": {
+            "slides": {
+                "path": "path/to/proposal-slides-html",
+                "mapping": "slides.yaml",
+            },
+            "report": {
+                "path": "path/to/proposal-report",
+                "mapping": "report.yaml",
+            },
+        },
+        "output_dir": f"{up}/var/builds/{slug}",
         "publishing": {
             "google_drive_folder_id": "",
             "filename_prefix": slug.upper()[:8],
@@ -448,24 +476,57 @@ def init(
     }
 
     (project_dir / "forma.yaml").write_text(
-        yaml.dump(forma_config, default_flow_style=False, allow_unicode=True)
+        yaml.dump(forma_config, default_flow_style=False, allow_unicode=True, sort_keys=False)
     )
 
-    # Minimal content.yaml skeleton
+    # Minimal content.yaml with resourceType
     (project_dir / "content.yaml").write_text(
+        f"resourceType: ProposalContent\n\n"
         f"# {client_name} — content.yaml\n"
-        "# Fill in your content here. Run: forma compose fill . --notes your-notes.md\n\n"
-        "publishing:\n"
-        "  google_drive_folder_id: ''\n"
-        "  filename_prefix: ''\n"
+        "# Fill in your content here.\n\n"
+        "engagement:\n"
+        f'  title: "{client_name}"\n'
+        "  subtitle: \"\"\n"
+        "  reference: \"\"\n"
+        "  date: \"\"\n\n"
+        "client:\n"
+        f'  name: "{client_name}"\n\n'
+        "executive_summary:\n"
+        "  headline: \"\"\n"
+        "  key_points: []\n"
     )
 
-    # Minimal style.yaml
-    (project_dir / "style.yaml").write_text(
-        "# Style overrides for this project.\n"
-        "# See style defaults in the root style.yaml.\n"
+    # Minimal slides.yaml skeleton
+    (project_dir / "slides.yaml").write_text(
+        "resourceType: SlideDocument\n\n"
+        "slides:\n"
+        "  - type: cover\n"
+        '    title: !include "@content.yaml:engagement.title"\n'
+        '    client: !include "@content.yaml:client.name"\n\n'
+        "  - type: exec_summary\n"
+        '    headline: !include "@content.yaml:executive_summary.headline"\n'
+        '    key_points: !include "@content.yaml:executive_summary.key_points"\n\n'
+        "  - type: closing\n"
+        "    tagline: \"\"\n"
+    )
+
+    # Minimal report.yaml skeleton
+    (project_dir / "report.yaml").write_text(
+        "resourceType: ReportDocument\n\n"
+        "meta:\n"
+        '  title: !include "@content.yaml:engagement.title"\n'
+        '  client: !include "@content.yaml:client.name"\n\n'
+        "chapters:\n"
+        "  - title: Executive Summary\n"
+        "    sections:\n"
+        "      - title: Overview\n"
+        "        blocks:\n"
+        "          - type: paragraph\n"
+        '            text: !include "@content.yaml:executive_summary.headline"\n'
     )
 
     console.print(f"[green]✓ Created[/green] {project_dir}/")
-    console.print(f"  • Edit [cyan]{project_dir}/content.yaml[/cyan]")
-    console.print(f"  • Or run: [cyan]forma compose fill {project_dir} --notes notes.md[/cyan]")
+    console.print(f"  • Edit [cyan]{project_dir}/content.yaml[/cyan] with your semantic content")
+    console.print(f"  • Edit [cyan]{project_dir}/slides.yaml[/cyan] to map content → slides")
+    console.print(f"  • Edit [cyan]{project_dir}/report.yaml[/cyan] to map content → report chapters")
+    console.print(f"  • Run: [cyan]forma render {project_dir} --template slides[/cyan]")

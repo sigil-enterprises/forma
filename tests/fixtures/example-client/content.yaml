@@ -1,3 +1,5 @@
+resourceType: ProposalContent
+
 engagement:
   title: "Digital Transformation Strategy"
   subtitle: "A phased modernisation roadmap for Acme Corp"

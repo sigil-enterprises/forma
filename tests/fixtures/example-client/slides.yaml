@@ -1,0 +1,18 @@
+resourceType: SlideDocument
+
+slides:
+  - type: cover
+    title: !include "@content.yaml:engagement.title"
+    subtitle: !include "@content.yaml:engagement.subtitle"
+    client: !include "@content.yaml:client.name"
+    reference: !include "@content.yaml:engagement.reference"
+    date: !include "@content.yaml:engagement.date"
+
+  - type: exec_summary
+    headline: !include "@content.yaml:executive_summary.headline"
+    key_points: !include "@content.yaml:executive_summary.key_points"
+
+  - type: closing
+    tagline: !include "@content.yaml:closing.tagline"
+    email: !include "@content.yaml:closing.email"
+    website: !include "@content.yaml:closing.website"

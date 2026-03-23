@@ -3,6 +3,7 @@ services:
     image: ghcr.io/${ORGANIZATION}/${PROJECT}:latest
     build:
       context: .
+      target: app
       secrets:
         - github_token
       args:

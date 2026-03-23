@@ -1,0 +1,365 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: "slide-document"
+title: SlideDocument
+description: >
+  Format mapping file for a slide presentation (slides.yaml).
+  A flat ordered list of slide objects, each with a type discriminator.
+  Content values are typically pulled from content.yaml using !include tags.
+type: object
+required:
+  - resourceType
+  - slides
+properties:
+  resourceType:
+    type: string
+    const: SlideDocument
+  slides:
+    type: array
+    minItems: 1
+    items:
+      $ref: "#/definitions/Slide"
+additionalProperties: false
+
+definitions:
+  Slide:
+    oneOf:
+      - $ref: "#/definitions/CoverSlide"
+      - $ref: "#/definitions/ExecSummarySlide"
+      - $ref: "#/definitions/SectionDividerSlide"
+      - $ref: "#/definitions/PainPointsSlide"
+      - $ref: "#/definitions/MetricsSlide"
+      - $ref: "#/definitions/SolutionPillarsSlide"
+      - $ref: "#/definitions/DifferentiatorsSlide"
+      - $ref: "#/definitions/TimelineSlide"
+      - $ref: "#/definitions/InvestmentTableSlide"
+      - $ref: "#/definitions/TeamGridSlide"
+      - $ref: "#/definitions/NextStepsSlide"
+      - $ref: "#/definitions/ClosingSlide"
+
+  CoverSlide:
+    type: object
+    required: [type, title, client]
+    properties:
+      type:
+        type: string
+        const: cover
+      title:
+        type: string
+        description: Engagement title displayed on the cover.
+      subtitle:
+        type: string
+      client:
+        type: string
+        description: Client name.
+      reference:
+        type: string
+      date:
+        type: string
+      logo:
+        type: string
+        description: Path to the client or presenter logo.
+    additionalProperties: false
+
+  ExecSummarySlide:
+    type: object
+    required: [type, headline]
+    properties:
+      type:
+        type: string
+        const: exec_summary
+      headline:
+        type: string
+      body:
+        type: string
+      key_points:
+        type: array
+        items:
+          type: string
+    additionalProperties: false
+
+  SectionDividerSlide:
+    type: object
+    required: [type, label]
+    properties:
+      type:
+        type: string
+        const: section_divider
+      label:
+        type: string
+        description: Section heading displayed on the divider slide.
+    additionalProperties: false
+
+  PainPointsSlide:
+    type: object
+    required: [type, items]
+    properties:
+      type:
+        type: string
+        const: pain_points
+      title:
+        type: string
+        default: "The Challenge"
+      items:
+        type: array
+        maxItems: 6
+        items:
+          $ref: "#/definitions/TitledItem"
+    additionalProperties: false
+
+  MetricsSlide:
+    type: object
+    required: [type, metrics]
+    properties:
+      type:
+        type: string
+        const: metrics
+      title:
+        type: string
+        default: "By the Numbers"
+      description:
+        type: string
+      metrics:
+        type: array
+        maxItems: 6
+        items:
+          $ref: "#/definitions/Metric"
+    additionalProperties: false
+
+  SolutionPillarsSlide:
+    type: object
+    required: [type, pillars]
+    properties:
+      type:
+        type: string
+        const: solution_pillars
+      title:
+        type: string
+        default: "Our Approach"
+      overview:
+        type: string
+      pillars:
+        type: array
+        maxItems: 4
+        items:
+          $ref: "#/definitions/TitledItem"
+    additionalProperties: false
+
+  DifferentiatorsSlide:
+    type: object
+    required: [type, items]
+    properties:
+      type:
+        type: string
+        const: differentiators
+      title:
+        type: string
+        default: "Why Us"
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/TitledItem"
+    additionalProperties: false
+
+  TimelineSlide:
+    type: object
+    required: [type, phases]
+    properties:
+      type:
+        type: string
+        const: timeline
+      title:
+        type: string
+        default: "Project Roadmap"
+      phases:
+        type: array
+        items:
+          $ref: "#/definitions/TimelinePhase"
+    additionalProperties: false
+
+  InvestmentTableSlide:
+    type: object
+    required: [type, phases]
+    properties:
+      type:
+        type: string
+        const: investment_table
+      title:
+        type: string
+        default: "Investment"
+      currency:
+        type: string
+        default: USD
+      notes:
+        type: array
+        items:
+          type: string
+      phases:
+        type: array
+        items:
+          $ref: "#/definitions/InvestmentPhase"
+    additionalProperties: false
+
+  TeamGridSlide:
+    type: object
+    required: [type, consultants]
+    properties:
+      type:
+        type: string
+        const: team_grid
+      title:
+        type: string
+        default: "Our Team"
+      consultants:
+        type: array
+        items:
+          $ref: "#/definitions/TeamMember"
+      partners:
+        type: array
+        items:
+          $ref: "#/definitions/Partner"
+    additionalProperties: false
+
+  NextStepsSlide:
+    type: object
+    required: [type, steps]
+    properties:
+      type:
+        type: string
+        const: next_steps
+      title:
+        type: string
+        default: "Next Steps"
+      intro:
+        type: string
+      steps:
+        type: array
+        items:
+          $ref: "#/definitions/TitledItem"
+    additionalProperties: false
+
+  ClosingSlide:
+    type: object
+    required: [type]
+    properties:
+      type:
+        type: string
+        const: closing
+      tagline:
+        type: string
+      email:
+        type: string
+      website:
+        type: string
+      logo:
+        type: string
+    additionalProperties: false
+
+  # ── Shared sub-types ─────────────────────────────────────────────────────
+
+  TitledItem:
+    type: object
+    required: [title]
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      icon:
+        type: string
+    additionalProperties: false
+
+  Metric:
+    type: object
+    required: [value, label]
+    properties:
+      value:
+        type: string
+      label:
+        type: string
+    additionalProperties: false
+
+  TimelinePhase:
+    type: object
+    required: [name]
+    properties:
+      name:
+        type: string
+      duration:
+        type: string
+      start_week:
+        type: integer
+      end_week:
+        type: integer
+      activities:
+        type: array
+        items:
+          type: string
+      deliverables:
+        type: array
+        items:
+          type: string
+    additionalProperties: false
+
+  InvestmentPhase:
+    type: object
+    required: [name, line_items]
+    properties:
+      name:
+        type: string
+      duration:
+        type: string
+      line_items:
+        type: array
+        items:
+          $ref: "#/definitions/LineItem"
+    additionalProperties: false
+
+  LineItem:
+    type: object
+    required: [service, total_usd]
+    properties:
+      service:
+        type: string
+      quantity:
+        type: number
+      unit:
+        type: string
+      rate_usd:
+        type: number
+      total_usd:
+        type: number
+    additionalProperties: false
+
+  TeamMember:
+    type: object
+    required: [name, role]
+    properties:
+      name:
+        type: string
+      role:
+        type: string
+      credentials:
+        type: string
+      experience_years:
+        type: integer
+      education:
+        type: array
+        items:
+          type: string
+      expertise:
+        type: array
+        items:
+          type: string
+    additionalProperties: false
+
+  Partner:
+    type: object
+    required: [name]
+    properties:
+      name:
+        type: string
+      logo:
+        type: string
+      description:
+        type: string
+    additionalProperties: false

@@ -1,0 +1,38 @@
+brand:
+  logo: "brand/logos/sigil-color-dark.png"
+  logo_white: "brand/logos/sigil-color-white.png"
+  logo_dark: "brand/logos/sigil-dark.png"
+  icon: "brand/logos/sigil-icon-color.png"
+
+colors:
+  primary_dark: "#061E30"
+  primary_accent: "#FDB62B"
+  accent_amber: "#F8942B"
+  accent_orange: "#F06134"
+  white: "#FFFFFF"
+  gray_light: "#F7F8FA"
+  gray_medium: "#E4E7EC"
+  gray_dark: "#6B7280"
+  text_primary: "#061E30"
+  text_secondary: "#4B5563"
+
+typography:
+  font_primary: "Rubik"
+  font_secondary: "Rubik"
+  sizes:
+    xs: 8
+    sm: 9
+    base: 10
+    md: 11
+    lg: 13
+    xl: 16
+    xl2: 20
+    xl3: 26
+    xl4: 34
+
+layout:
+  page_size: a4
+  slides_aspect_ratio: "169"
+
+publishing:
+  filename_prefix: "SGLR"

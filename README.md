@@ -40,20 +40,17 @@ forma render documents/acme-corp --template slides
 ```
 forma/
 ├── src/forma/          # the engine (schema-agnostic)
-├── schemas/            # starter content schemas (Pydantic)
-│   ├── proposal/       # ProposalContent
-│   ├── case_study/     # CaseStudyContent
-│   └── brief/          # BriefContent
-├── templates/          # starter Jinja2/LaTeX templates
-│   ├── proposal-slides/
-│   ├── proposal-report/
-│   └── proposal-brief/
-├── documents/          # document projects (one dir per client/project)
-│   └── example-client/
-│       ├── forma.yaml  # schema, templates, output config
-│       ├── content.yaml
-│       └── style.yaml
-└── skills/             # git submodule: forma-skills (external data fetchers)
+│   ├── cli/            # Typer CLI (validate, render, compose, publish, schema, template, init)
+│   ├── core/           # config, loader, validator, !include tag resolver
+│   ├── renderer/       # Jinja2 engine, LaTeX/HTML renderers, filters
+│   ├── composer/       # Claude AI content drafting (FormaClient, prompts, filler)
+│   ├── publisher/      # Google Drive upload
+│   ├── schema/         # Built-in JSON Schema files (forma-config, slide-document, etc.)
+│   └── schemas/        # Starter Pydantic content schemas (ProposalContent, etc.)
+└── tests/
+    └── fixtures/
+        ├── example-client/   # complete document project used in tests
+        └── templates/        # Jinja2 template fixtures (proposal-slides-html, proposal-report, etc.)
 ```
 
 ## CLI reference
@@ -88,9 +85,9 @@ Open in VS Code → "Reopen in Container". The devcontainer:
 
 ## Adding a new document type
 
-1. Define a schema in `schemas/mytype/content.py` extending `BaseContent`
-2. Create a template in `templates/mytype/` with a `manifest.yaml` and `main.tex.j2`
-3. Point a document project's `forma.yaml` at your schema and template
+1. Define a schema in `src/forma/schemas/mytype/content.py` extending `BaseContent`
+2. Create a template directory anywhere (e.g. alongside your document project) with a `manifest.yaml` and `main.tex.j2`
+3. Point the document project's `forma.yaml` at your schema class and template path
 
 ## CI/CD
 

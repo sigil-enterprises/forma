@@ -1,0 +1,23 @@
+<div class="slide closing">
+  <div class="closing-body">
+    (% if slide.get('logo') %)
+    <img class="closing-logo" src="(( slide.get('logo') | e ))" alt="Logo">
+    (% endif %)
+    (% if slide.get('tagline') %)
+    <p class="closing-tagline">(( slide.get('tagline') | e ))</p>
+    (% endif %)
+    <div class="closing-contact">
+      (% if slide.get('email') %)
+      <a href="mailto:(( slide.get('email') | e ))">(( slide.get('email') | e ))</a>
+      (% endif %)
+      (% if slide.get('website') %)
+      <a href="https://(( slide.get('website') | e ))">(( slide.get('website') | e ))</a>
+      (% endif %)
+    </div>
+  </div>
+  <div class="closing-stripe"></div>
+  <div class="slide-footer">
+    <span class="footer-left"></span>
+    <span class="footer-right"></span>
+  </div>
+</div>

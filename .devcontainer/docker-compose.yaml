@@ -4,8 +4,17 @@ services:
     command: ["infinity"]
     build:
       context: ..
-      dockerfile: Dockerfile.devcontainer
+      dockerfile: Dockerfile
+      target: base
+      secrets:
+        - github_token
+      args:
+        ORGANIZATION: ${ORGANIZATION:-slivern-corporate-services}
     env_file:
       - ../.env
     volumes:
       - ..:/app
+
+secrets:
+  github_token:
+    environment: GITHUB_TOKEN
