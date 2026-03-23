@@ -1242,13 +1242,9 @@
 <p>Turn structured YAML content and Jinja2/LaTeX templates into polished PDF slides, reports, and briefings — driven by Claude AI.</p>
 <hr />
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>content.yaml  ──[schema validates]──→  Jinja2 context
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                             │
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>style.yaml    ─────────────────────→  templates/proposal-slides/main.tex.j2  →  slides.pdf
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                             │
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                        templates/proposal-report/main.tex.j2  →  report.pdf
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                             │
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                        templates/proposal-brief/main.tex.j2   →  brief.pdf
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>content.yaml  ──[!include]──→  slides.yaml / report.yaml  (mapping)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                        │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>style.yaml   ───────────────→  Jinja2 template  →  xelatex / Playwright  →  PDF
 </code></pre></div>
 <p><strong>Content</strong> describes <em>what</em> — client, problem, solution, team, investment. No slide types, no page layout.</p>
 <p><strong>Templates</strong> describe <em>how</em> — each template independently decides structure, layout, and which content fields to include.</p>
@@ -1272,11 +1268,11 @@
 
     `forma publish` renders all templates and uploads to a Drive folder. Service account credentials never touch disk.
 
-- :material-puzzle: **Skills submodule**
+- :material-puzzle: **Skills integration**
 
     Pull live data from ClickUp, Google Docs, Google Sheets, or meeting notes files and feed them directly into the composer.
 
-- :material-test-tube: **65 tests, all mocked**
+- :material-test-tube: **84 tests, all mocked**
 
     Full test suite covering every CLI command, filter, schema, publisher, and skills loader — no live API keys required.
 
