@@ -873,6 +873,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#worked-example-cover-slide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: cover slide
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1518,6 +1529,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#worked-example-cover-slide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: cover slide
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1670,6 +1692,81 @@
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  (% endif %)
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>(% endfor %)
 </code></pre></div>
+<p>The full context also includes:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>style</code></td>
+<td>Style dict from <code>style.yaml</code></td>
+</tr>
+<tr>
+<td><code>meta.rendered_date</code></td>
+<td>ISO-8601 date of the render (e.g. <code>"2026-03-23"</code>)</td>
+</tr>
+<tr>
+<td><code>meta.forma_version</code></td>
+<td>Installed forma version</td>
+</tr>
+<tr>
+<td><code>meta.project_dir</code></td>
+<td>Absolute path to the project root</td>
+</tr>
+<tr>
+<td><code>meta.presskit_root</code></td>
+<td>Absolute path two levels above the template directory</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="worked-example-cover-slide">Worked example: cover slide<a class="headerlink" href="#worked-example-cover-slide" title="Permanent link">&para;</a></h2>
+<p>The following traces a cover slide from <code>content.yaml</code> source values through the mapping file to the rendered LaTeX.</p>
+<p><strong><code>content.yaml</code></strong> (excerpt):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">engagement</span><span class="p">:</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Digital</span><span class="nv"> </span><span class="s">Transformation</span><span class="nv"> </span><span class="s">Strategy&quot;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A</span><span class="nv"> </span><span class="s">phased</span><span class="nv"> </span><span class="s">modernisation</span><span class="nv"> </span><span class="s">roadmap</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Acme</span><span class="nv"> </span><span class="s">Corp&quot;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nt">reference</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SCS-2026-001&quot;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2026-03-21&quot;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="nt">client</span><span class="p">:</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Acme</span><span class="nv"> </span><span class="s">Corp&quot;</span>
+</code></pre></div>
+<p><strong><code>slides.yaml</code></strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">resourceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SlideDocument</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nt">slides</span><span class="p">:</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cover</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:engagement.title&quot;</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:engagement.subtitle&quot;</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="nt">client</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:client.name&quot;</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">    </span><span class="nt">reference</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:engagement.reference&quot;</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:engagement.date&quot;</span>
+</code></pre></div>
+<p>After <code>load_document()</code> resolves the <code>!include</code> tags, the first slide dict is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;cover&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Digital Transformation Strategy&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    <span class="s2">&quot;subtitle&quot;</span><span class="p">:</span> <span class="s2">&quot;A phased modernisation roadmap for Acme Corp&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    <span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="s2">&quot;Acme Corp&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    <span class="s2">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;SCS-2026-001&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;2026-03-21&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong><code>_slides/cover.tex.j2</code></strong> (partial template):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}</span>[plain]
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  <span class="k">\vfill</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  <span class="k">\textbf</span><span class="nb">{</span>(( slide.title | le ))<span class="nb">}</span><span class="k">\\</span><span class="na">[0.5em]</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  <span class="k">\textit</span><span class="nb">{</span>(( slide.subtitle | le ))<span class="nb">}</span><span class="k">\\</span><span class="na">[1em]</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  (( slide.client | le )) <span class="k">\quad</span> <span class="k">\textbar</span> <span class="k">\quad</span> (( slide.date | format<span class="nb">_</span>date ))
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  <span class="k">\vfill</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}</span>
+</code></pre></div>
+<p>The <code>| le</code> filter (alias for <code>latex_escape</code>) ensures that any special characters in the content — ampersands, underscores, percent signs — are escaped before LaTeX processes them. The <code>| format_date</code> filter converts <code>"2026-03-21"</code> to <code>"March 21, 2026"</code>.</p>
 
 
 
