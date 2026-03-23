@@ -177,3 +177,73 @@ After loading and validating, the mapping dict is passed to `render_template()` 
   (% endif %)
 (% endfor %)
 ```
+
+The full context also includes:
+
+| Key | Description |
+|-----|-------------|
+| `style` | Style dict from `style.yaml` |
+| `meta.rendered_date` | ISO-8601 date of the render (e.g. `"2026-03-23"`) |
+| `meta.forma_version` | Installed forma version |
+| `meta.project_dir` | Absolute path to the project root |
+| `meta.presskit_root` | Absolute path two levels above the template directory |
+
+---
+
+## Worked example: cover slide
+
+The following traces a cover slide from `content.yaml` source values through the mapping file to the rendered LaTeX.
+
+**`content.yaml`** (excerpt):
+
+```yaml
+engagement:
+  title: "Digital Transformation Strategy"
+  subtitle: "A phased modernisation roadmap for Acme Corp"
+  reference: "SCS-2026-001"
+  date: "2026-03-21"
+
+client:
+  name: "Acme Corp"
+```
+
+**`slides.yaml`**:
+
+```yaml
+resourceType: SlideDocument
+
+slides:
+  - type: cover
+    title: !include "@content.yaml:engagement.title"
+    subtitle: !include "@content.yaml:engagement.subtitle"
+    client: !include "@content.yaml:client.name"
+    reference: !include "@content.yaml:engagement.reference"
+    date: !include "@content.yaml:engagement.date"
+```
+
+After `load_document()` resolves the `!include` tags, the first slide dict is:
+
+```python
+{
+    "type": "cover",
+    "title": "Digital Transformation Strategy",
+    "subtitle": "A phased modernisation roadmap for Acme Corp",
+    "client": "Acme Corp",
+    "reference": "SCS-2026-001",
+    "date": "2026-03-21",
+}
+```
+
+**`_slides/cover.tex.j2`** (partial template):
+
+```latex
+\begin{frame}[plain]
+  \vfill
+  \textbf{(( slide.title | le ))}\\[0.5em]
+  \textit{(( slide.subtitle | le ))}\\[1em]
+  (( slide.client | le )) \quad \textbar \quad (( slide.date | format_date ))
+  \vfill
+\end{frame}
+```
+
+The `| le` filter (alias for `latex_escape`) ensures that any special characters in the content — ampersands, underscores, percent signs — are escaped before LaTeX processes them. The `| format_date` filter converts `"2026-03-21"` to `"March 21, 2026"`.
