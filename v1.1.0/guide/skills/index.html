@@ -637,6 +637,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapping files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../templates/" class="md-nav__link">
         
   
@@ -1267,9 +1295,8 @@
 
 
 <h1 id="skills">Skills<a class="headerlink" href="#skills" title="Permanent link">&para;</a></h1>
-<p>Skills are data-fetching modules in the <code>skills/</code> git submodule
-(<code>slivern-corporate-services/forma-skills</code>). Each skill pulls data from an
-external system and returns a dict that the composer can use.</p>
+<p>Skills are data-fetching modules — each a directory containing a <code>fetch.py</code> file that returns a dict. The composer uses them to pull live data (tasks, docs, meeting notes) into content generation.</p>
+<p>Skills live outside the forma repo. Pass their parent directory to <code>forma compose enrich</code> via <code>--skills-dir</code> (defaults to a <code>skills/</code> directory relative to the repo root).</p>
 <h2 id="available-skills">Available skills<a class="headerlink" href="#available-skills" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1338,7 +1365,7 @@ external system and returns a dict that the composer can use.</p>
 <h2 id="writing-a-new-skill">Writing a new skill<a class="headerlink" href="#writing-a-new-skill" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
-<p>Create <code>skills/my_skill/fetch.py</code> in the submodule:</p>
+<p>Create <code>my_skill/fetch.py</code> in your skills directory:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">fetch</span><span class="p">(</span><span class="n">list_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
@@ -1346,9 +1373,6 @@ external system and returns a dict that the composer can use.</p>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="c1"># ... fetch and return data</span>
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}</span>
 </code></pre></div>
-</li>
-<li>
-<p>Add its env vars to <code>.env.example</code>.</p>
 </li>
 <li>
 <p>Use it:</p>
@@ -1368,8 +1392,8 @@ external system and returns a dict that the composer can use.</p>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">results</span> <span class="o">=</span> <span class="n">load_skills</span><span class="p">(</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;skills&quot;</span><span class="p">),</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="p">[</span><span class="s2">&quot;clickup&quot;</span><span class="p">,</span> <span class="s2">&quot;meeting_notes&quot;</span><span class="p">],</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">skills_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/path/to/your/skills&quot;</span><span class="p">),</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">skill_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;clickup&quot;</span><span class="p">,</span> <span class="s2">&quot;meeting_notes&quot;</span><span class="p">],</span>
 <a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;notes/meeting.md&quot;</span><span class="p">,</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">)</span>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># results = {&quot;clickup&quot;: {...}, &quot;meeting_notes&quot;: {...}}</span>

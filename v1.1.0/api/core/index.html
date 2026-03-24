@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#core" class="md-skip">
+        <a href="#core-api-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -632,6 +632,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guide/mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapping files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guide/templates/" class="md-nav__link">
         
   
@@ -1011,19 +1039,79 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#forma.core.base" class="md-nav__link">
+  <a href="#formaconfig" class="md-nav__link">
     <span class="md-ellipsis">
       
-        base
+        FormaConfig
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="base">
+    <nav class="md-nav" aria-label="FormaConfig">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forma.core.base.BaseContent" class="md-nav__link">
+  <a href="#fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formaconfigfrom_yamlpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FormaConfig.from_yaml(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolve methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#templateentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TemplateEntry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishoverride" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PublishOverride
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basecontent" class="md-nav__link">
     <span class="md-ellipsis">
       
         BaseContent
@@ -1031,63 +1119,25 @@
     </span>
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#forma.core.base.BaseStyle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BaseStyle
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#forma.core.base.FormaStyle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        FormaStyle
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#forma.core.config" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        config
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#forma.core.loader" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        loader
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="loader">
+    <nav class="md-nav" aria-label="BaseContent">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forma.core.loader.load_content_class" class="md-nav__link">
+  <a href="#basecontentfrom_yamlpath" class="md-nav__link">
     <span class="md-ellipsis">
       
-        load_content_class
+        BaseContent.from_yaml(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basecontentjson_schema-and-basecontentjson_schema_str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BaseContent.json_schema() and BaseContent.json_schema_str()
       
     </span>
   </a>
@@ -1100,13 +1150,240 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#forma.core.validator" class="md-nav__link">
+  <a href="#basestyle-and-formastyle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validator
+        BaseStyle and FormaStyle
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-loaders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document loaders
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Document loaders">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load_documentpath-base_dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_document(path, base_dir)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_contentpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_content(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_stylepath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_style(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_schemaresource_type-schema_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register_schema(resource_type, schema_path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include-tag-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        !include tag reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="!include tag reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-an-entire-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Load an entire file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-string-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extract a string field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extract a list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traverse-nested-dicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traverse nested dicts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traverse-list-elements-by-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traverse list elements by index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relative-paths-across-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relative paths across directories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validationresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValidationResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate_filepath-base_dir-schema_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_file(path, base_dir, *, schema_path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate_projectproject_dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_project(project_dir)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1237,19 +1514,79 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#forma.core.base" class="md-nav__link">
+  <a href="#formaconfig" class="md-nav__link">
     <span class="md-ellipsis">
       
-        base
+        FormaConfig
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="base">
+    <nav class="md-nav" aria-label="FormaConfig">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forma.core.base.BaseContent" class="md-nav__link">
+  <a href="#fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formaconfigfrom_yamlpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FormaConfig.from_yaml(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolve methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#templateentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TemplateEntry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishoverride" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PublishOverride
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basecontent" class="md-nav__link">
     <span class="md-ellipsis">
       
         BaseContent
@@ -1257,63 +1594,25 @@
     </span>
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#forma.core.base.BaseStyle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BaseStyle
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#forma.core.base.FormaStyle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        FormaStyle
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#forma.core.config" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        config
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#forma.core.loader" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        loader
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="loader">
+    <nav class="md-nav" aria-label="BaseContent">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forma.core.loader.load_content_class" class="md-nav__link">
+  <a href="#basecontentfrom_yamlpath" class="md-nav__link">
     <span class="md-ellipsis">
       
-        load_content_class
+        BaseContent.from_yaml(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basecontentjson_schema-and-basecontentjson_schema_str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BaseContent.json_schema() and BaseContent.json_schema_str()
       
     </span>
   </a>
@@ -1326,13 +1625,240 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#forma.core.validator" class="md-nav__link">
+  <a href="#basestyle-and-formastyle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validator
+        BaseStyle and FormaStyle
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-loaders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document loaders
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Document loaders">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load_documentpath-base_dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_document(path, base_dir)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_contentpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_content(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_stylepath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_style(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_schemaresource_type-schema_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register_schema(resource_type, schema_path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include-tag-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        !include tag reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="!include tag reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-an-entire-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Load an entire file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-string-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extract a string field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extract a list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traverse-nested-dicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traverse nested dicts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traverse-list-elements-by-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traverse list elements by index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relative-paths-across-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relative paths across directories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validationresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValidationResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate_filepath-base_dir-schema_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_file(path, base_dir, *, schema_path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate_projectproject_dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_project(project_dir)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1356,450 +1882,304 @@
   
 
 
-<h1 id="core">Core<a class="headerlink" href="#core" title="Permanent link">&para;</a></h1>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<h2 id="forma.core.base" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>forma.core.base</code>
-
-
-<a href="#forma.core.base" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents first">
-
-        <p>Base Pydantic models for forma content and style.</p>
-<p>Projects extend BaseContent and BaseStyle to define their own
-domain-specific schemas. The engine works with any subclass.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h3 id="forma.core.base.BaseContent" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BaseContent</code>
-
-
-<a href="#forma.core.base.BaseContent" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
-
-
-
-        <p>Base for content.yaml models. Projects extend this with their
-own domain-specific fields (engagement, client, solution, etc.).</p>
-<p>The engine accepts any subclass — it builds a Jinja2 context
-from the model's fields and passes it to the template.</p>
-
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h3 id="forma.core.base.BaseStyle" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BaseStyle</code>
-
-
-<a href="#forma.core.base.BaseStyle" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
-
-
-
-        <p>Base for style.yaml models. Projects extend this with their
-own branding tokens (colors, typography, layout, etc.).</p>
-<p>FormaStyle (below) provides the full default implementation.
-Projects that need custom fields should subclass FormaStyle.</p>
-
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h3 id="forma.core.base.FormaStyle" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>FormaStyle</code>
-
-
-<a href="#forma.core.base.FormaStyle" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="            BaseStyle (forma.core.base.BaseStyle)" href="#forma.core.base.BaseStyle">BaseStyle</a></code></p>
-
-
-
-        <p>Full style model with typed branding tokens.
-Loaded by the renderer from style.yaml.</p>
-
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-module">
-
-
-
-<h2 id="forma.core.config" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>forma.core.config</code>
-
-
-<a href="#forma.core.config" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents first">
-
-        <p>forma.yaml project config loader.</p>
-<p>Each document project root contains a forma.yaml that declares:
-  - schema: importable path to a BaseContent subclass
-  - style:  path to style.yaml (relative to project root)
-  - templates: named template directories
-  - output_dir: where to write rendered artifacts
-  - publishing: Google Drive config (overrides schema defaults)</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-module">
-
-
-
-<h2 id="forma.core.loader" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>forma.core.loader</code>
-
-
-<a href="#forma.core.loader" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents first">
-
-        <p>Dynamic schema class loader.</p>
-<p>Given a dotted path like "schemas.proposal.content:ProposalContent",
-imports the module and returns the class. Works with any BaseContent subclass
-defined anywhere on sys.path — including in-project schemas/ directories.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="forma.core.loader.load_content_class" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">load_content_class</span><span class="p">(</span><span class="n">schema_path</span><span class="p">,</span> <span class="n">project_root</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-<a href="#forma.core.loader.load_content_class" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Load a BaseContent subclass from a dotted import path.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>schema_path</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>"module.path:ClassName"</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>project_root</code>
-            </td>
-            <td>
-                  <code><span title="pathlib.Path">Path</span> | None</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>if provided, added to sys.path so project-local
-          schemas/ directory is importable.</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code>src/forma/core/loader.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span>
-<span class="normal"><a href="#__codelineno-0-23">23</a></span>
-<span class="normal"><a href="#__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#__codelineno-0-31">31</a></span>
-<span class="normal"><a href="#__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#__codelineno-0-33">33</a></span>
-<span class="normal"><a href="#__codelineno-0-34">34</a></span>
-<span class="normal"><a href="#__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#__codelineno-0-36">36</a></span>
-<span class="normal"><a href="#__codelineno-0-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_content_class</span><span class="p">(</span><span class="n">schema_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseContent</span><span class="p">]:</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="sd">    Load a BaseContent subclass from a dotted import path.</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="sd">        schema_path: &quot;module.path:ClassName&quot;</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="sd">        project_root: if provided, added to sys.path so project-local</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="sd">                      schemas/ directory is importable.</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="k">if</span> <span class="n">project_root</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">project_root</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">project_root</span><span class="p">))</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="n">module_path</span><span class="p">,</span> <span class="n">class_name</span> <span class="o">=</span> <span class="n">_split_path</span><span class="p">(</span><span class="n">schema_path</span><span class="p">)</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="bp">cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">BaseContent</span><span class="p">)):</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35"></a>        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">schema_path</span><span class="si">}</span><span class="s2"> must be a subclass of BaseContent, got </span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a>
-<a id="__codelineno-0-37" name="__codelineno-0-37"></a>    <span class="k">return</span> <span class="bp">cls</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-module">
-
-
-
-<h2 id="forma.core.validator" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>forma.core.validator</code>
-
-
-<a href="#forma.core.validator" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents first">
-
-        <p>Content and style validation with human-readable error output.</p>
-<p>Validates content.yaml against the project's declared schema class,
-checks that all asset paths referenced in the content exist on disk,
-and prints structured errors via rich.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h1 id="core-api-reference">Core API Reference<a class="headerlink" href="#core-api-reference" title="Permanent link">&para;</a></h1>
+<p>The <code>forma.core</code> package handles project configuration, schema loading, document parsing, and validation. These are the foundational components that every rendering pipeline depends on.</p>
+<hr />
+<h2 id="formaconfig">FormaConfig<a class="headerlink" href="#formaconfig" title="Permanent link">&para;</a></h2>
+<p><code>FormaConfig</code> represents the contents of a project's <code>forma.yaml</code> file. It is a Pydantic model and is the authoritative source of truth for which content file, style file, templates, and output location a project uses.</p>
+<h3 id="fields">Fields<a class="headerlink" href="#fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>resourceType</code></td>
+<td><code>str</code></td>
+<td><code>"FormaConfig"</code></td>
+<td>Discriminator field. Must be <code>FormaConfig</code> in YAML.</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td><code>str</code></td>
+<td><code>"content.yaml"</code></td>
+<td>Path to the content file, relative to the project root.</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>str</code></td>
+<td><code>"style.yaml"</code></td>
+<td>Path to the style file, relative to the project root.</td>
+</tr>
+<tr>
+<td><code>templates</code></td>
+<td><code>dict[str, TemplateEntry]</code></td>
+<td><code>{}</code></td>
+<td>Named template entries. Each key is a template name (e.g. <code>slides</code>, <code>report</code>).</td>
+</tr>
+<tr>
+<td><code>output_dir</code></td>
+<td><code>str</code></td>
+<td><code>"../../var/builds"</code></td>
+<td>Where rendered artifacts are written, relative to the project root.</td>
+</tr>
+<tr>
+<td><code>publishing</code></td>
+<td><code>PublishOverride</code></td>
+<td>(empty)</td>
+<td>Google Drive publishing overrides.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="formaconfigfrom_yamlpath"><code>FormaConfig.from_yaml(path)</code><a class="headerlink" href="#formaconfigfrom_yamlpath" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">from_yaml</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FormaConfig</span>
+</code></pre></div>
+<p>Load a <code>forma.yaml</code> file from disk and return a validated <code>FormaConfig</code> instance. Raises a Pydantic <code>ValidationError</code> if the file does not conform to the schema.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">config</span> <span class="o">=</span> <span class="n">FormaConfig</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;documents/my-client/forma.yaml&quot;</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="resolve-methods">Resolve methods<a class="headerlink" href="#resolve-methods" title="Permanent link">&para;</a></h3>
+<p>These methods convert the relative path strings stored in the config into absolute <code>Path</code> objects by resolving them against the project root.</p>
+<p><strong><code>resolve_template_path(name, project_root)</code></strong> — Returns the absolute path to the template directory for the named entry. Raises <code>KeyError</code> if the name is not in <code>templates</code>.</p>
+<p><strong><code>resolve_mapping_path(name, project_root)</code></strong> — Returns the absolute path to the mapping file (e.g. <code>slides.yaml</code>) for the named template entry.</p>
+<p><strong><code>resolve_style_path(project_root)</code></strong> — Returns the absolute path to the style YAML file.</p>
+<p><strong><code>resolve_content_path(project_root)</code></strong> — Returns the absolute path to the content YAML file.</p>
+<p><strong><code>resolve_output_dir(project_root)</code></strong> — Returns the absolute path to the output directory. The directory is not created by this call.</p>
+<p>All five methods have the same signature pattern:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">resolve_</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,]</span> <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
+</code></pre></div>
+<hr />
+<h2 id="templateentry">TemplateEntry<a class="headerlink" href="#templateentry" title="Permanent link">&para;</a></h2>
+<p><code>TemplateEntry</code> is a Pydantic model that represents one entry in the <code>templates</code> dict of <code>forma.yaml</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path</code></td>
+<td><code>str</code></td>
+<td>Path to the template directory, relative to the project root.</td>
+</tr>
+<tr>
+<td><code>mapping</code></td>
+<td><code>str</code></td>
+<td>Path to the mapping file (e.g. <code>slides.yaml</code>), relative to the project root.</td>
+</tr>
+</tbody>
+</table>
+<p>Example <code>forma.yaml</code> fragment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">templates</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">slides</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../../templates/proposal-slides</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">mapping</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slides.yaml</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">report</span><span class="p">:</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../../templates/proposal-report</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">mapping</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">report.yaml</span>
+</code></pre></div>
+<hr />
+<h2 id="publishoverride">PublishOverride<a class="headerlink" href="#publishoverride" title="Permanent link">&para;</a></h2>
+<p><code>PublishOverride</code> is a Pydantic model for the <code>publishing</code> block inside <code>forma.yaml</code>. It overrides per-project publishing settings.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>google_drive_folder_id</code></td>
+<td><code>str</code></td>
+<td><code>""</code></td>
+<td>Drive folder ID where rendered PDFs are uploaded.</td>
+</tr>
+<tr>
+<td><code>filename_prefix</code></td>
+<td><code>str</code></td>
+<td><code>""</code></td>
+<td>Prefix prepended to uploaded filenames.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="basecontent">BaseContent<a class="headerlink" href="#basecontent" title="Permanent link">&para;</a></h2>
+<p><code>BaseContent</code> is the Pydantic base class that all project content schemas extend. The rendering engine accepts any subclass — it builds a Jinja2 context from the model's fields and passes them to the template.</p>
+<p>Projects define their own schema by subclassing <code>BaseContent</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">forma.core.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseContent</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">ProposalContent</span><span class="p">(</span><span class="n">BaseContent</span><span class="p">):</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">engagement</span><span class="p">:</span> <span class="n">Engagement</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">client</span><span class="p">:</span> <span class="n">Client</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">executive_summary</span><span class="p">:</span> <span class="n">ExecutiveSummary</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="c1"># ... additional domain fields</span>
+</code></pre></div>
+<h3 id="basecontentfrom_yamlpath"><code>BaseContent.from_yaml(path)</code><a class="headerlink" href="#basecontentfrom_yamlpath" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">from_yaml</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseContent</span>
+</code></pre></div>
+<p>Load a content YAML file and validate it against the subclass schema. This is a plain <code>yaml.safe_load</code> — it does not resolve <code>!include</code> tags. Use <code>load_document()</code> for mapping files that use <code>!include</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">content</span> <span class="o">=</span> <span class="n">ProposalContent</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;documents/my-client/content.yaml&quot;</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="basecontentjson_schema-and-basecontentjson_schema_str"><code>BaseContent.json_schema()</code> and <code>BaseContent.json_schema_str()</code><a class="headerlink" href="#basecontentjson_schema-and-basecontentjson_schema_str" title="Permanent link">&para;</a></h3>
+<p>Return the JSON Schema for the content class as a dict or formatted string respectively. Used internally by the composer to build Claude's system prompt.</p>
+<hr />
+<h2 id="basestyle-and-formastyle">BaseStyle and FormaStyle<a class="headerlink" href="#basestyle-and-formastyle" title="Permanent link">&para;</a></h2>
+<p><code>BaseStyle</code> is the Pydantic base for <code>style.yaml</code> models. Like <code>BaseContent</code>, projects may extend it with custom branding tokens. It has a single typed field:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>publishing</code></td>
+<td><code>PublishingConfig</code></td>
+<td>Google Drive settings embedded in the style file.</td>
+</tr>
+</tbody>
+</table>
+<p><code>FormaStyle</code> extends <code>BaseStyle</code> with fully typed branding sections:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>brand</code></td>
+<td><code>BrandConfig</code></td>
+<td>Logo paths.</td>
+</tr>
+<tr>
+<td><code>colors</code></td>
+<td><code>ColorConfig</code></td>
+<td>Hex color tokens (primary, accent, grays, text).</td>
+</tr>
+<tr>
+<td><code>typography</code></td>
+<td><code>TypographyConfig</code></td>
+<td>Font families and size scale.</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td><code>LayoutConfig</code></td>
+<td>Page size and slide aspect ratio.</td>
+</tr>
+</tbody>
+</table>
+<p>Both classes accept <code>extra = "allow"</code>, meaning arbitrary additional fields in <code>style.yaml</code> will pass through to templates without validation errors.</p>
+<hr />
+<h2 id="document-loaders">Document loaders<a class="headerlink" href="#document-loaders" title="Permanent link">&para;</a></h2>
+<p>These functions are in <code>forma.core.loader</code> and handle reading YAML files from disk.</p>
+<h3 id="load_documentpath-base_dir"><code>load_document(path, base_dir)</code><a class="headerlink" href="#load_documentpath-base_dir" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_document</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">base_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+<p>Load a mapping file (<code>slides.yaml</code>, <code>report.yaml</code>, etc.) and resolve all <code>!include</code> tags. The <code>base_dir</code> argument is the project root — all <code>@file</code> references in <code>!include</code> tags are resolved relative to it.</p>
+<p>This function does <strong>not</strong> validate the result against a schema. Call <code>validate_file()</code> separately if validation is needed.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">load_document</span><span class="p">(</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;documents/my-client/slides.yaml&quot;</span><span class="p">),</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">base_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;documents/my-client&quot;</span><span class="p">),</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">)</span>
+</code></pre></div>
+<h3 id="load_contentpath"><code>load_content(path)</code><a class="headerlink" href="#load_contentpath" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_content</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+<p>Load a plain YAML file (no <code>!include</code> resolution). Use this for <code>content.yaml</code> and <code>forma.yaml</code>, which do not use the <code>!include</code> tag. Raises <code>FileNotFoundError</code> if the file does not exist.</p>
+<p>The key difference from <code>load_document()</code> is that this function uses <code>yaml.safe_load</code> directly, while <code>load_document()</code> installs a custom constructor that understands the <code>!include</code> tag.</p>
+<h3 id="load_stylepath"><code>load_style(path)</code><a class="headerlink" href="#load_stylepath" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_style</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+<p>Load a <code>style.yaml</code> file into a plain dict. Returns an empty dict if the file does not exist — style is always optional.</p>
+<h3 id="register_schemaresource_type-schema_path"><code>register_schema(resource_type, schema_path)</code><a class="headerlink" href="#register_schemaresource_type-schema_path" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">register_schema</span><span class="p">(</span><span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">schema_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+<p>Register a new <code>resourceType</code> → JSON Schema file mapping at runtime. The built-in registry covers <code>FormaConfig</code>, <code>SlideDocument</code>, <code>ReportDocument</code>, and <code>ProposalContent</code>. Call this function before any validation if your project defines a custom <code>resourceType</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">register_schema</span><span class="p">(</span><span class="s2">&quot;MyCustomDocument&quot;</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;schemas/my-custom.schema.yaml&quot;</span><span class="p">))</span>
+</code></pre></div>
+<hr />
+<h2 id="include-tag-reference"><code>!include</code> tag reference<a class="headerlink" href="#include-tag-reference" title="Permanent link">&para;</a></h2>
+<p>The <code>!include</code> tag is a YAML extension that mapping files use to pull values from other YAML files — typically <code>content.yaml</code>. It is only active when loading with <code>load_document()</code>. Plain <code>yaml.safe_load</code> does not recognise it.</p>
+<h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>!include &quot;@&lt;file-ref&gt;[:&lt;dot-path&gt;]&quot;
+</code></pre></div>
+<p>The <code>@</code> prefix is required. The file reference is resolved relative to the project root (where <code>forma.yaml</code> lives), regardless of where the mapping file itself sits.</p>
+<h3 id="load-an-entire-file">Load an entire file<a class="headerlink" href="#load-an-entire-file" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">data</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml&quot;</span>
+</code></pre></div>
+<p>The value of <code>data</code> becomes the entire parsed content of <code>content.yaml</code> as a dict.</p>
+<h3 id="extract-a-string-field">Extract a string field<a class="headerlink" href="#extract-a-string-field" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:engagement.title&quot;</span>
+</code></pre></div>
+<p>Loads <code>content.yaml</code> and traverses the path <code>engagement → title</code>, returning the string value.</p>
+<h3 id="extract-a-list">Extract a list<a class="headerlink" href="#extract-a-list" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">key_points</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:executive_summary.key_points&quot;</span>
+</code></pre></div>
+<p>Returns the list at <code>executive_summary.key_points</code>. The result is a proper YAML list, not a string — it can be iterated in templates.</p>
+<h3 id="traverse-nested-dicts">Traverse nested dicts<a class="headerlink" href="#traverse-nested-dicts" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:client.contact.email&quot;</span>
+</code></pre></div>
+<p>Each dot-separated segment is treated as a dict key lookup.</p>
+<h3 id="traverse-list-elements-by-index">Traverse list elements by index<a class="headerlink" href="#traverse-list-elements-by-index" title="Permanent link">&para;</a></h3>
+<p>When a path segment is a plain integer, it is used as a list index:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">first_phase</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@content.yaml:timeline.phases.0&quot;</span>
+</code></pre></div>
+<p>Retrieves the first element of the <code>phases</code> list.</p>
+<h3 id="relative-paths-across-directories">Relative paths across directories<a class="headerlink" href="#relative-paths-across-directories" title="Permanent link">&para;</a></h3>
+<p>The <code>@</code> path is always relative to the project root, not to the mapping file's location. Use <code>../</code> to escape the project root if needed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">colors</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="s">&quot;@../clients/sigil/style.yaml:colors.primary_dark&quot;</span>
+</code></pre></div>
+<h3 id="caching">Caching<a class="headerlink" href="#caching" title="Permanent link">&para;</a></h3>
+<p>Within a single <code>load_document()</code> call, each file is read from disk only once. Subsequent <code>!include</code> tags referencing the same file reuse the cached parse result.</p>
+<h3 id="error-messages">Error messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h3>
+<p>If the referenced file does not exist, <code>FileNotFoundError</code> is raised with the resolved path, the <code>base_dir</code>, and the original <code>@ref</code> string. If a dot-path key does not exist, <code>KeyError</code> is raised with the full reference and the available keys at the failing level.</p>
+<hr />
+<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h2>
+<p><code>forma.core.validator</code> validates YAML documents against their JSON Schema files. Schemas are stored in YAML format using JSON Schema draft-07.</p>
+<h3 id="validationresult"><code>ValidationResult</code><a class="headerlink" href="#validationresult" title="Permanent link">&para;</a></h3>
+<p><code>ValidationResult</code> is returned by all validation functions. It has two fields:</p>
+<ul>
+<li><code>errors: list[str]</code> — fatal errors that make the document invalid.</li>
+<li><code>warnings: list[str]</code> — non-fatal notices (e.g. missing optional schema, <code>jsonschema</code> not installed).</li>
+</ul>
+<p>The <code>.ok</code> property returns <code>True</code> when <code>errors</code> is empty. Call <code>.print()</code> to display a formatted summary to the terminal using Rich.</p>
+<h3 id="validate_filepath-base_dir-schema_path"><code>validate_file(path, base_dir, *, schema_path)</code><a class="headerlink" href="#validate_filepath-base_dir-schema_path" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">validate_file</span><span class="p">(</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    <span class="n">base_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>    <span class="n">schema_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValidationResult</span>
+</code></pre></div>
+<p>Load a single YAML file and validate it. If <code>base_dir</code> is provided, <code>!include</code> tags are resolved before validation (appropriate for mapping files). If <code>base_dir</code> is <code>None</code>, the file is loaded as plain YAML (appropriate for <code>content.yaml</code> and <code>forma.yaml</code>).</p>
+<p>The schema is determined automatically from the <code>resourceType</code> field in the document, using the built-in registry. Supply <code>schema_path</code> explicitly to override.</p>
+<h3 id="validate_projectproject_dir"><code>validate_project(project_dir)</code><a class="headerlink" href="#validate_projectproject_dir" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">validate_project</span><span class="p">(</span><span class="n">project_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValidationResult</span>
+</code></pre></div>
+<p>Validate all YAML files in a project directory in one call. This covers:</p>
+<ul>
+<li><code>content.yaml</code> — loaded as plain YAML</li>
+<li><code>slides.yaml</code>, <code>report.yaml</code>, <code>brief.yaml</code> — loaded with <code>!include</code> resolution if present</li>
+<li><code>forma.yaml</code> — loaded as plain YAML</li>
+</ul>
+<p>Returns a single <code>ValidationResult</code> that aggregates errors and warnings from all files.</p>
 
 
 
