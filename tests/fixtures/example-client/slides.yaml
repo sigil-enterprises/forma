@@ -1,18 +1,14 @@
 resourceType: SlideDocument
-
+title: !include "@content.yaml:engagement.title"
 slides:
-  - type: cover
+  - type: title
     title: !include "@content.yaml:engagement.title"
-    subtitle: !include "@content.yaml:engagement.subtitle"
-    client: !include "@content.yaml:client.name"
-    reference: !include "@content.yaml:engagement.reference"
-    date: !include "@content.yaml:engagement.date"
-
-  - type: exec_summary
-    headline: !include "@content.yaml:executive_summary.headline"
-    key_points: !include "@content.yaml:executive_summary.key_points"
-
+    subtitle: !include "@content.yaml:client.name"
+  - type: problem
+    title: !include "@content.yaml:problem.title"
+    content: !include "@content.yaml:problem.description"
+  - type: solution
+    title: !include "@content.yaml:solution.title"
+    content: !include "@content.yaml:solution.description"
   - type: closing
-    tagline: !include "@content.yaml:closing.tagline"
-    email: !include "@content.yaml:closing.email"
-    website: !include "@content.yaml:closing.website"
+    logo: !include "@content.yaml:closing.logo"

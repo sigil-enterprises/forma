@@ -1,18 +1,14 @@
 resourceType: FormaConfig
-
 content: content.yaml
 style: style.yaml
-
 templates:
   slides:
-    path: ../../tests/fixtures/templates/proposal-slides-html
+    path: ../templates/proposal-slides-html
     mapping: slides.yaml
   report:
-    path: ../../tests/fixtures/templates/proposal-report
+    path: ../templates/proposal-report
     mapping: report.yaml
-
 output_dir: ../../var/builds/example-client
-
 publishing:
   google_drive_folder_id: ""
-  filename_prefix: "SLVR-EXAMPLE"
+  filename_prefix: "SLVR"

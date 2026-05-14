@@ -1,0 +1,256 @@
+resourceType: ProposalContent
+
+engagement:
+  title: "aHUS Expert Recommendations & Clinical Guidance"
+  subtitle: "Modified Delphi Expert Panel — Ravulizumab Positioning in Complex Scenarios"
+  reference: "SGLR-2026-ALEXION-001"
+  date: "2026-01-30"
+  version: "0.2.0"
+  confidentiality: confidential
+  language: en
+
+client:
+  name: "Alexion, AstraZeneca Rare Disease"
+  industry: "Rare Disease Pharmaceuticals"
+  size: "Global rare disease division"
+  contact:
+    name: "Torcuato Fernández"
+    title: "Medical Affairs"
+    email: ""
+
+executive_summary:
+  headline: "Generating expert consensus on Ravulizumab positioning in complex aHUS scenarios through a Modified Delphi methodology"
+  body: >
+    Sigil Scientific Enterprises proposes to collaborate with Alexion to design and
+    facilitate an Expert Panel project focused on atypical Haemolytic Uraemic Syndrome
+    (aHUS). Adhering to a robust scientific framework, this initiative utilises a
+    Modified Delphi-based Expert Panel methodology to generate clinically actionable
+    guidance on the positioning of Ravulizumab in complex patient scenarios — areas
+    where current guidelines are absent or ambiguous. The project will convene six
+    distinguished Key Opinion Leaders in Nephrology, synthesising their expertise into
+    a peer-reviewed publication and a scientific congress poster.
+  key_points:
+    - "Modified Delphi methodology — structured, quantifiable, compliant with TARC requirements"
+    - "6 KOL Nephrologists engaged via 1:1 interviews and a virtual plenary consensus meeting"
+    - "Deliverables: peer-reviewed manuscript (English + Spanish) and congress poster"
+    - "Full February–July timeline with manuscript submission before summer break"
+    - "End-to-end HCP management including FMV honoraria and compliance documentation"
+
+context:
+  problem_statement: >
+    aHUS is a rare, life-threatening disease driven by complement dysregulation.
+    While Ravulizumab is established in standard scenarios, clinical practice reveals
+    significant variability in complex cases — post-transplant patients, paediatric
+    presentations, and overlapping thrombotic microangiopathy. No specific guidelines
+    exist for these scenarios, leaving clinicians without a validated evidence base.
+    The gap between clinical reality and published guidance creates uncertainty, delays
+    treatment, and risks suboptimal patient outcomes.
+  pain_points:
+    - title: "Guideline Gaps in Complex Scenarios"
+      description: "No published consensus exists for Ravulizumab use in post-transplant patients, paediatric cases, or overlap TMA presentations."
+    - title: "Clinical Variability"
+      description: "Treatment decisions in complex aHUS cases vary significantly across centres, leading to inconsistent outcomes and delayed initiation."
+    - title: "No Quantified Expert Alignment"
+      description: "Existing expert opinion is anecdotal. There is no structured, quantifiable measure of clinical agreement to guide practice or policy."
+    - title: "TARC Compliance Requirement"
+      description: "Internal approval processes require a scientifically grounded research framework — an informal advisory board does not satisfy this."
+  current_state:
+    description: "Clinical evidence landscape for Ravulizumab in aHUS complex scenarios."
+    metrics:
+      - label: "Published guidelines for post-transplant aHUS"
+        value: "None"
+      - label: "KOLs in target panel"
+        value: "6"
+      - label: "Consensus threshold"
+        value: "≥75%"
+      - label: "Target publication deadline"
+        value: "July 2026"
+
+solution:
+  overview: >
+    Sigil proposes a four-step Modified Delphi Expert Panel, generating quantifiable
+    clinical consensus through structured individual interviews followed by group voting.
+    The methodology produces both a peer-reviewed publication and a congress poster,
+    while remaining fully compliant with TARC and FMV requirements.
+  pillars:
+    - title: "Evidence Baseline"
+      description: "Targeted narrative review of guidelines and literature to frame clinical vignettes and define the research questions."
+    - title: "Structured Expert Engagement"
+      description: "1:1 in-depth interviews with each KOL to generate qualitative insights, followed by a 9-point Likert scoring round to quantify agreement."
+    - title: "Scientific Dissemination"
+      description: "Full peer-reviewed manuscript in English and Spanish, plus a scientific congress poster — translating expert consensus into actionable clinical guidance."
+  differentiators:
+    - title: "Rigorous consensus methodology"
+      description: "Modified Delphi with defined consensus (≥75%) and divergence criteria, median scores, and IQR analysis — not a simple advisory board."
+    - title: "End-to-end HCP management"
+      description: "Sigil manages the full administrative lifecycle: contracting, FMV honoraria processing, compliance documentation, and reporting."
+    - title: "Senior clinical + scientific leadership"
+      description: "Tiago Taveira-Gomes (MD, PhD) and João Gancho Figueiredo (MD) provide strategic and clinical oversight throughout, with a PhD-level medical writer for the manuscript."
+
+timeline:
+  phases:
+    - name: "February — Protocol & Governance"
+      duration: "1 month"
+      start_week: 1
+      end_week: 4
+      activities:
+        - "Scientific protocol drafting and methodology finalisation"
+        - "Committee submission and compliance review preparation"
+        - "Narrative review of existing aHUS literature"
+        - "Clinical vignette development"
+      deliverables:
+        - "Full study protocol"
+        - "Narrative review document"
+        - "Clinical vignette set for expert review"
+    - name: "March — Kick-off & Preparation"
+      duration: "1 month"
+      start_week: 5
+      end_week: 8
+      activities:
+        - "Group kick-off meeting with all 6 KOLs"
+        - "Pre-read materials sent to panel (approx. 1 hour prep per expert)"
+        - "1:1 interview scheduling and logistics"
+      deliverables:
+        - "Kick-off meeting minutes"
+        - "Pre-read pack distributed"
+        - "Interview schedule confirmed"
+    - name: "April – May — Interviews & Analysis"
+      duration: "2 months"
+      start_week: 9
+      end_week: 20
+      activities:
+        - "1:1 in-depth interviews with each of the 6 KOLs"
+        - "Synthesis and thematic analysis of qualitative findings"
+        - "Structured scoring sheet development"
+        - "Delphi scoring round distribution and collection"
+      deliverables:
+        - "Interview transcripts and synthesis report"
+        - "Scoring sheet with 9-point Likert responses"
+        - "Preliminary consensus analysis"
+    - name: "June – July — Plenary & Publication"
+      duration: "2 months"
+      start_week: 21
+      end_week: 28
+      activities:
+        - "Final plenary virtual meeting — voting on divergent statements"
+        - "Manuscript drafting (English)"
+        - "Spanish translation and localisation"
+        - "Congress poster design and production"
+      deliverables:
+        - "Final consensus report"
+        - "Peer-reviewed manuscript (English + Spanish)"
+        - "Scientific congress poster"
+
+investment:
+  currency: EUR
+  notes:
+    - "All values exclude VAT."
+    - "Publication fees (APCs, Open Access charges) are NOT included and will be invoiced separately at cost."
+    - "HCP honoraria (pass-through costs) are billed separately at Fair Market Value plus 3% administrative fee."
+  phases:
+    - name: "Part 1 — Protocol & Scientific Foundation (February)"
+      duration: "1 month"
+      line_items:
+        - service: "Study Protocol and Methodology Design"
+          quantity: 1
+          unit: project
+          rate_usd: 3500
+          total_usd: 3500
+        - service: "Narrative Review and Gap Analysis"
+          quantity: 1
+          unit: project
+          rate_usd: 3000
+          total_usd: 3000
+        - service: "Project Management (Phase 1)"
+          quantity: 1
+          unit: project
+          rate_usd: 750
+          total_usd: 750
+    - name: "Part 2 — Execution, Fieldwork & Dissemination (March – July)"
+      duration: "5 months"
+      line_items:
+        - service: "Virtual Expert Meetings — Kick-off and Final Alignment (×2)"
+          quantity: 2
+          unit: sessions
+          rate_usd: 1800
+          total_usd: 3600
+        - service: "One-to-One Expert Interviews (×6 KOLs)"
+          quantity: 6
+          unit: sessions
+          rate_usd: 850
+          total_usd: 5100
+        - service: "Medical Writing — Manuscript in English"
+          quantity: 1
+          unit: project
+          rate_usd: 6200
+          total_usd: 6200
+        - service: "Scientific Poster / Presentation Development"
+          quantity: 1
+          unit: project
+          rate_usd: 1800
+          total_usd: 1800
+        - service: "Project Management (Phase 2)"
+          quantity: 1
+          unit: project
+          rate_usd: 2600
+          total_usd: 2600
+
+team:
+  consultants:
+    - name: "Tiago Taveira-Gomes, MD PhD"
+      role: "Project Strategic Lead"
+      credentials: "MD, PhD"
+      experience_years: 12
+      education:
+        - "PhD in Medicine — Medical Education & Medical Informatics, University of Porto"
+        - "MSc in Information Engineering, University of Porto"
+        - "MD, University of Porto Faculty of Medicine"
+      expertise:
+        - "Real World Evidence and Implementation Science"
+        - "Data Science and Machine Learning in Healthcare"
+        - "Medical Education Research"
+        - "AI in Healthcare / Digital Health"
+    - name: "João Gancho Figueiredo, MD"
+      role: "Senior Clinical Lead"
+      credentials: "MD"
+      experience_years: 10
+      education:
+        - "Postgraduate in Healthcare Management, Nova School of Business and Economics"
+        - "Specialisation in Occupational Medicine, National School of Public Health"
+        - "Master's Degree in Medicine, University of Lisbon"
+      expertise:
+        - "Clinical Strategy and Medical Evidence Generation"
+        - "Health Plan Consultancy and Insurance Frameworks"
+        - "Clinical-to-Technical Translation"
+        - "Healthcare Interoperability"
+    - name: "TBA — Senior Medical Writer (PhD)"
+      role: "Scientific Writing Lead"
+      credentials: "PhD"
+      experience_years: 8
+      education:
+        - "PhD in Biomedical Sciences or related field"
+      expertise:
+        - "Peer-reviewed manuscript production"
+        - "Systematic and narrative literature review"
+        - "Statistical reporting and consensus methodology write-up"
+        - "Journal submission and revision management"
+  partners: []
+
+next_steps:
+  intro: "Upon acceptance of this proposal, we are ready to initiate immediately:"
+  steps:
+    - title: "Contract Execution"
+      description: "Signing of the service agreement and data processing addendum. Part 1 fees invoiced upon signing."
+      icon: pen
+    - title: "Protocol Kick-off"
+      description: "Immediate initiation of the study protocol, narrative review, and KOL identification and contracting."
+      icon: calendar
+    - title: "Compliance Submission"
+      description: "Preparation and submission of all required materials for TARC and internal Alexion approval review."
+      icon: check
+
+closing:
+  tagline: "Science that shapes clinical practice."
+  email: "tiago.taveira@sigil-enterprises.com"
+  website: "www.sigil.ae"
+  logo: "../presskit/brand/logos/sigil-color-white.png"

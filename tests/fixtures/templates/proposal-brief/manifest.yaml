@@ -1,7 +1,0 @@
-name: "Proposal Brief"
-description: "One-pager executive brief"
-format: document
-engine: xelatex
-entry: main.tex.j2
-compatible_schemas:
-  - "schemas.brief.content:BriefContent"

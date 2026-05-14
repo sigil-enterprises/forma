@@ -1,0 +1,18 @@
+resourceType: FormaConfig
+
+content: content.yaml
+style: ../../tests/fixtures/templates/style.yaml
+
+templates:
+  slides:
+    path: ../../tests/fixtures/templates/proposal-slides-html
+    mapping: slides.yaml
+  report:
+    path: ../../tests/fixtures/templates/proposal-report
+    mapping: report.yaml
+
+output_dir: ../../var/builds/cellar/nupco-vbhc-proposal
+
+publishing:
+  google_drive_folder_id: ""
+  filename_prefix: "SGLR-NUPCO"

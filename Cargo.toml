@@ -1,0 +1,33 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+clap = { version = "4.5", features = ["derive"] }
+clap-verbosity-flag = "3.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+jsonschema = "0.26"
+tera = "1.20"
+tempfile = "3.12"
+regex = "1.11"
+chrono = "0.4"
+thiserror = "2.0"
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+once_cell = "1.20"
+headless_chrome = "1.0"
+schemars = "0.8"
+
+forma-schema = { path = "crates/forma-schema" }
+forma-core = { path = "crates/forma-core" }
+forma-render = { path = "crates/forma-render" }
+forma-composer = { path = "crates/forma-composer" }

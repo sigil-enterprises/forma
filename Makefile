@@ -1,39 +1,46 @@
-.DEFAULT_GOAL := help
+ROOT := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+include $(ROOT).toolkit/targets/type.mk
 
-help:
-	@awk '{FS = ":.*##"} /^[A-z0-9_-]+:.*?##/ {printf "→ \033[36m%-21s\033[0m %s\n", $$1, $$2} /^##@/ {printf "\n\033[1m%s\033[0m\n", substr($$0, 5)}' $(MAKEFILE_LIST) && echo
+##@ Development
 
-
-##@ DevOps
-
-init: ## Initialise submodules and create .env
-	git submodule update --init --recursive
-	@test -f .env || (test -f .env.example && cp .env.example .env || touch .env)
-	@echo "✓ Submodules initialised"
-
-submodule-status: ## Show submodule status
-	git submodule status
-
-setup: ## Setup environment
-	pip install -e .[test,ci,docs]
+setup: ## Install dependencies
+	cargo fetch
 
 setup-dev: git-config ## Setup development environment
-	pip install -e .[dev]
+	cargo fetch
+	cargo install cargo-watch
 
 dev: ## Run tests on file change
-	ptw
+	cargo watch -x test
+
+##@ Build
+
+build: ## Build project
+	cargo build --release
+
+##@ Test
 
 test: ## Run tests
-	pytest .
+	cargo test
 
+##@ Lint
 
-build:
-	@echo "No build, check errors"
+clippy: ## Run clippy
+	cargo clippy -- -D warnings
 
+fmt: ## Run rustfmt
+	cargo fmt --check
 
-##@ Internal
+lint: clippy fmt ## Run all linting checks
 
-git-config:  ## Configure git to use current organization
+check: test clippy fmt ## Run all checks (test + clippy + fmt)
+
+##@ CI
+
+git-config: ## Configure git to push into current organization
 	git config --global --replace-all \
 		url."https://github.com/$$ORGANIZATION/".insteadOf \
-		"https://github.com/slivern-corporate-services/"
+		"https://github.com/sigil-enterprises/"
+
+help: ## Show help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[:a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)

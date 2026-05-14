@@ -1,35 +1,7 @@
-brand:
-  logo: "assets/logo.png"
-  logo_white: "assets/logo-white.png"
-
+resourceType: FormaStyle
 colors:
-  primary_dark: "#0B1D2A"
-  primary_accent: "#F58220"
-  white: "#FFFFFF"
-  gray_light: "#F5F5F5"
-  gray_medium: "#E0E0E0"
-  gray_dark: "#666666"
-  text_primary: "#333333"
-  text_secondary: "#666666"
-
-typography:
-  font_primary: "TeX Gyre Heros"
-  font_secondary: "TeX Gyre Heros"
-  sizes:
-    xs: 9
-    sm: 10
-    base: 11
-    md: 12
-    lg: 14
-    xl: 16
-    xl2: 20
-    xl3: 24
-    xl4: 32
-
-layout:
-  page_size: a4
-  slides_aspect_ratio: "169"
-
-publishing:
-  google_drive_folder_id: ""
-  filename_prefix: "SLVR"
+  primary: "#1a73e8"
+  secondary: "#5f6368"
+fonts:
+  heading: "Roboto"
+  body: "Roboto"

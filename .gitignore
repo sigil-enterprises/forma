@@ -1,47 +1,32 @@
-.cellar
+# Rust build artifacts
+/target/
+**/*.rs.bk
+*.pdb
 
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-*.egg
-.eggs/
-dist/
-build/
-.venv/
-venv/
+# Environments / secrets
 .env
+.envrc
+.local
 
-# Testing / coverage
-.pytest_cache/
-var/.coverage
-docs/reports/
-
-# Build outputs
-var/
-*.pdf
-*.aux
+# Logs
+logs
 *.log
-*.toc
-*.out
-*.synctex.gz
+nohup.out
 
-# IDE
-.vscode/settings.json
-.idea/
-
-# Docker
-.dockerignore
-
-# OS
+# OS noise
 .DS_Store
 Thumbs.db
 
-# Secrets (never commit)
-*.pem
-*.key
-service-account*.json
+# Editor / IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs
 site/
-src/forma/_version.py
-.cellar/
-.claude/
+
+# Note: .toolchain/ is NOT excluded here. The directory itself is tracked
+# (so its inner .gitignore is committed), and that inner .gitignore excludes
+# every chain-storage snapshot. Same pattern: .toolkit/ is fully tracked.

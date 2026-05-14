@@ -1,0 +1,88 @@
+name: Release validate
+
+# Reusable validate-tag workflow shipped via toolchain/base. Any Sigil repo
+# inheriting the base layer can invoke this from its own release pipeline:
+#
+#   jobs:
+#     validate-tag:
+#       uses: ./.github/workflows/release-validate.yml
+#     build:
+#       needs: validate-tag
+#       ...
+#
+# Enforces the SemVer policy from RELEASING.md so backward jumps,
+# re-numbered tags, and overwrites are impossible to ship.
+
+on:
+  workflow_call:
+    inputs:
+      allow_moving_tag:
+        description: >-
+          Optional moving-pointer tag name (e.g. "latest") to skip validation
+          for. The release workflow itself can set this when it re-pushes a
+          sticky pointer ref alongside the versioned tag.
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate tag format, ordering, and provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          ALLOW_MOVING: ${{ inputs.allow_moving_tag }}
+        run: |
+          set -euo pipefail
+
+          # 1. Moving pointer exemption (e.g. "latest" sticky ref managed by
+          # the release workflow itself).
+          if [ -n "$ALLOW_MOVING" ] && [ "$TAG" = "$ALLOW_MOVING" ]; then
+            echo "Skipping validation for moving ref '$TAG'"
+            exit 0
+          fi
+
+          # 2. Format: vMAJOR.MINOR.PATCH — no pre-release, no metadata.
+          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Tag '$TAG' does not match required format vMAJOR.MINOR.PATCH"
+            exit 1
+          fi
+
+          # 3. Provenance: tag commit must be reachable from origin/main.
+          TAG_SHA="$(git rev-parse "$TAG^{commit}")"
+          git fetch origin main
+          if ! git merge-base --is-ancestor "$TAG_SHA" origin/main; then
+            echo "::error::Tag '$TAG' points at $TAG_SHA which is not on main"
+            exit 1
+          fi
+
+          # 4. No overwrite: this tag must not already have a published release.
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::A release for '$TAG' already exists — releases are immutable"
+            exit 1
+          fi
+
+          # 5. Ordering: must be strictly greater than the highest existing
+          # vX.Y.Z release. We list+filter rather than `gh release view` so
+          # any sticky moving pointer (e.g. "latest") is ignored.
+          HIGHEST="$(gh release list --limit 100 --json tagName \
+              -q '.[] | select(.tagName | test("^v[0-9]+\\.[0-9]+\\.[0-9]+$")) | .tagName' \
+            | sed 's/^v//' | sort -V | tail -1 || echo '')"
+          if [ -n "$HIGHEST" ]; then
+            HIGHER="$(printf '%s\n%s\n' "$HIGHEST" "${TAG#v}" | sort -V | tail -1)"
+            if [ "v$HIGHER" != "$TAG" ] || [ "${TAG#v}" = "$HIGHEST" ]; then
+              echo "::error::Tag '$TAG' is not strictly greater than current highest release 'v$HIGHEST'"
+              exit 1
+            fi
+          fi
+
+          echo "Tag $TAG validated: format OK, on main, no overwrite, > 'v$HIGHEST'"

@@ -1,0 +1,336 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: "report-document@1"
+title: ReportDocument@1
+description: >
+  Format mapping file for a full document / report (report.yaml).
+  Hierarchical structure: chapters → sections → blocks.
+  Content values are typically pulled from content.yaml using !include tags.
+type: ReportDocument@1
+required:
+  - resourceType
+  - chapters
+properties:
+  resourceType:
+    type: string
+    const: ReportDocument@1
+  meta:
+    $ref: "#/definitions/ReportMeta"
+  cover:
+    $ref: "#/definitions/ReportCover"
+  chapters:
+    type: array
+    minItems: 1
+    items:
+      $ref: "#/definitions/Chapter"
+additionalProperties: false
+
+definitions:
+  ReportMeta:
+    type: object
+    properties:
+      title:
+        type: string
+      subtitle:
+        type: string
+      client:
+        type: string
+      reference:
+        type: string
+      date:
+        type: string
+      version:
+        type: string
+      confidentiality:
+        type: string
+        enum: [public, internal, confidential, strictly_confidential]
+    additionalProperties: false
+
+  ReportCover:
+    type: object
+    properties:
+      title:
+        type: string
+      subtitle:
+        type: string
+      client:
+        type: string
+      logo:
+        type: string
+      contact_name:
+        type: string
+      contact_email:
+        type: string
+      date:
+        type: string
+    additionalProperties: false
+
+  Chapter:
+    type: object
+    required: [title]
+    properties:
+      title:
+        type: string
+      sections:
+        type: array
+        items:
+          $ref: "#/definitions/Section"
+    additionalProperties: false
+
+  Section:
+    type: object
+    required: [title]
+    properties:
+      title:
+        type: string
+      blocks:
+        type: array
+        items:
+          $ref: "#/definitions/Block"
+    additionalProperties: false
+
+  Block:
+    oneOf:
+      - $ref: "#/definitions/ParagraphBlock"
+      - $ref: "#/definitions/HeadingBlock"
+      - $ref: "#/definitions/BulletListBlock"
+      - $ref: "#/definitions/TableBlock"
+      - $ref: "#/definitions/MetricsTableBlock"
+      - $ref: "#/definitions/InvestmentTableBlock"
+      - $ref: "#/definitions/TimelineBlock"
+      - $ref: "#/definitions/TeamBlock"
+      - $ref: "#/definitions/FigureBlock"
+      - $ref: "#/definitions/RawLatexBlock"
+
+  ParagraphBlock:
+    type: object
+    required: [type, text]
+    properties:
+      type:
+        type: string
+        const: paragraph
+      text:
+        type: string
+    additionalProperties: false
+
+  HeadingBlock:
+    type: object
+    required: [type, text]
+    properties:
+      type:
+        type: string
+        const: heading
+      text:
+        type: string
+      level:
+        type: integer
+        minimum: 1
+        maximum: 4
+        default: 3
+    additionalProperties: false
+
+  BulletListBlock:
+    type: object
+    required: [type, items]
+    properties:
+      type:
+        type: string
+        const: bullet_list
+      items:
+        type: array
+        items:
+          type: string
+    additionalProperties: false
+
+  TableBlock:
+    type: object
+    required: [type, headers, rows]
+    properties:
+      type:
+        type: string
+        const: table
+      caption:
+        type: string
+      headers:
+        type: array
+        items:
+          type: string
+      rows:
+        type: array
+        items:
+          type: array
+          items:
+            type: string
+    additionalProperties: false
+
+  MetricsTableBlock:
+    type: object
+    required: [type, metrics]
+    properties:
+      type:
+        type: string
+        const: metrics_table
+      caption:
+        type: string
+      metrics:
+        type: array
+        items:
+          type: object
+          required: [value, label]
+          properties:
+            value:
+              type: string
+            label:
+              type: string
+          additionalProperties: false
+    additionalProperties: false
+
+  InvestmentTableBlock:
+    type: object
+    required: [type, phases]
+    properties:
+      type:
+        type: string
+        const: investment_table
+      currency:
+        type: string
+        default: USD
+      notes:
+        type: array
+        items:
+          type: string
+      phases:
+        type: array
+        items:
+          type: object
+          required: [name, line_items]
+          properties:
+            name:
+              type: string
+            duration:
+              type: string
+            line_items:
+              type: array
+              items:
+                type: object
+                required: [service, total_usd]
+                properties:
+                  service:
+                    type: string
+                  quantity:
+                    type: number
+                  unit:
+                    type: string
+                  rate_usd:
+                    type: number
+                  total_usd:
+                    type: number
+                additionalProperties: false
+          additionalProperties: false
+    additionalProperties: false
+
+  TimelineBlock:
+    type: object
+    required: [type, phases]
+    properties:
+      type:
+        type: string
+        const: timeline
+      phases:
+        type: array
+        items:
+          type: object
+          required: [name]
+          properties:
+            name:
+              type: string
+            duration:
+              type: string
+            start_week:
+              type: integer
+            end_week:
+              type: integer
+            activities:
+              type: array
+              items:
+                type: string
+            deliverables:
+              type: array
+              items:
+                type: string
+          additionalProperties: false
+    additionalProperties: false
+
+  TeamBlock:
+    type: object
+    required: [type, consultants]
+    properties:
+      type:
+        type: string
+        const: team
+      consultants:
+        type: array
+        items:
+          type: object
+          required: [name, role]
+          properties:
+            name:
+              type: string
+            role:
+              type: string
+            credentials:
+              type: string
+            experience_years:
+              type: integer
+            education:
+              type: array
+              items:
+                type: string
+            expertise:
+              type: array
+              items:
+                type: string
+          additionalProperties: false
+      partners:
+        type: array
+        items:
+          type: object
+          required: [name]
+          properties:
+            name:
+              type: string
+            logo:
+              type: string
+            description:
+              type: string
+          additionalProperties: false
+    additionalProperties: false
+
+  FigureBlock:
+    type: object
+    required: [type, path]
+    properties:
+      type:
+        type: string
+        const: figure
+      path:
+        type: string
+        description: Path to the image file, relative to the project root.
+      caption:
+        type: string
+      width:
+        type: string
+        description: LaTeX width expression, e.g. "0.8\linewidth".
+        default: "\\linewidth"
+    additionalProperties: false
+
+  RawLatexBlock:
+    type: object
+    required: [type, latex]
+    properties:
+      type:
+        type: string
+        const: raw_latex
+      latex:
+        type: string
+        description: Raw LaTeX source inserted verbatim.
+    additionalProperties: false

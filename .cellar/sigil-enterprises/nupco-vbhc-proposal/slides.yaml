@@ -1,0 +1,76 @@
+resourceType: SlideDocument
+
+slides:
+  - type: cover
+    title: !include "@content.yaml:engagement.title"
+    subtitle: !include "@content.yaml:engagement.subtitle"
+    client: !include "@content.yaml:client.name"
+    reference: !include "@content.yaml:engagement.reference"
+    date: !include "@content.yaml:engagement.date"
+    logo: "../../../clients/sigil/brand/logos/sigil-color-white.png"
+
+  - type: exec_summary
+    headline: !include "@content.yaml:executive_summary.headline"
+    key_points: !include "@content.yaml:executive_summary.key_points"
+
+  - type: section_divider
+    label: "The Challenge"
+
+  - type: pain_points
+    title: "The Challenge"
+    items: !include "@content.yaml:context.pain_points"
+
+  - type: metrics
+    title: "By the Numbers"
+    description: !include "@content.yaml:context.current_state.description"
+    metrics: !include "@content.yaml:context.current_state.metrics"
+
+  - type: section_divider
+    label: "Our Approach"
+
+  - type: solution_pillars
+    title: "Our Approach"
+    overview: !include "@content.yaml:solution.overview"
+    pillars: !include "@content.yaml:solution.pillars"
+
+  - type: differentiators
+    title: "Why Sigil"
+    items: !include "@content.yaml:solution.differentiators"
+
+  - type: section_divider
+    label: "Project Roadmap"
+
+  - type: timeline
+    title: "Project Roadmap"
+    phases: !include "@content.yaml:timeline.phases"
+
+  - type: section_divider
+    label: "Investment"
+
+  - type: investment_table
+    title: "Investment"
+    currency: !include "@content.yaml:investment.currency"
+    notes: !include "@content.yaml:investment.notes"
+    phases: !include "@content.yaml:investment.phases"
+
+  - type: section_divider
+    label: "Our Team"
+
+  - type: team_grid
+    title: "Our Team"
+    consultants: !include "@content.yaml:team.consultants"
+    partners: !include "@content.yaml:team.partners"
+
+  - type: section_divider
+    label: "Next Steps"
+
+  - type: next_steps
+    title: "Next Steps"
+    intro: !include "@content.yaml:next_steps.intro"
+    steps: !include "@content.yaml:next_steps.steps"
+
+  - type: closing
+    tagline: !include "@content.yaml:closing.tagline"
+    email: !include "@content.yaml:closing.email"
+    website: !include "@content.yaml:closing.website"
+    logo: "../../../clients/sigil/brand/logos/sigil-color-white.png"

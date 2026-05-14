@@ -1,0 +1,25 @@
+[package]
+name = "forma"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "forma"
+path = "src/main.rs"
+
+[dependencies]
+forma-schema = { workspace = true }
+forma-core = { workspace = true }
+forma-render = { workspace = true }
+forma-composer = { workspace = true }
+clap = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+thiserror = { workspace = true }
+serde_yaml = { workspace = true }
+serde_json = { workspace = true }
+regex = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

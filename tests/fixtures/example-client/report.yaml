@@ -1,14 +1,7 @@
 resourceType: ReportDocument
-
-meta:
-  title: !include "@content.yaml:engagement.title"
-  client: !include "@content.yaml:client.name"
-  date: !include "@content.yaml:engagement.date"
-
-chapters:
-  - title: "Executive Summary"
-    sections:
-      - title: "Overview"
-        blocks:
-          - type: paragraph
-            text: !include "@content.yaml:executive_summary.headline"
+title: !include "@content.yaml:engagement.title"
+sections:
+  - title: !include "@content.yaml:client.name"
+    content: !include "@content.yaml:problem.description"
+  - title: Investment
+    content: !include "@content.yaml:investment.total"

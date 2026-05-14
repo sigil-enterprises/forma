@@ -1,0 +1,79 @@
+resourceType: ReportDocument
+
+meta:
+  title: !include "@content.yaml:engagement.title"
+  subtitle: !include "@content.yaml:engagement.subtitle"
+  client: !include "@content.yaml:client.name"
+  reference: !include "@content.yaml:engagement.reference"
+  date: !include "@content.yaml:engagement.date"
+  version: !include "@content.yaml:engagement.version"
+  confidentiality: !include "@content.yaml:engagement.confidentiality"
+
+cover:
+  title: !include "@content.yaml:engagement.title"
+  subtitle: !include "@content.yaml:engagement.subtitle"
+  client: !include "@content.yaml:client.name"
+  logo: "brand/logos/sigil-color-white.png"
+  date: !include "@content.yaml:engagement.date"
+
+chapters:
+  - title: "Executive Summary"
+    sections:
+      - title: "Overview"
+        blocks:
+          - type: paragraph
+            text: !include "@content.yaml:executive_summary.headline"
+          - type: paragraph
+            text: !include "@content.yaml:executive_summary.body"
+          - type: bullet_list
+            items: !include "@content.yaml:executive_summary.key_points"
+
+  - title: "The Challenge"
+    sections:
+      - title: "Problem Statement"
+        blocks:
+          - type: paragraph
+            text: !include "@content.yaml:context.problem_statement"
+      - title: "Baseline Metrics"
+        blocks:
+          - type: metrics_table
+            caption: !include "@content.yaml:context.current_state.description"
+            metrics: !include "@content.yaml:context.current_state.metrics"
+
+  - title: "Our Approach"
+    sections:
+      - title: "Solution Overview"
+        blocks:
+          - type: paragraph
+            text: !include "@content.yaml:solution.overview"
+
+  - title: "Project Roadmap"
+    sections:
+      - title: "Implementation Timeline"
+        blocks:
+          - type: timeline
+            phases: !include "@content.yaml:timeline.phases"
+
+  - title: "Investment"
+    sections:
+      - title: "Fee Schedule"
+        blocks:
+          - type: investment_table
+            currency: !include "@content.yaml:investment.currency"
+            notes: !include "@content.yaml:investment.notes"
+            phases: !include "@content.yaml:investment.phases"
+
+  - title: "Our Team"
+    sections:
+      - title: "Key Personnel"
+        blocks:
+          - type: team
+            consultants: !include "@content.yaml:team.consultants"
+            partners: !include "@content.yaml:team.partners"
+
+  - title: "Next Steps"
+    sections:
+      - title: "Proposed Actions"
+        blocks:
+          - type: paragraph
+            text: !include "@content.yaml:next_steps.intro"

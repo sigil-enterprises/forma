@@ -1,7 +1,4 @@
-name: "Proposal Slides (HTML)"
-description: "Sigil proposal slide deck rendered via HTML + Playwright"
+name: "Proposal Slides"
 format: slides
 engine: html
 entry: main.html.j2
-compatible_schemas:
-  - SlideDocument

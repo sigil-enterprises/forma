@@ -1,0 +1,15 @@
+[package]
+name = "forma-composer"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+forma-schema = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+reqwest = { workspace = true, features = ["blocking", "json"] }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+regex = { workspace = true }

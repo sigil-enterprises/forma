@@ -1,0 +1,22 @@
+[package]
+name = "forma-render"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+forma-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+tera = { workspace = true }
+tempfile = { workspace = true }
+thiserror = { workspace = true }
+regex = { workspace = true }
+chrono = "0.4"
+html-escape = "0.2"
+headless_chrome = { workspace = true, optional = true }
+
+[features]
+default = []
+pdf = ["headless_chrome"]

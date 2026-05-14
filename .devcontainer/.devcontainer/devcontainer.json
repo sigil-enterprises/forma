@@ -1,0 +1,54 @@
+{
+  "name": "${containerEnv:DEV_CONTAINER_NAME:unnamed}",
+  "dockerComposeFile": [
+    "../docker-compose.yaml",
+    "./docker-compose.yaml"
+  ],
+  "workspaceFolder": "/app",
+  "service": "app",
+  "initializeCommand": "bash .devcontainer/setup-host",
+  "onCreateCommand": "bash .devcontainer/setup-editor",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.makefile-tools",
+        "tamasfe.even-better-toml",
+        "github.vscode-github-actions",
+        "rust-lang.rust-analyzer",
+        "vadimcn.vscode-lldb",
+        "ahmadalli.vscode-aws-actions",
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "mutantdino.resourcemonitor",
+        "bierner.markdown-mermaid",
+        "eamodio.gitlens",
+        "GitHub.vscode-pull-request-github",
+        "Gruntfuggly.todo-tree",
+        "anthropic.claude-code",
+        "tamasfe.belvedere"
+      ],
+      "settings": {
+        "workbench.editor.labelFormat": "short",
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+        "terminal.integrated.env.linux": {
+          "PATH": "/root/.cargo/bin:/usr/local/cargo/bin:${env:PATH}"
+        },
+        "terminal.integrated.defaultProfile.linux": "tmux",
+        "terminal.integrated.profiles.linux": {
+          "tmux": {
+            "path": "tmux",
+            "args": [
+              "-c",
+              "tmux new -ADs dev"
+            ]
+          }
+        },
+        "files.exclude": {
+          "**/target/": true,
+          "**/.pytest_cache": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [ -n "${CODESPACES:-}" ]
+then
+  echo "GITHUB_TOKEN=$(gh auth token)" > .env
+
+else
+  if [ -e ".env" ]
+  then
+    source .env
+  else
+    echo "GITHUB_TOKEN=$(gh auth token)" > .env
+  fi
+fi
+
+export PROJECT=$(git remote get-url origin | awk -F'[:/]' '{gsub(/\.git$/, "", $NF); print $NF}')
+export ORGANIZATION=$(git remote get-url origin | sed -E 's|.*[:/]([^/]+)/[^/]+\.git$|\1|')
+export DEV_CONTAINER_NAME="$ORGANIZATION/$PROJECT"
+
+echo "PROJECT=$PROJECT" >> .env
+echo "ORGANIZATION=$ORGANIZATION" >> .env
+echo "DEV_CONTAINER_NAME=$DEV_CONTAINER_NAME" >> .env
+echo "COMPOSE_BAKE=true" >> .env

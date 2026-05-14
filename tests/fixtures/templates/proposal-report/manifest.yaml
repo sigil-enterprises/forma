@@ -1,7 +1,4 @@
 name: "Proposal Report"
-description: "Full LaTeX report document for client proposals"
 format: document
 engine: xelatex
 entry: main.tex.j2
-compatible_schemas:
-  - "schemas.proposal.content:ProposalContent"

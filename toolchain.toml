@@ -1,0 +1,27 @@
+# forma — Rust project layer
+
+[base]
+source = "$ORGANIZATION/toolchain/rust-tools"
+version = "v0.20.0"
+
+[targets]
+forced     = ["help", "check", "git-config", "build", "test", "clippy", "fmt", "_check_required"]
+extensible = ["check"]
+
+[pinned]
+files = [
+  ".github/**",
+  ".toolchain/**",
+]
+
+[checks]
+cargo-lock-exists    = "cargo-lock-exists"
+
+[rules.devcontainer]
+service              = "app"
+github_token_var     = "GITHUB_TOKEN"
+setup_command        = "make setup-dev"
+compose_build_target = "base"
+compose_entrypoint   = "sleep"
+compose_command      = "infinity"
+compose_env_file     = ".env"

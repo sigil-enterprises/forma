@@ -1,0 +1,280 @@
+resourceType: ProposalContent
+
+engagement:
+  title: "A National Transformation Model: Value-Based Procurement for Wound Care"
+  subtitle: "12-Month Pilot Programme — Diabetic Foot Ulcers"
+  reference: "SGLR-2026-NUPCO-001"
+  date: "2026-01-15"
+  version: "0.2.0"
+  confidentiality: confidential
+  language: en
+
+client:
+  name: "NUPCO"
+  industry: "Healthcare Procurement"
+  size: "National procurement authority, Kingdom of Saudi Arabia"
+  contact:
+    name: ""
+    title: ""
+    email: ""
+
+executive_summary:
+  headline: "Shifting wound care procurement from unit cost to patient outcomes — a scalable national blueprint"
+  body: >
+    Sigil Scientific Enterprises proposes a strategic partnership with NUPCO to implement
+    a National Transformation Model for Value-Based Procurement in Wound Care, specifically
+    focusing on Diabetic Foot Care. This initiative shifts procurement from traditional
+    volume-based purchasing to an outcome-driven model that incentivises healing, reduces
+    complications, and optimises the total cost of care. Beginning with a 12-month pilot
+    on Diabetic Foot Ulcers, it delivers a scalable blueprint for managing chronic diseases
+    in direct alignment with Saudi Vision 2030.
+  key_points:
+    - "Outcome-Driven Procurement — pay for healing, not products"
+    - "12-Month DFU Pilot with live KPI monitoring across participating hospitals"
+    - "Multidisciplinary execution combining clinical, data, and procurement expertise"
+    - "Scalable National Blueprint replicable across chronic disease categories"
+    - "Full alignment with Saudi Vision 2030 healthcare transformation goals"
+
+context:
+  problem_statement: >
+    The Kingdom of Saudi Arabia faces a significant and growing burden from diabetes. The
+    current procurement model, focused on unit cost, fails to address the true cost of
+    care — the "cost of failure" associated with prolonged hospitalisations and severe
+    complications such as amputation. A systemic shift towards value-based procurement
+    is required to align supplier incentives with patient outcomes.
+  pain_points:
+    - title: "High DFU Prevalence"
+      description: "18.3% adult diabetes prevalence in KSA; 34% lifetime DFU risk for diabetics — one of the highest burdens globally."
+    - title: "Volume-Based Incentives"
+      description: "Current procurement rewards product volume, not outcomes. Suppliers have no incentive to prevent complications or reduce hospital stays."
+    - title: "Severe Complication Rates"
+      description: "31% of DFU cases lead to amputation; 5-year post-amputation mortality is 42%. The human and economic cost is preventable."
+    - title: "No Outcome Measurement Framework"
+      description: "Absence of standardised KPIs across hospitals means there is no visibility into care quality or supplier contribution to outcomes."
+  current_state:
+    description: "Baseline burden metrics for Diabetic Foot Ulcers in the Kingdom of Saudi Arabia."
+    metrics:
+      - label: "Adult Diabetes Prevalence"
+        value: "18.3%"
+      - label: "Lifetime DFU Risk"
+        value: "34%"
+      - label: "DFU Cases → Amputation"
+        value: "31%"
+      - label: "5-Year Post-Amputation Mortality"
+        value: "42%"
+
+solution:
+  overview: >
+    Sigil proposes a comprehensive Value-Based Procurement framework for Diabetic Foot
+    Care, grounded in an integrated care pathway spanning screening through long-term
+    maintenance. The model links supplier contracts to measurable patient outcomes,
+    creating a shared-risk structure where procurement cost tracks directly with
+    clinical performance.
+  pillars:
+    - title: "Outcome-Linked Contracts"
+      description: "Procurement agreements tied to Tier 1 clinical outcomes (healing rate, amputation rate), Tier 2 patient-reported outcomes, and Tier 3 cost-of-care metrics."
+    - title: "Data Infrastructure"
+      description: "Robust real-time dashboards monitoring KPIs across the pilot cohort, enabling monthly performance reviews and rapid course-correction."
+    - title: "Supplier Prequalification"
+      description: "Structured supplier assessment framework measuring impact on pathology (healing efficacy, complication reduction) and on providers (training, supply chain, cost efficiency)."
+  differentiators:
+    - title: "Proven VBHC methodology"
+      description: "Sigil brings a tested framework for value-based healthcare implementation, adapted for the Saudi procurement and regulatory context."
+    - title: "End-to-end execution"
+      description: "From stakeholder alignment through pilot launch to national blueprint — one partner owns the full delivery chain."
+    - title: "Academic output"
+      description: "Pilot findings are structured for peer-reviewed publication, creating lasting scientific credibility for the NUPCO model."
+
+timeline:
+  phases:
+    - name: "Phase 1 — Analysis & Design"
+      duration: "3 months"
+      start_week: 1
+      end_week: 12
+      activities:
+        - "Stakeholder mapping and alignment workshops"
+        - "Current state assessment and patient journey mapping"
+        - "KPI framework definition and baseline measurement"
+        - "Draft legal and contract framework for VBP"
+      deliverables:
+        - "Stakeholder map"
+        - "Clinical baseline report"
+        - "KPI dictionary"
+        - "Draft VBP contract"
+    - name: "Phase 2 — Setup & Training"
+      duration: "3 months"
+      start_week: 13
+      end_week: 24
+      activities:
+        - "Contract finalisation and signing"
+        - "IT and data integration setup"
+        - "Clinical staff training on new care pathways"
+        - "Supply chain logistics and dry-run simulation"
+      deliverables:
+        - "Signed VBP contract"
+        - "Live data dashboard"
+        - "Staff certification records"
+        - "Readiness audit report"
+    - name: "Phase 3 — Pilot Implementation"
+      duration: "3 months"
+      start_week: 25
+      end_week: 36
+      activities:
+        - "Go-live of VBP pilot across participating hospitals"
+        - "Real-time KPI monitoring"
+        - "Patient enrolment and tracking"
+        - "Monthly performance reviews and clinical huddles"
+      deliverables:
+        - "Monthly KPI reports"
+        - "Patient registry"
+        - "Issue log and resolution tracker"
+        - "Interim financial report"
+    - name: "Phase 4 — Evaluation & Scale"
+      duration: "3 months"
+      start_week: 37
+      end_week: 48
+      activities:
+        - "Comprehensive outcome and ROI analysis"
+        - "Total cost of care calculation"
+        - "Model refinement into national VBP blueprint"
+        - "Academic research and case study production"
+      deliverables:
+        - "Final impact report"
+        - "National VBP blueprint"
+        - "Scaling roadmap for other chronic diseases"
+        - "Peer-reviewed manuscript submission"
+
+investment:
+  currency: USD
+  notes:
+    - "Prices are exclusive of applicable VAT."
+    - "Payment terms to be aligned with NUPCO procurement cycles."
+    - "Pass-through costs (travel, venue, expert honoraria) are billed at cost."
+  phases:
+    - name: "Phase 1 — Analysis & Design"
+      duration: "3 months"
+      line_items:
+        - service: "Stakeholder mapping and alignment workshops"
+          quantity: 1
+          unit: project
+          rate_usd: 45000
+          total_usd: 45000
+        - service: "KPI framework and baseline measurement"
+          quantity: 1
+          unit: project
+          rate_usd: 30000
+          total_usd: 30000
+        - service: "Legal and contract framework design"
+          quantity: 1
+          unit: project
+          rate_usd: 25000
+          total_usd: 25000
+    - name: "Phase 2 — Setup & Training"
+      duration: "3 months"
+      line_items:
+        - service: "IT and data infrastructure setup"
+          quantity: 1
+          unit: project
+          rate_usd: 60000
+          total_usd: 60000
+        - service: "Clinical training programme"
+          quantity: 1
+          unit: project
+          rate_usd: 20000
+          total_usd: 20000
+    - name: "Phase 3 — Pilot Implementation"
+      duration: "3 months"
+      line_items:
+        - service: "Programme management and monitoring"
+          quantity: 3
+          unit: months
+          rate_usd: 20000
+          total_usd: 60000
+    - name: "Phase 4 — Evaluation & Scale"
+      duration: "3 months"
+      line_items:
+        - service: "Outcomes analysis and blueprint development"
+          quantity: 1
+          unit: project
+          rate_usd: 50000
+          total_usd: 50000
+        - service: "Scientific publication and dissemination"
+          quantity: 1
+          unit: project
+          rate_usd: 20000
+          total_usd: 20000
+
+team:
+  consultants:
+    - name: "Tiago Taveira-Gomes, MD PhD"
+      role: "Project Strategic Lead"
+      credentials: "MD, PhD"
+      experience_years: 12
+      education:
+        - "PhD in Medicine — Medical Education & Medical Informatics, University of Porto"
+        - "MSc in Information Engineering, University of Porto"
+        - "MD, University of Porto Faculty of Medicine"
+      expertise:
+        - "Real World Evidence & Implementation Science"
+        - "Data Science & Machine Learning in Healthcare"
+        - "AI in Healthcare / Digital Health"
+        - "VBHC Programme Design"
+    - name: "João Gancho Figueiredo, MD"
+      role: "Senior Clinical Lead"
+      credentials: "MD"
+      experience_years: 10
+      education:
+        - "Postgraduate in Healthcare Management, Nova School of Business and Economics"
+        - "Specialisation in Occupational Medicine, Universidade Nova de Lisboa"
+        - "Integrated Master in Medicine, University of Lisbon"
+      expertise:
+        - "Clinical Strategy and Evidence Generation"
+        - "Healthcare Interoperability"
+        - "Health Plan Consultancy"
+        - "Clinical-to-Technical Translation"
+    - name: "Carlos Sousa, MsC"
+      role: "IT Governance Director"
+      credentials: "MsC, COBIT"
+      experience_years: 25
+      education:
+        - "Healthcare Management Programme, Católica Lisbon School of Business"
+        - "Post-Graduate in Health Information Systems, Universidade Católica Portuguesa"
+        - "Degree in Computer Science, Universidade Autónoma de Lisboa"
+      expertise:
+        - "Healthcare Information Systems Implementation"
+        - "Digital Health PMO and Governance"
+        - "Interoperability and Cybersecurity in Health"
+    - name: "Marco Lima, MsC"
+      role: "Data Engineering Specialist"
+      credentials: "MsC, Oracle DBA"
+      experience_years: 18
+      education:
+        - "Degree in Electrical and Computer Engineering, FEUP Porto"
+      expertise:
+        - "SQL Development and Database Management"
+        - "ETL Pipeline Development and Interoperability"
+        - "Healthcare Application Management"
+        - "Clinical Information Systems Integration"
+  partners:
+    - name: "Opvance"
+      logo: ""
+      description: "Healthcare IT and implementation science partner — 25+ years delivering digital health at major Portuguese hospital networks."
+
+next_steps:
+  intro: "We propose the following immediate next steps to begin the engagement:"
+  steps:
+    - title: "Proposal Review Call"
+      description: "30-minute session with the NUPCO team to walk through the proposal, clarify scope, and align on pilot hospital selection."
+      icon: phone
+    - title: "Formal Partnership Agreement"
+      description: "Drafting and signing of the framework agreement, including the risk-sharing contract structure and data processing addendum."
+      icon: pen
+    - title: "Phase 1 Kick-off"
+      description: "Stakeholder alignment workshop to launch Phase 1 and begin the current state assessment across the pilot hospitals."
+      icon: calendar
+
+closing:
+  tagline: "Procurement that pays for health."
+  email: "tiago.taveira@sigil-enterprises.com"
+  website: "www.sigil.ae"
+  logo: "../presskit/brand/logos/sigil-color-white.png"
