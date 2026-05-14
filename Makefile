@@ -1,5 +1,5 @@
 ROOT := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-include $(ROOT).toolkit/targets/type.mk
+-include $(ROOT).toolkit/targets/type.mk
 
 ##@ Development
 
