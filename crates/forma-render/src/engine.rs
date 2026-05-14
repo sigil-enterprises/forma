@@ -1589,34 +1589,43 @@ mod array_debug {
 #[cfg(test)]
 mod debug_preprocess_test {
     use super::*;
+
+    fn presskit_exists() -> bool {
+        std::fs::metadata("/tmp/presskit").is_ok()
+    }
+
     #[test]
+    #[ignore = "requires /tmp/presskit"]
     fn debug_team_template() {
+        if !presskit_exists() { panic!("/tmp/presskit not available"); }
         let contents = std::fs::read_to_string("/tmp/presskit/templates/proposal-slides/_partials/_team.tex.j2").unwrap();
         let processed = preprocess_delimiters(&contents);
-        // Write first 500 chars of processed
         let snippet: String = processed.chars().take(800).collect();
         println!("=== TEAM PREPROCESSED (first 800 chars) ===\n{}\n=== END ===", snippet);
         std::fs::write("/tmp/team_preprocessed.txt", &processed).ok();
     }
-    
+
     #[test]
+    #[ignore = "requires /tmp/presskit"]
     fn debug_investment_template() {
+        if !presskit_exists() { panic!("/tmp/presskit not available"); }
         let contents = std::fs::read_to_string("/tmp/presskit/templates/proposal-slides/_partials/_investment.tex.j2").unwrap();
         let processed = preprocess_delimiters(&contents);
         let snippet: String = processed.chars().take(500).collect();
         println!("=== INVESTMENT PREPROCESSED (first 500 chars) ===\n{}\n=== END ===", snippet);
         std::fs::write("/tmp/investment_preprocessed.txt", &processed).ok();
     }
-    
+
     #[test]
+    #[ignore = "requires /tmp/presskit"]
     fn debug_main_template_first_50() {
+        if !presskit_exists() { panic!("/tmp/presskit not available"); }
         let contents = std::fs::read_to_string("/tmp/presskit/templates/proposal-slides/main.tex.j2").unwrap();
         let processed = preprocess_delimiters(&contents);
         let snippet: String = processed.chars().take(800).collect();
         println!("=== MAIN PREPROCESSED (first 800 chars) ===\n{}\n=== END ===", snippet);
         std::fs::write("/tmp/main_preprocessed.txt", &processed).ok();
 
-        // Debug: find the problematic line 85
         let lines: Vec<&str> = processed.split('\n').collect();
         for (i, line) in lines.iter().enumerate() {
             if i >= 80 && i <= 90 {
